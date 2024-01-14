@@ -1,14 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useAuthProvider from '../../Hooks/useAuthProvider';
 
 const AdminSiteSideNav = ({ isChecked, setChecked }) => {
     const {provideSignOut} = useAuthProvider();
+    const location = useLocation();
+    if(location.pathname === '/'){
+        return <></>
+    }
     return (
         <>
             <aside
                 id="default-sidebar"
-                className={`shadow select-none cursor-pointer fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isChecked ? '' : '-translate-x-full sm:translate-x-0'
+                className={`shadow-md border-r-2 select-none cursor-pointer fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isChecked ? '' : '-translate-x-full sm:translate-x-0'
                     }`}
                 aria-label="Sidebar"
             >
