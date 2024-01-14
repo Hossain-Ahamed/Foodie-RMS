@@ -17,8 +17,8 @@ const useProfile = () => {
             // return res?.data;
 
             return {
-                f_name: 'helo',
-                l_name: 'dsaj',
+                f_name: 'Alex',
+                l_name: 'benjamin',
                 email: 'a@gmail.com',
                 gender: 'Female',
                 DOB: '2001-01-19',

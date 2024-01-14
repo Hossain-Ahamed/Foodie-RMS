@@ -72,7 +72,7 @@ const AdminSite = () => {
             <AdminSiteSideNav isChecked={isChecked} setChecked={setChecked} />
 
             {/* main page content */}
-            <div className="p-4 sm:ml-64">
+            <div className="p-4 sm:ml-64 max-w-[2560px] mx-auto p">
                 <Outlet />
             </div>
 

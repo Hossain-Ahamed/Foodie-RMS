@@ -9,6 +9,7 @@ import Statistics from "../../pages/Admin/Statistics/Statistics";
 import AddDish from "../../pages/Admin/AddDish/AddDish";
 import ErrorPage from "../../pages/Shared/ErrorPage/ErrorPage";
 import ViewAsMyProfile from "../../pages/Admin/ViewEmployee/ViewAsMyProfile";
+import OngoingOrders from "../../pages/Admin/OngoingOrders/OngoingOrders";
 
 
 
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/add-employee',
                 element: <AddEmployee />
+            },
+            {
+                path: '/restaurant/:restaurantName/branch/:branchName/ongoing-orders',
+                element: <OngoingOrders />
             },
 
 
