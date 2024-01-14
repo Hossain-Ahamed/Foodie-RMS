@@ -5,12 +5,11 @@ import useProfile from '../../Hooks/useProfile';
 import LoadingPage from '../../pages/Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../pages/Shared/ErrorPage/ErrorPage';
 import AdminSiteSideNav from './AdminSiteSideNav';
-import useAuthProvider from '../../Hooks/useAuthProvider';
 
 const AdminSite = () => {
     const [isChecked, setChecked] = useState(false);
-    const {user,loading} = useAuthProvider();
-    const { profile, profileLoading, role, profileError } = useProfile();
+ 
+    const { profileLoading,  profileError } = useProfile();
 
     /**
      * 
@@ -20,25 +19,22 @@ const AdminSite = () => {
      *                                                             ==> go to the destination page
      *                                                             ==> otherwise  go to the error page
      */
-    if (profileLoading ||loading) {
+    if (profileLoading) {
         return <LoadingPage />
     }
 
-    if(!user){
-        return <Navigate to='/' replace></Navigate>
-    }
 
 
- 
-    if (profileError || !profile || !['Admin', 'Accounts', 'Developer'].includes(role)) {
+    if (profileError) {
         return <ErrorPage />
     }
+
 
     return (
         <>
 
 
-            {/* Button that acts as a checkbox */}
+            {/* Button that acts as a checkbox -- for mobile */}
             <Navbar isBordered className=" sm:hidden max-w-full" maxWidth="full">
                 <NavbarContent className="sm:hidden" justify="start">
                     <label htmlFor="sidebarToggle">
@@ -59,7 +55,7 @@ const AdminSite = () => {
                 </NavbarContent>
 
                 <NavbarBrand className="flex sm:hidden gap-4" justify="center" >
-                    <Link className="font-bold text-inherit text-red-500 cursor-pointer" href="/admin">Foodie</Link>
+                    <Link className="font-bold text-inherit text-red-500 cursor-pointer" href="/">Foodie</Link>
                 </NavbarBrand>
             </Navbar>
 
@@ -72,7 +68,7 @@ const AdminSite = () => {
                 onChange={() => setChecked(!isChecked)}
             />
 
-            {/* Sidebar */}
+            {/* Sidebar  for moobile -- and desktopp*/}
             <AdminSiteSideNav isChecked={isChecked} setChecked={setChecked} />
 
             {/* main page content */}

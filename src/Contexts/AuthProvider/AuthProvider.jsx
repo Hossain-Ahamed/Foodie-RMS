@@ -59,7 +59,13 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             // todo 
-            setUser({ email: 'hossainahamed6872@gmail.com' });
+            setUser({
+                name: "currentUser?.displayName",
+                email: "currentUser.email",
+                photoURL: "currentUser?.photoURL",
+                phone: "currentUser?.phoneNumber",
+                firebase_UID: "currentUser?.uid",
+            });
             // setUser(currentUser);
             console.log('current user cred : ', currentUser);
 
@@ -119,6 +125,7 @@ const AuthProvider = ({ children }) => {
     if (loading) {
         return <LoadingPage />
     }
+
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
