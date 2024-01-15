@@ -108,15 +108,16 @@ const validateImage = (file) => {
     const { type, size } = file[0];
 
     if (!supportedFormats.includes(type)) {
-      return "Only JPEG, PNG, and GIF images are allowed.";
+      return false;
+      // return "Only JPEG, PNG, and GIF images are allowed.";
     }
 
     if (size > 3 * 1024 * 1024) {
-      return "Image size should not exceed 3MB.";
+      return false;
+      // return "Image size should not exceed 3MB.";
     }
+    return true;
   }
-
-  return true;
 };
 
 const getPcInfo = async () => {
