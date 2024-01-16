@@ -1,5 +1,5 @@
 import React from 'react';
-import OngoingOrderTable from '../../../components/Dashboard/OngoingOrderTable/OngoingOrderTable';
+import OngoingOrderTable from '../../../../components/Dashboard/OngoingOrderTable/OngoingOrderTable';
 
 const OngoingOrders = () => {
     return (
