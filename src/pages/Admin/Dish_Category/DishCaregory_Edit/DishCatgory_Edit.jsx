@@ -5,8 +5,43 @@ import toast from 'react-hot-toast';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import { Checkbox } from '@nextui-org/react';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import { useQuery } from 'react-query';
+import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
+import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
+import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 
 const DishCategory_Edit = () => {
+  const { categoryID } = useParams();
+
+  const axiosSecure = useAxiosSecure();
+  const { branchName, restaurantName } = useRestauarantAndBranch();
+
+  const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
+    queryKey: ['categoryData', categoryID],
+    enabled: true,
+    cacheTime: 0,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/restaurant/${restaurantName}/branch/${branchName}/edit-category/${categoryID}`);
+
+      //   to do uncomment 
+      // return res?.data;
+
+      const prev = {
+        id: 1,
+        title: 'Burgers',
+        description: "tui moros na k",
+        img: 'https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no',
+        active: false,
+
+      }
+
+      setSelectedImage0(prev?.img);
+      setActive(prev?.active);
+      return prev;
+    },
+
+  });
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
 
   // handle image
@@ -26,35 +61,43 @@ const DishCategory_Edit = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+
     console.log(data)
     if (!selectedImage0) {
-
       toast.error('Cover Photo needed');
       return;
     }
 
-    if (event.target.name === 'create') {
-      // Handle create action
-      console.log('Create action', data);
-    } else if (event.target.name === 'saveAndCreateAnother') {
-      // Handle save and create another action
-      console.log('Save and create another action', data);
+    console.log('Create action', data);
 
-      // Reset the form fields
-      setSelectedImage0(null);
-      setActive(true);
-      reset();
+    axiosSecure.patch(`/restaurant/${restaurantName}/branch/${branchName}/edit-category/${categoryID}`, data)
+      .then(data => {
+        setSelectedImage0(null);
+        setActive(true);
+        reset();
+        navigate(`/restaurant/${restaurantName}/branch/${branchName}/category`, { replace: true });
+      }).catch(e => {
+        console.error(e);
+        return <ErrorPage />
+      })
 
-    }
 
   };
+
+  if (dataLoading) {
+    return <LoadingPage />
+  }
+
+  if (dataError) {
+    return <ErrorPage />
+  }
 
 
   return (
     <>
-      <SetTitle title="Add Category" />
+      <SetTitle title="Edit Category" />
       <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 '>
-        <SectionTitle h1={`Add Category`} />
+        <SectionTitle h1={`Edit Category`} />
         <div className="w-full p-3 ">
           <div className="p-6 h-full border border-gray-300 overflow-hidden bg-white rounded-md shadow-dashboard">
 
@@ -114,7 +157,8 @@ const DishCategory_Edit = () => {
               <div className="w-full  p-3">
                 <p className="mb-1.5 font-medium text-base text-coolGray-800" data-config-id="auto-txt-3-3">Category Title</p>
                 <input className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input" type="text" placeholder="ie: FastFood"
-                  {...register("title", {
+                defaultValue={data?.title}
+                {...register("title", {
                     required: "*title  is Required",
                   })} />
                 {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
@@ -129,6 +173,7 @@ const DishCategory_Edit = () => {
                       Description
                     </p>
                     <textarea
+                    defaultValue={data?.description}
                       {...register('description', { required: "*Description is required" })}
                       className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
 

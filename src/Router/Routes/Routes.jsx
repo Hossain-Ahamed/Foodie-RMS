@@ -11,6 +11,7 @@ import ViewAsMyProfile from "../../pages/Admin/ViewEmployee/ViewAsMyProfile";
 import OngoingOrders from "../../pages/Admin/OngoingOrders/OngoingOrders";
 import DishCategory_Add from "../../pages/Admin/Dish_Category/DishCategory_Add/DishCategory_Add";
 import DishCategory_List from "../../pages/Admin/Dish_Category/DishCategory_List/DishCategory_List";
+import DishCategory_Edit from "../../pages/Admin/Dish_Category/DishCaregory_Edit/DishCatgory_Edit";
 
 
 
@@ -41,8 +42,8 @@ export const router = createBrowserRouter([
                 element: <DishCategory_Add />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/edit-category',
-                element: < ></>
+                path: '/restaurant/:restaurantName/branch/:branchName/edit-category/:categoryID',
+                element: <DishCategory_Edit/>
             },
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/dish',
