@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import SectionTitle from '../../../components/SectionTitle/SectionTitle';
-import { getCountries, validateEmail, validateMobileNumber } from '../../../assets/scripts/Utility';
-import SetTitle from '../../Shared/SetTtitle/SetTitle';
-import { toast } from 'react-hot-toast';
-import ScrollToTop from '../../../components/ScrollToTop/ScrollToTop';
+import { getCountries, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
+import toast from 'react-hot-toast';
+import ScrollToTop from '../../../../components/ScrollToTop/ScrollToTop';
+import SetTitle from '../../../Shared/SetTtitle/SetTitle';
+import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
+
 
 const AddEmployee = () => {
     const countries = getCountries();
