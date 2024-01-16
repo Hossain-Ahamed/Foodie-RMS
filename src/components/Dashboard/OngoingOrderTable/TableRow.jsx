@@ -3,6 +3,38 @@ import { LuEye } from "react-icons/lu";
 import { BiEditAlt } from "react-icons/bi";
 import { TbMoneybag } from "react-icons/tb";
 import Swal from "sweetalert2";
+const statusColorMap = {
+    active: "success",
+
+
+    vacation: "secondary",
+    leave: 'secondary',
+    probation: 'secondary',
+    training: 'secondary',
+
+    trial: 'primary',
+    upgrading: 'primary',
+
+
+
+    suspension: 'danger',
+    terminated: 'danger',
+    renewalPending: 'danger',
+    paymentExpired: 'danger',
+
+
+
+
+    hold: "warning",
+    paused: "warning",
+    downgrading: 'warning',
+    paymentIssue: 'warning',
+    paymentPending: 'warning',
+    gracePeriod: 'warning',
+
+
+};
+
 const TableRow = ({ order }) => {
 
     let statusStyle, paymentStatus, icon;
