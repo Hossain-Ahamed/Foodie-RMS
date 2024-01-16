@@ -1,5 +1,5 @@
 import React from 'react';
-import TableComponent from '../../../components/Table/Table';
+import TableComponent from '../../../../components/Table/Table';
 
 const EmployeeList = () => {
     return (

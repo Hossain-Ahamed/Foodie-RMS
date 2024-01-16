@@ -8,7 +8,7 @@ import AddEmployee from "../../pages/Admin/AddEmployee/AddEmployee";
 import Statistics from "../../pages/Admin/Statistics/Statistics";
 import ErrorPage from "../../pages/Shared/ErrorPage/ErrorPage";
 import ViewAsMyProfile from "../../pages/Admin/ViewEmployee/ViewAsMyProfile";
-import OngoingOrders from "../../pages/Admin/OngoingOrders/OngoingOrders";
+import OngoingOrders from "../../pages/Admin/Orders/OngoingOrders/OngoingOrders";
 import DishCategory_Add from "../../pages/Admin/Dish_Category/DishCategory_Add/DishCategory_Add";
 import DishCategory_List from "../../pages/Admin/Dish_Category/DishCategory_List/DishCategory_List";
 import DishCategory_Edit from "../../pages/Admin/Dish_Category/DishCaregory_Edit/DishCatgory_Edit";
