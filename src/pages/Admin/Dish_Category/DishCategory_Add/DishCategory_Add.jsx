@@ -164,7 +164,7 @@ const DishCategory_Add = () => {
                 {/* save button  */}
 
                 <button type='submit' className="flex flex-wrap justify-center w-full md:w-auto md:ml-auto px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                  <p data-config-id="auto-txt-22-3">Save</p>
+                  <p data-config-id="auto-txt-22-3">Create</p>
                 </button>
 
 

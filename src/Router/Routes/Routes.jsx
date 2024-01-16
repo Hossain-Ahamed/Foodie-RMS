@@ -12,6 +12,7 @@ import DishCategory_Add from "../../pages/Admin/Dish_Category/DishCategory_Add/D
 import DishCategory_List from "../../pages/Admin/Dish_Category/DishCategory_List/DishCategory_List";
 import DishCategory_Edit from "../../pages/Admin/Dish_Category/DishCaregory_Edit/DishCatgory_Edit";
 import AddEmployee from "../../pages/Admin/Employee/AddEmployee/AddEmployee";
+import Dish_Add from "../../pages/Admin/DishManage/Dish_Add/Dish_Add";
 
 
 
@@ -19,15 +20,15 @@ export const router = createBrowserRouter([
     {
         path: '/',
         element: <PrivateRoute><AdminSite /></PrivateRoute>,
-        errorElement: <ErrorPage/>,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: '/',
                 element: <MyRestaurants />
             },
             {
-                path : '/my-profile',
-                element : <ViewAsMyProfile/>
+                path: '/my-profile',
+                element: <ViewAsMyProfile />
             },
             {
                 path: '/restaurant/:restaurantName/branch/:branchName',
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/edit-category/:categoryID',
-                element: <DishCategory_Edit/>
+                element: <DishCategory_Edit />
             },
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/dish',
@@ -51,7 +52,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/add-dish',
-                element: < ></>
+                element: <Dish_Add />
             },
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/add-employee',
