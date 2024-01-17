@@ -12,18 +12,22 @@ import { validateSalesTax } from '../../../../assets/scripts/Utility'
 import { MdDelete } from "react-icons/md";
 import { CiSquarePlus } from "react-icons/ci";
 const Dish_Add = () => {
-  const { register, handleSubmit, formState: { errors }, setValue, reset, control } = useForm();
+  const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({ defaultValues: {
+    active: true,
+  },});
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields : optionFields, append : optionAppend, remove : optionRemove,  } = useFieldArray({
     control,
     name: 'options',
   });
+  const { fields : addOnFields, append : addOnAppend, remove : addOnRemove,  } = useFieldArray({
+    control,
+    name: 'addOn',
+  });
 
-  const [active, setActive] = useState(true);
+ 
   const [descriptionContent, setDescriptionContent] = useState("");
-  useEffect(() => {
-    setValue('active', active);
-  }, [active, setValue]);
+
   const [selectedImage0, setSelectedImage0] = useState(null);
 
   const handleImageUpload0 = (event) => {
@@ -43,19 +47,6 @@ const Dish_Add = () => {
       return;
     }
 
-    if (event.target.name === 'create') {
-      // Handle create action
-      console.log('Create action', data);
-    } else if (event.target.name === 'saveAndCreateAnother') {
-      // Handle save and create another action
-      console.log('Save and create another action', data);
-
-      // Reset the form fields
-      setSelectedImage0(null);
-      setActive(true);
-      reset();
-
-    }
 
   };
 
@@ -138,7 +129,7 @@ const Dish_Add = () => {
                 <div role="alert" className="rounded-xl border border-gray-300 bg-white p-4">
                   <div className="flex items-start gap-4">
                     <span className="text-green-600">
-                      <Checkbox className='p-4' isSelected={active} onValueChange={setActive} ></Checkbox>
+                      <Checkbox  className='p-4' onValueChange={(e)=>{setValue('active',e)}} defaultSelected></Checkbox>
                     </span>
 
                     <div className="flex-1">
@@ -174,7 +165,9 @@ const Dish_Add = () => {
                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="700"
                   {...register("preparation_cost", {
                     required: "*preparation_cost  is Required",
-                    validate: validateSalesTax
+                    validate: {
+                      isNumber: (value) => !isNaN(value)
+                    },
                   })} />
                 {errors.preparation_cost?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.preparation_cost?.message}</p>)}
                 {errors.preparation_cost?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.preparation_cost?.message}</p>)}
@@ -248,63 +241,65 @@ const Dish_Add = () => {
             <div className="p-6 h-full w-full   overflow-hidden bg-white  shadow-dashboard">
               <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Options</p>
               <small>if the dish has different and choices then you can create option&#40;ie: Pizza 10&#34; 16&#34;&#41;</small>
-              {fields.map((branch, index) => (
+              {optionFields.map((branch, index) => (
                 <div key={index} className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
 
                   {/* */}
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                      {...register(`branches[${index}].postalCode`, { required: 'ZIP / Postal code is required' })}
+                      {...register(`options[${index}].name`, { required: 'name is required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder="Name"
                     />
-                    {errors.branches && errors.branches[index]?.postalCode && (
-                      <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                        {errors.branches[index].postalCode.message}
+                    {errors.options && errors.options[index]?.name && (
+                      <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">
+                        {errors.options[index].name.message}
                       </p>
                     )}
                   </div>
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                      {...register(`branches[${index}].postalCode`, { required: 'ZIP / Postal code is required' })}
+                      {...register(`options[${index}].priority`, { required: 'priority is reequired' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                      type="text"
+                      type="number"
                       placeholder="priority : 0 1 2 3"
                     />
-                    {errors.branches && errors.branches[index]?.postalCode && (
-                      <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                        {errors.branches[index].postalCode.message}
+                    {errors.options && errors.options[index]?.priority && (
+                      <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">
+                        {errors.options[index].priority.message}
                       </p>
                     )}
                   </div>
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                      {...register(`branches[${index}].postalCode`, { required: 'ZIP / Postal code is required' })}
+                    
+                      {...register(`options[${index}].price`, { required: 'price is required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                      type="text"
+                      type="number"
                       placeholder="Price"
                     />
-                    {errors.branches && errors.branches[index]?.postalCode && (
-                      <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                        {errors.branches[index].postalCode.message}
+                    {errors.options && errors.options[index]?.price && (
+                      <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">
+                        {errors.options[index].price.message}
                       </p>
                     )}
                   </div>
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                      {...register(`branches[${index}].postalCode`, { required: 'ZIP / Postal code is required' })}
+                
+                      {...register(`options[${index}].preparation_cost`, { required: 'preparation cost required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder="Preparation cost"
                     />
-                    {errors.branches && errors.branches[index]?.postalCode && (
-                      <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                        {errors.branches[index].postalCode.message}
+                    {errors.options && errors.options[index]?.preparation_cost && (
+                      <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">
+                        {errors.options[index].preparation_cost.message}
                       </p>
                     )}
                   </div>
@@ -317,7 +312,7 @@ const Dish_Add = () => {
                   <div className='w-full flex flex-wrap justify-end items-center gap-2 absolute top-12'>
                     <button
                       type="button"
-                      onClick={() => remove(index)}
+                      onClick={() => optionRemove(index)}
                       className="flex-shrink-0 px-2 py-2 bg-slate-200 hover:bg-slate-300 font-medium text-sm text-white border border-slate-400 rounded-md shadow-button"
                     >
                       <MdDelete className='text-red-300' />
@@ -332,7 +327,95 @@ const Dish_Add = () => {
               <div className='w-full flex flex-wrap justify-start items-center gap-2'>
                 <button
                   type="button"
-                  onClick={() => append({})}
+                  onClick={() => optionAppend({})}
+                  className="flex   font-medium text-sm  rounded-md shadow-button "
+                >
+                  <CiSquarePlus className='text-green-400 text-5xl' title='Add New' />
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* --------------------------------------------------------------------------
+          ------------------Add Ons-----------------------------------------------------
+          ------------------------------------------------------------------------------ */}
+          <div className="flex flex-wrap pb-3 m-3 border-1 rounded p-2">
+            <div className="p-6 h-full w-full   overflow-hidden bg-white  shadow-dashboard">
+              <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Add Ons</p>
+              <small>if you offer yoru customers to add additional items with this dish then you can create add ons option&#40;ie: spice , cheese;</small>
+              {addOnFields.map((item, index) => (
+                <div key={index} className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
+
+                  {/* */}
+                  <div className="w-full  p-1">
+
+                    <input
+                      {...register(`addOn[${index}].name`, { required: 'name is required' })}
+                      className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
+                      type="text"
+                      placeholder="Name"
+                    />
+                    {errors.addOn && errors.addOn[index]?.name && (
+                      <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">
+                        {errors.addOn[index].name.message}
+                      </p>
+                    )}
+                  </div>
+            
+                  <div className="w-full md:w-1/2 p-1">
+
+                    <input
+                    
+                      {...register(`addOn[${index}].price`, { required: 'price is required' })}
+                      className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
+                      type="number"
+                      placeholder="Price"
+                    />
+                    {errors.addOn && errors.addOn[index]?.price && (
+                      <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">
+                        {errors.addOn[index].price.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="w-full md:w-1/2 p-1">
+
+                    <input
+                
+                      {...register(`addOn[${index}].preparation_cost`, { required: 'preparation cost required' })}
+                      className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
+                      type="text"
+                      placeholder="Preparation cost"
+                    />
+                    {errors.addOn && errors.addOn[index]?.preparation_cost && (
+                      <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">
+                        {errors.addOn[index].preparation_cost.message}
+                      </p>
+                    )}
+                  </div>
+
+
+
+
+
+                  {/* Remove  Button */}
+                  <div className='w-full flex flex-wrap justify-end items-center gap-2 absolute top-12'>
+                    <button
+                      type="button"
+                      onClick={() => addOnRemove(index)}
+                      className="flex-shrink-0 px-2 py-2 bg-slate-200 hover:bg-slate-300 font-medium text-sm text-white border border-slate-400 rounded-md shadow-button"
+                    >
+                      <MdDelete className='text-red-300' />
+                    </button>
+
+                  </div>
+
+                </div>
+              ))}
+
+              {/* add option  */}
+              <div className='w-full flex flex-wrap justify-start items-center gap-2'>
+                <button
+                  type="button"
+                  onClick={() => addOnAppend({})}
                   className="flex   font-medium text-sm  rounded-md shadow-button "
                 >
                   <CiSquarePlus className='text-green-400 text-5xl' title='Add New' />

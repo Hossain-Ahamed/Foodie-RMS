@@ -13,6 +13,7 @@ import DishCategory_List from "../../pages/Admin/Dish_Category/DishCategory_List
 import DishCategory_Edit from "../../pages/Admin/Dish_Category/DishCaregory_Edit/DishCatgory_Edit";
 import AddEmployee from "../../pages/Admin/Employee/AddEmployee/AddEmployee";
 import Dish_Add from "../../pages/Admin/DishManage/Dish_Add/Dish_Add";
+import Dish_Edit from "../../pages/Admin/DishManage/DishEdit/Dish_Edit";
 
 
 
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/add-dish',
                 element: <Dish_Add />
+            },
+            {
+                path: '/restaurant/:restaurantName/branch/:branchName/edit-dish/:id',
+                element: <Dish_Edit />
             },
             {
                 path: '/restaurant/:restaurantName/branch/:branchName/add-employee',
