@@ -159,10 +159,23 @@ const getPcInfo = async () => {
 };
 
 
-  
+const validateSalesTax = (value) => {
+  if (isNaN(value)) {
+    return "*is not a number";
+  }
+
+  const floatValue = parseFloat(value);
+
+  if (floatValue < 0 || floatValue > 100) {
+    return "Sales Tax must be between 0 and 100";
+  }
+
+  return true;
+};
 
 export {
   validateMobileNumber,
+  validateSalesTax,
   validateEmail,
   fetchJson,
   validateImage,
