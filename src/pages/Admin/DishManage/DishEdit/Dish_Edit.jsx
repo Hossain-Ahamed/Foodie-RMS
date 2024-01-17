@@ -69,6 +69,7 @@ const Dish_Edit = () => {
                             "preparation_cost": "324"
                         }
                     ],
+                    "addOn" : [],
                     "active": true,
                     "description": "<ol><li>dsfj</li><li>fdsaklf</li><li>adshf</li></ol>"
                 }
@@ -310,7 +311,7 @@ const Dish_Edit = () => {
 
 
 
-                <div className='w-full h-full p-3 '>
+                <div className='w-full h-full p-3 select-none'>
                     {/* --------------------------------------------------------------------------
           ------------------OPTIONS-----------------------------------------------------
           ------------------------------------------------------------------------------ */}
@@ -418,7 +419,7 @@ const Dish_Edit = () => {
                     <div className="flex flex-wrap pb-3 m-3 border-1 rounded p-2">
                         <div className="p-6 h-full w-full   overflow-hidden bg-white  shadow-dashboard">
                             <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Add Ons</p>
-                            <small>if you offer yoru customers to add additional items with this dish then you can create add ons option&#40;ie: spice , cheese;</small>
+                            <small>if you offer yoru customers to add additional items with this dish then you can create add ons option&#40;ie: spice , cheese&#41;</small>
                             {addOnFields.map((item, index) => (
                                 <div key={index} className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
 
