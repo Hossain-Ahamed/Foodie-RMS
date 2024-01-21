@@ -15,14 +15,14 @@ const DishCategory_Edit = () => {
   const { categoryID } = useParams();
 
   const axiosSecure = useAxiosSecure();
-  const { branchName, restaurantName } = useRestauarantAndBranch();
+  const { branchID, res_id } = useRestauarantAndBranch();
 
   const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
     queryKey: ['categoryData', categoryID],
     enabled: true,
     cacheTime: 0,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/restaurant/${restaurantName}/branch/${branchName}/edit-category/${categoryID}`);
+      const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/edit-category/${categoryID}`);
 
       //   to do uncomment 
       // return res?.data;
@@ -70,12 +70,12 @@ const DishCategory_Edit = () => {
 
     console.log('Create action', data);
 
-    axiosSecure.patch(`/restaurant/${restaurantName}/branch/${branchName}/edit-category/${categoryID}`, data)
+    axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/edit-category/${categoryID}`, data)
       .then(data => {
         setSelectedImage0(null);
         setActive(true);
         reset();
-        navigate(`/restaurant/${restaurantName}/branch/${branchName}/category`, { replace: true });
+        navigate(`/restaurant/${res_id}/branch/${branchID}/category`, { replace: true });
       }).catch(e => {
         console.error(e);
         return <ErrorPage />

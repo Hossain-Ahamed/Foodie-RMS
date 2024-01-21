@@ -55,7 +55,7 @@ const AdminSite = () => {
                 </NavbarContent>
 
                 <NavbarBrand className="flex sm:hidden gap-4" justify="center" >
-                    <Link className="font-bold text-inherit text-red-500 cursor-pointer" href="/">Foodie</Link>
+                    <Link className="font-bold text-inherit text-red-500 cursor-pointer" href="/">Home</Link>
                 </NavbarBrand>
             </Navbar>
 

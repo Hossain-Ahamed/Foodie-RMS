@@ -46,7 +46,7 @@ const useProfile = () => {
                         res_id : '743ndsa8t43',
                         
                         branch_name : 'kolabagan',
-                        branch_id : '3485jdsfu',
+                        branchID : '3485jdsfu',
 
                         role : 'customer-service',
                     },
@@ -56,7 +56,7 @@ const useProfile = () => {
                         res_id : '849358',
                         
                         branch_name : 'Dhanmondi',
-                        branch_id : 'jfsd845jfdsa',
+                        branchID : 'jfsd845jfdsa',
 
                         role : 'Admin',
                     },
