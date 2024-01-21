@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import useAuthProvider from '../../Hooks/useAuthProvider';
 import { PiBowlFoodBold } from "react-icons/pi";
 import useRestauarantAndBranch from '../../Hooks/useRestauarantAndBranch';
+import { IoFastFoodOutline } from "react-icons/io5";
 const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
     const { provideSignOut } = useAuthProvider();
@@ -122,6 +123,14 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
 
 
+                        <li>
+                            <Link to={`restaurant/${res_id}/branch/${branchID}/ongoing-orders`}
+                                className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
+                            >
+                               <IoFastFoodOutline className='h-5 w-5 opacity-75' />
+                                <span className="text-sm font-medium"> Orders </span>
+                            </Link>
+                        </li>
                         <li>
                             <Link to='invoices'
                                 className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
