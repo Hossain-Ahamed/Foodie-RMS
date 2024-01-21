@@ -174,14 +174,14 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     <li>
-                                        <Link to={`restaurant/${branchID}/branch/${res_id}/category`}
+                                        <Link to={`restaurant/${res_id}/branch/${branchID}/category`}
                                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                         >
                                             Category
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to={`restaurant/${branchID}/branch/${res_id}/dishes`}
+                                        <Link to={`restaurant/${res_id}/branch/${branchID}/dishes`}
                                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                         >
                                             Dishes
