@@ -32,39 +32,39 @@ export const router = createBrowserRouter([
                 element: <ViewAsMyProfile />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName',
+                path: '/restaurant/:res_id/branch/:branchID',
                 element: <Statistics />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/category',
+                path: '/restaurant/:res_id/branch/:branchID/category',
                 element: <DishCategory_List />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/add-category',
+                path: '/restaurant/:res_id/branch/:branchID/add-category',
                 element: <DishCategory_Add />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/edit-category/:categoryID',
+                path: '/restaurant/:res_id/branch/:branchID/edit-category/:categoryID',
                 element: <DishCategory_Edit />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/dish',
+                path: '/restaurant/:res_id/branch/:branchID/dish',
                 element: < ></>
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/add-dish',
+                path: '/restaurant/:res_id/branch/:branchID/add-dish',
                 element: <Dish_Add />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/edit-dish/:id',
+                path: '/restaurant/:res_id/branch/:branchID/edit-dish/:id',
                 element: <Dish_Edit />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/add-employee',
+                path: '/restaurant/:res_id/branch/:branchID/add-employee',
                 element: <AddEmployee />
             },
             {
-                path: '/restaurant/:restaurantName/branch/:branchName/ongoing-orders',
+                path: '/restaurant/:res_id/branch/:branchID/ongoing-orders',
                 element: <OngoingOrders />
             },
 

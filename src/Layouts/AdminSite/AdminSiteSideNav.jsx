@@ -8,7 +8,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
 
 
-    const { branchName, restaurantName } = useParams();
+    const { res_id, branchID } = useParams();
 
     const location = useLocation();
     if (location.pathname === '/') {
@@ -20,7 +20,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
         <>
             <aside
                 id="default-sidebar"
-                className={`shadow-md border-r-2 select-none cursor-pointer fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isChecked ? '' : '-translate-x-full sm:translate-x-0'
+                className={`shadow-md bg-white border-r-2 select-none cursor-pointer fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isChecked ? '' : '-translate-x-full sm:translate-x-0'
                     }`}
                 aria-label="Sidebar"
             >
@@ -152,14 +152,14 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     <li>
-                                        <Link to={`restaurant/${restaurantName}/branch/${branchName}/category`}
+                                        <Link to={`restaurant/${branchID}/branch/${res_id}/category`}
                                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                         >
                                             Category
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to={`restaurant/${restaurantName}/branch/${branchName}/dishes`}
+                                        <Link to={`restaurant/${branchID}/branch/${res_id}/dishes`}
                                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                         >
                                            Dishes

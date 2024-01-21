@@ -34,7 +34,7 @@ const Dish_Edit = () => {
 
 
     const axiosSecure = useAxiosSecure();
-    const { branchName, restaurantName } = useRestauarantAndBranch();
+    const { res_id, branchID } = useRestauarantAndBranch();
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['DishData', id],
@@ -43,7 +43,7 @@ const Dish_Edit = () => {
         queryFn: async () => {
 
 
-            const res = await axiosSecure.get(`/restaurant/${restaurantName}/branch/${branchName}/edit-dish/${id}`);
+            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/edit-dish/${id}`);
 
 
             const res1 = {
