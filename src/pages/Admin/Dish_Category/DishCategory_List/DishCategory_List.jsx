@@ -7,6 +7,7 @@ import useRestauarantAndBranch from "../../../../Hooks/useRestauarantAndBranch";
 import CategoryPagination from "../../../../components/Pagination/CategoryPagination";
 import Dropdown from "../../../../components/Dashboard/Dropdown/Dropdown";
 import { useState } from "react";
+import SectionTitle from "../../../../components/SectionTitle/SectionTitle";
 
 const DishCategory_List = () => {
     const axiosSecure = useAxiosSecure();
@@ -20,7 +21,6 @@ const DishCategory_List = () => {
         queryKey: ['ongoing-orders', selectedRange, selectActive, searchQuery],
         queryFn: async () => {
             const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/ongoing-orders?search=${searchQuery}&currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
-            console.log(`/restaurant/${res_id}/branch/${branchID}/ongoing-orders?search=${searchQuery}&currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`)
             return [
                 {
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -142,6 +142,7 @@ const DishCategory_List = () => {
         <div className="bg-gray-100 rounded-md">
             <div className='container mx-auto px-4 sm:px-8 select-none'>
                 <SetTitle title="Ongoing Order" />
+                <SectionTitle h1='Category'/>
                 <div className="flex items-center justify-between flex-col md:flex-row">
 
                     <div className="relative mt-5">
