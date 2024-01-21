@@ -2,10 +2,13 @@ import React from 'react';
 import useProfile from '../../../Hooks/useProfile';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import MyRestaurantCard from '../../Others/MyRestaurantCard/MyRestaurantCard';
+import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 
 
 const MyRestaurants = () => {
     const { profile, permitted } = useProfile();
+
+    const {setBranchAndRestaurantName} = useRestauarantAndBranch();
 
  
     return (
@@ -27,7 +30,7 @@ const MyRestaurants = () => {
                 <SectionTitle h1="Your Restaurants" />
                 <div className='mt-10 flex flex-wrap justify-center items-center gap-3'>
                     {
-                        permitted && Array.isArray(permitted) && permitted.map((data, _idx) => <MyRestaurantCard key={_idx} data={data} />)
+                        permitted && Array.isArray(permitted) && permitted.map((data, _idx) => <MyRestaurantCard key={_idx} data={data} setBranchAndRestaurantName={setBranchAndRestaurantName} />)
                     }
                 </div>
             </div>

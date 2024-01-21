@@ -14,6 +14,7 @@ import DishCategory_Edit from "../../pages/Admin/Dish_Category/DishCaregory_Edit
 import AddEmployee from "../../pages/Admin/Employee/AddEmployee/AddEmployee";
 import Dish_Add from "../../pages/Admin/DishManage/Dish_Add/Dish_Add";
 import Dish_Edit from "../../pages/Admin/DishManage/DishEdit/Dish_Edit";
+import EditRestaurant from "../../pages/Admin/EditRestaurant/EditRestaurant";
 
 
 
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
             {
                 path: '/my-profile',
                 element: <ViewAsMyProfile />
+            },
+            {
+                path: '/edit-restaurant/:res_id',
+                element: <EditRestaurant />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID',

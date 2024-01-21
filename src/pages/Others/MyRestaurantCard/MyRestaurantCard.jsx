@@ -1,10 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const MyRestaurantCard = ({ data }) => {
+const MyRestaurantCard = ({ data, setBranchAndRestaurantName }) => {
+    const navigate = useNavigate();
+    const handleSelect = () => {
+
+        setBranchAndRestaurantName({
+            res_id: data?.res_id,
+            branchID: data?.branchID,
+            res_img: data?.res_img,
+            res_name: data?.res_name,
+            branch_name: data?.branch_name,
+            role: data?.role,
+        })
+        
+        navigate(`/restaurant/${data?.res_id}/branch/${data?.branchID}/ongoing-orders`)
+
+    }
     return (
         <>
-            <Link to={`/restaurant/${data?.res_id}/branch/${data?.branchID}/ongoing-orders`} title={`Click to go to ${data?.res_name}'s panel`} className="block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100">
+            <div onClick={handleSelect} title={`Click to go to ${data?.res_name}'s panel`} className="block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100">
                 <img
                     alt="img"
                     src={data?.res_img}
@@ -27,9 +42,9 @@ const MyRestaurantCard = ({ data }) => {
 
                     </dl>
 
-              
+
                 </div>
-            </Link>
+            </div>
         </>
     );
 };

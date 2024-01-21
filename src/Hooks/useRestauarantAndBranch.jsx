@@ -1,9 +1,10 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
+import  { useContext } from 'react'
+import { BranchAndRestaurantNameContext } from '../Contexts/BranchAndRestaurantNameProvider/BranchAndRestaurantNameProvider';
 
 const useRestauarantAndBranch = () => {
-  const { branchID, res_id } = useParams();
-  return {res_id,branchID}
+  const data = useContext(BranchAndRestaurantNameContext);
+
+  return data;
 }
 
 export default useRestauarantAndBranch
