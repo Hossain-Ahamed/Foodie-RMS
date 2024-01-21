@@ -67,7 +67,7 @@ const DishCategory_Add = () => {
 
               {/* iamge 1  */}
               <div
-                className=" flex items-center justify-center relative  h-60"
+                className="flex items-center justify-center relative h-60"
 
               >
 
