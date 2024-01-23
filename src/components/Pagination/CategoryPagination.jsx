@@ -20,7 +20,6 @@ export default function CategoryPagination({size, currentPage, setCurrentPage}) 
             <ol className="flex justify-center gap-1 text-xs font-medium">
                 <li>
                     <button
-                        href="#"
                         className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
                         onClick={handlePrevPage}
                     >
@@ -42,9 +41,8 @@ export default function CategoryPagination({size, currentPage, setCurrentPage}) 
                 {
                     size.map(number => <li key={number}>
                         <button
-                            href="#"
-                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center
-                             leading-8 text-gray-900 ${currentPage === number ? 'border-blue-600 bg-blue-600 text-white' : '' }`}
+                            className={`block h-8 w-8 rounded border border-gray-100 text-center
+                             leading-8 text-gray-900 ${currentPage === number ? 'border-blue-600 bg-blue-600 text-white' : 'bg-white' }`}
                             onClick={() => setCurrentPage(number)}
                         >
                             {number + 1}
@@ -53,7 +51,6 @@ export default function CategoryPagination({size, currentPage, setCurrentPage}) 
                 }
                 <li>
                     <button
-                        href="#"
                         className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
                         onClick={handleNextPage}
                     >
