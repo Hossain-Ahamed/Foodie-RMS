@@ -15,6 +15,7 @@ import AddEmployee from "../../pages/Admin/Employee/AddEmployee/AddEmployee";
 import Dish_Add from "../../pages/Admin/DishManage/Dish_Add/Dish_Add";
 import Dish_Edit from "../../pages/Admin/DishManage/DishEdit/Dish_Edit";
 import EditRestaurant from "../../pages/Admin/EditRestaurant/EditRestaurant";
+import AddBranch from "../../pages/Admin/EditRestaurant/AddBranch/AddBranch";
 
 
 
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
             {
                 path: '/edit-restaurant/:res_id',
                 element: <EditRestaurant />
+            },
+            {
+                path: '/edit-restaurant/:res_id/add-new-branch',
+                element: <AddBranch />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID',

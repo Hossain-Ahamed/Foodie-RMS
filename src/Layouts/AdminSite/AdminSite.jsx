@@ -4,8 +4,9 @@ import { Link, Navigate, Outlet } from 'react-router-dom';
 import useProfile from '../../Hooks/useProfile';
 import LoadingPage from '../../pages/Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../pages/Shared/ErrorPage/ErrorPage';
-import AdminSiteSideNav from './AdminSiteSideNav';
+
 import BranchAndRestaurantNameProvider, { BranchAndRestaurantNameContext } from '../../Contexts/BranchAndRestaurantNameProvider/BranchAndRestaurantNameProvider';
+import AdminSiteSideNav from './SideNav/AdminSiteSideNav';
 
 const AdminSite = () => {
     const [isChecked, setChecked] = useState(false);
