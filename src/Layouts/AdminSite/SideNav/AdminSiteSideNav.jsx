@@ -207,7 +207,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         >
 
 
-                                            <span className="text-sm font-medium">Graph<span class="text-[9px]">(All)</span></span>
+                                            <span className="text-sm font-medium">Graph<span className="text-[9px]">(All)</span></span>
                                         </NavLink>
                                     </li>
                                     <li>
@@ -222,7 +222,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         >
 
 
-                                            <span className="text-sm font-medium">Graph<span class="text-[9px]">(selected branch)</span> </span>
+                                            <span className="text-sm font-medium">Graph<span className="text-[9px]">(selected branch)</span> </span>
                                         </NavLink>
                                     </li>
 
@@ -540,7 +540,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     className="group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                 >
                                     <div className="flex items-center gap-2">
-                                        <svg class="flex-shrink-0 w-4 h-4 text-gray-500 transition duration-75  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 17 20">
+                                        <svg className="flex-shrink-0 w-4 h-4 text-gray-500 transition duration-75  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 17 20">
                                             <path d="M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z" />
                                         </svg>
 
@@ -630,7 +630,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         <div className="flex items-center gap-2">
 
                                             <svg className="w-4 h-4 mb-1 text-gray-500  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2" />
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2" />
                                             </svg>
                                             <span className="text-sm font-medium">My Account </span>
                                         </div>
