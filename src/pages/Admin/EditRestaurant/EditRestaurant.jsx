@@ -446,7 +446,7 @@ const EditRestaurant = () => {
                             <div className='flex flex-wrap justify-start items-center gap-2'>
                                 <button
                                     type="button"
-                                    onClick={() => navigate(`/restaurant/${res_id}/add-new-branch`)}
+                                    onClick={() => navigate(`add-new-branch`)}
                                     className="flex-shrink-0 px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button"
                                 >
                                     Add New Branch

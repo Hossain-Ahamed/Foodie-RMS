@@ -12,20 +12,22 @@ import { validateSalesTax } from '../../../../assets/scripts/Utility'
 import { MdDelete } from "react-icons/md";
 import { CiSquarePlus } from "react-icons/ci";
 const Dish_Add = () => {
-  const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({ defaultValues: {
-    active: true,
-  },});
+  const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({
+    defaultValues: {
+      active: true,
+    },
+  });
 
-  const { fields : optionFields, append : optionAppend, remove : optionRemove,  } = useFieldArray({
+  const { fields: optionFields, append: optionAppend, remove: optionRemove, } = useFieldArray({
     control,
     name: 'options',
   });
-  const { fields : addOnFields, append : addOnAppend, remove : addOnRemove,  } = useFieldArray({
+  const { fields: addOnFields, append: addOnAppend, remove: addOnRemove, } = useFieldArray({
     control,
     name: 'addOn',
   });
 
- 
+
   const [descriptionContent, setDescriptionContent] = useState("");
 
   const [selectedImage0, setSelectedImage0] = useState(null);
@@ -129,7 +131,7 @@ const Dish_Add = () => {
                 <div role="alert" className="rounded-xl border border-gray-300 bg-white p-4">
                   <div className="flex items-start gap-4">
                     <span className="text-green-600">
-                      <Checkbox  className='p-4' onValueChange={(e)=>{setValue('active',e)}} defaultSelected></Checkbox>
+                      <Checkbox className='p-4' onValueChange={(e) => { setValue('active', e) }} defaultSelected></Checkbox>
                     </span>
 
                     <div className="flex-1">
@@ -145,8 +147,8 @@ const Dish_Add = () => {
             </div>
             <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
               {/* price */}
-              <div className="w-full  p-3">
-                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Price</p>
+              <div className="w-full md:w-1/2 p-3 pb-0">
+                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Regular Price</p>
                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="780"
                   {...register("price", {
                     required: "*price  is Required",
@@ -158,6 +160,23 @@ const Dish_Add = () => {
                 {errors.price?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
 
               </div>
+              <div className="w-full md:w-1/2 p-3">
+                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Offer Price</p>
+                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="780"
+                  {...register("offerPrice", {
+                    required: "*offerPrice  is Required",
+                    validate: {
+                      isNumber: (value) => !isNaN(value)
+                    },
+                  })} />
+                {errors.offerPrice?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.offerPrice?.message}</p>)}
+                {errors.offerPrice?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
+              </div>
+              <div className="w-full p-3 pt-0">
+
+              NB: Offer and regular price must be same if no offer are given
+              </div>
+
 
               {/* preparation_cost */}
               <div className="w-full  p-3">
@@ -276,7 +295,7 @@ const Dish_Add = () => {
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                    
+
                       {...register(`options[${index}].price`, { required: 'price is required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                       type="number"
@@ -291,7 +310,7 @@ const Dish_Add = () => {
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                
+
                       {...register(`options[${index}].preparation_cost`, { required: 'preparation cost required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
@@ -360,11 +379,11 @@ const Dish_Add = () => {
                       </p>
                     )}
                   </div>
-            
+
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                    
+
                       {...register(`addOn[${index}].price`, { required: 'price is required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                       type="number"
@@ -379,7 +398,7 @@ const Dish_Add = () => {
                   <div className="w-full md:w-1/2 p-1">
 
                     <input
-                
+
                       {...register(`addOn[${index}].preparation_cost`, { required: 'preparation cost required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"

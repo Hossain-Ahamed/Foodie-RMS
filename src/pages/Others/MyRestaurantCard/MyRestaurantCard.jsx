@@ -19,7 +19,7 @@ const MyRestaurantCard = ({ data, setBranchAndRestaurantName }) => {
     }
     return (
         <>
-            <div onClick={handleSelect} title={`Click to go to ${data?.res_name}'s panel`} className="block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100">
+            <div onClick={handleSelect} title={`Click to go to ${data?.res_name}'s panel`} className="block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100 cursor-pointer">
                 <img
                     alt="img"
                     src={data?.res_img}
