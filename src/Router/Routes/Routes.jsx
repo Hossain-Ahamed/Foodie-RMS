@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
                 element: <CouponList />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/coupon-list',
+                path: '/restaurant/:res_id/branch/:branchID/add-coupon',
                 element: <AddCoupon />
             },
             {

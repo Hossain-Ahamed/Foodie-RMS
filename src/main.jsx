@@ -10,7 +10,11 @@ import { RouterProvider } from 'react-router-dom'
 import { router } from './Router/Routes/Routes.jsx'
 import ToasterProvider from './components/Toastprovider/ToastProvider.jsx'
 import { NextUIProvider } from '@nextui-org/react'
+
 import 'react-tooltip/dist/react-tooltip.css'
+
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 // Create a client
 const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
