@@ -116,7 +116,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         >
 
 
-                                            <span className="text-sm font-medium">Manage Shifts</span>
+                                            <span className="text-sm font-medium">Business Hours</span>
                                         </NavLink>
 
                                     </li>
@@ -148,7 +148,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         >
 
 
-                                            <span className="text-sm font-medium">Manage Payment</span>
+                                            <span className="text-sm font-medium">Bills & Payment</span>
                                         </NavLink>
 
                                     </li>
@@ -175,7 +175,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                                 d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
                                             />
                                         </svg> */}
-                                        <BsGraphUpArrow className='h-5 w-5 opacity-7' />
+                                        <BsGraphUpArrow className="h-5 w-5 opacity-75" viewBox="0 0 24 24"/>
 
                                         <span className="text-sm font-medium"> Statistics </span>
                                     </div>
@@ -183,7 +183,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5"
+                                            className="h-4 w-4"
                                             viewBox="0 0 20 20"
                                             fill="currentColor"
                                         >
@@ -536,6 +536,8 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                 </ul>
                             </details>
                         </li>
+
+                        {/* offers coupon member */}
                         <li>
                             <details className="group [&_summary::-webkit-details-marker]:hidden">
                                 <summary
@@ -579,7 +581,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/offers`}
+                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/coupon-list`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
