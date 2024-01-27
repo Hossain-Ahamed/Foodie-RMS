@@ -18,6 +18,7 @@ import EditRestaurant from "../../pages/Admin/EditRestaurant/EditRestaurant";
 import AddBranch from "../../pages/Admin/EditRestaurant/AddBranch/AddBranch";
 import TimeTable from "../../pages/Admin/ManageRestaurant/TimeTable/TimeTable";
 import TableManagement from "../../pages/Admin/ManageRestaurant/TableManagement/TableManagement";
+import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
 
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:res_id/branch/:branchID/ongoing-orders',
                 element: <OngoingOrders />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/employee-list',
+                element: <EmployeeList />
             },
 
 
