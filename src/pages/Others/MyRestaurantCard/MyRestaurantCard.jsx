@@ -19,7 +19,7 @@ const MyRestaurantCard = ({ data, setBranchAndRestaurantName }) => {
     }
     return (
         <>
-            <div onClick={handleSelect} title={`Click to go to ${data?.res_name}'s panel`} className="block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100 cursor-pointer">
+            <div onClick={handleSelect} title={`Click to go to ${data?.res_name}'s panel`} className="relative block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100 cursor-pointer">
                 <img
                     alt="img"
                     src={data?.res_img}
@@ -39,7 +39,7 @@ const MyRestaurantCard = ({ data, setBranchAndRestaurantName }) => {
                             <dd className="text-sm text-gray-500">{data?.branch_name} <span className='text-[10px] text-gray-400'>&#40;{data?.branchID}&#41;</span></dd>
                         </div>
 
-
+                        <span className="absolute bottom-7 right-2 inline-block py-1 px-2 mr-2 text-xs bg-blue-50 text-blue-500 rounded" data-config-id="role">{data?.role}</span>
                     </dl>
 
 

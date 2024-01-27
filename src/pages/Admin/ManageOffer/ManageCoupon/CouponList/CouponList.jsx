@@ -234,7 +234,7 @@ const CouponList = () => {
         return <ErrorPage />
     }
     return (
-        <section aria-label='coupons' className='py-3'>
+        <section aria-label='coupons' className='py-3 max-w-7xl mx-auto'>
 
             <SetTitle title="Coupons" />
             <div className='flex  gap-3'>
@@ -248,7 +248,7 @@ const CouponList = () => {
 
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                <table className="table-wrp w-full text-sm text-left rtl:text-right text-gray-500 ">
+                <table className=" w-full text-sm text-left rtl:text-right text-gray-500 shaodow shadow-md">
                     <thead className="text-sm text-gray-700  bg-gray-50 ">
                         <tr>
 

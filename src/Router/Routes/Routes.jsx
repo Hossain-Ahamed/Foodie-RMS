@@ -21,6 +21,7 @@ import TableManagement from "../../pages/Admin/ManageRestaurant/TableManagement/
 import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
+import ManagePaymentSystem from "../../pages/Admin/ManageRestaurant/ManagePaymentSystem/ManagePaymentSystem";
 
 
 
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:res_id/branch/:branchID/manage-tables',
                 element: <TableManagement />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/manage-payment-system',
+                element: <ManagePaymentSystem />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/coupon-list',
