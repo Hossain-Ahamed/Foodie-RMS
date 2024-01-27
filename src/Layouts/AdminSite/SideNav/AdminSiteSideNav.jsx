@@ -653,7 +653,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </span>
                                     </summary>
 
-                                    <ul className="mt-2 space-y-1 px-4">
+                                    <ul className="mt-2 space-y-1 px-4 border-l">
 
                                         <li>
                                             <NavLink to='my-profile'
