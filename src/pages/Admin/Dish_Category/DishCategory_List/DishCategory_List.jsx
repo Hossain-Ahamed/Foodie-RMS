@@ -142,7 +142,7 @@ const DishCategory_List = () => {
             <div className='container mx-auto px-4 sm:px-8 select-none'>
                 <SetTitle title="Ongoing Order" />
                 <SectionTitle h1='Category'/>
-                <div className="flex items-center justify-between flex-col md:flex-row">
+                <div className="flex items-center justify-between flex-col md:flex-row md:mt-5 lg:mt-0">
 
                     <div className="relative mt-5">
 
@@ -205,7 +205,7 @@ const DishCategory_List = () => {
                             </select>
                         </div>
                         <Link
-                            className="inline-block mt-5 rounded border border-indigo-600 md:px-12 md:py-3 px-10 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
+                            className="inline-block mt-5 rounded border border-indigo-600 px-8 py-2.5 text-sm font-medium text-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
                             to={`/restaurant/${res_id}/branch/${branchID}/add-category`}
                         >
                             Add Category
