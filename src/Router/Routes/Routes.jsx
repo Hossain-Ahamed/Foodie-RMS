@@ -21,6 +21,7 @@ import TableManagement from "../../pages/Admin/ManageRestaurant/TableManagement/
 import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
+import Test from "../../pages/Shared/VideoPlayer/Test";
 
 
 

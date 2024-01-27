@@ -93,7 +93,7 @@ const TableRow = ({ order }) => {
         <tr>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <div className='flex items-center'>
-                    <div className='flex items-center gap-5'>
+                    <div className='flex items-center gap-5 flex-col md:flex-row'>
                         <div className=''>
                             <img
                                 alt='profile'
