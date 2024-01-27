@@ -19,6 +19,8 @@ import AddBranch from "../../pages/Admin/EditRestaurant/AddBranch/AddBranch";
 import TimeTable from "../../pages/Admin/ManageRestaurant/TimeTable/TimeTable";
 import TableManagement from "../../pages/Admin/ManageRestaurant/TableManagement/TableManagement";
 import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
+import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
+import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
 
 
 
@@ -55,6 +57,14 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:res_id/branch/:branchID/manage-tables',
                 element: <TableManagement />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/coupon-list',
+                element: <CouponList />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/coupon-list',
+                element: <AddCoupon />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/category',
