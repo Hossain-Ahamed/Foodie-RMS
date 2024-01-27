@@ -242,7 +242,7 @@ const CouponList = () => {
                     <SectionTitle h1="All Available Coupons" />
                 </div>
                 <div>
-                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-coupon`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Table<IoAddOutline className='text-white' /></Link>
+                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-coupon`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Coupon<IoAddOutline className='text-white' /></Link>
 
                 </div>
 
