@@ -11,10 +11,13 @@ import QRCode from 'qrcode.react';
 import { Tooltip } from 'react-tooltip'
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
-
-
+import toast from 'react-hot-toast'
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { IoAddOutline } from "react-icons/io5";
 const TableManagement = () => {
-    const { handleSubmit, control, setValue } = useForm();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    const { handleSubmit, control, setValue, register, formState: { errors }, reset } = useForm();
     const axiosSecure = useAxiosSecure();
     const { res_id, branchID, res_name } = useRestauarantAndBranch();
 
@@ -27,8 +30,8 @@ const TableManagement = () => {
             queryFn: async () => {
                 // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/tables`);
                 return [
-                    { number: 1, capacity: 4, location: 'Window', qrCodeData: 'https://www.foodie.com/restaurant/743ndsa8t43/branch/3485jdsfu?table=1' },
-                    { number: 2, capacity: 6, location: 'Center', qrCodeData: 'https://www.foodie.com/restaurant/743ndsa8t43/branch/3485jdsfu?table=2' },
+                    { number: "1", capacity: "4", location: 'Window', qrCodeData: 'https://www.foodie.com/restaurant/743ndsa8t43/branch/3485jdsfu?table=1' },
+                    { number: "2", capacity: "6", location: 'Center', qrCodeData: 'https://www.foodie.com/restaurant/743ndsa8t43/branch/3485jdsfu?table=2' },
                     // Add more tables as needed
                 ];
             },
@@ -93,37 +96,7 @@ const TableManagement = () => {
         }
     );
 
-    // Function to handle form submission
-    const onSubmit = async (formData) => {
-        const existingTableIndex = existingTableData.findIndex((table) => table.id === formData.id);
 
-        if (existingTableIndex !== -1) {
-            // Table with the same ID exists, update its data
-            const updatedData = [...existingTableData];
-            updatedData[existingTableIndex] = formData;
-            await updateTableMutation.mutateAsync(updatedData);
-        } else {
-            // Table with the given ID doesn't exist, add a new table
-            await addTableMutation.mutateAsync([...existingTableData, formData]);
-        }
-    };
-
-    // Function to handle table deletion
-    const onDeleteTable = async (tableNo) => {
-        const confirmDelete = await Swal.fire({
-            title: 'Are you sure?',
-            text: 'This action cannot be undone.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!',
-        });
-
-        if (confirmDelete.isConfirmed) {
-            await deleteTableMutation.mutateAsync(tableNo);
-        }
-    };
 
     // download QR code
     const downloadQRCode = (id, number) => {
@@ -182,6 +155,52 @@ const TableManagement = () => {
 
 
 
+    // Function to handle table deletion
+    const onDeleteTable = async (tableNo) => {
+        const confirmDelete = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+        });
+
+        if (confirmDelete.isConfirmed) {
+            await deleteTableMutation.mutateAsync(tableNo);
+        }
+    };
+
+    // Function to handle form submission
+    const onSubmit = async (formData) => {
+
+        const existingTableIndex = existingTableData.findIndex((table) => table?.number.toString() === formData?.number);
+
+
+        if (existingTableIndex !== -1) {
+            // Table with the same ID exists, update its data
+            // const updatedData = [...existingTableData];
+            // updatedData[existingTableIndex] = formData;
+            // await updateTableMutation.mutateAsync(updatedData);
+
+            Swal.fire({
+                icon: 'error',
+                text: 'Table number exists'
+            })
+            reset();
+            return;
+
+        } else {
+            // Table with the given ID doesn't exist, add a new table
+            await addTableMutation.mutateAsync([...existingTableData, formData]);
+            reset();
+            onOpenChange(); //close the modal after upload
+            toast.success('saved successfully')
+        }
+
+    };
+
 
     if (existingTableError) {
         return <ErrorPage />;
@@ -193,74 +212,97 @@ const TableManagement = () => {
 
     return (
         <div className="container mx-auto mt-8">
-            <SetTitle title="Table"/>
-            <SectionTitle h1={"Manage Tables"}/>
-            {/* <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="id">
-                        Table No
-                    </label>
-                    <Controller
-                        name="id"
-                        control={control}
-                        render={({ field }) => (
-                            <input
-                                {...field}
-                                type="text"
-                                className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                                readOnly={!existingTableLoading && existingTableData.length > 0} // Make ID readOnly if there are existing tables
-                            />
-                        )}
-                    />
+            <SetTitle title="Table" />
+            <SectionTitle h1={"Manage Tables"} />
+
+            {/* table add  */}
+            <>
+                <div className='w-full flex justify-end pr-6'>
+
+                    <Button color='success' variant='solid' onPress={onOpen} endContent={<IoAddOutline className='text-white' />}><span className='text-white'>Add Table</span></Button>
                 </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="number">
-                        Table Number
-                    </label>
-                    <Controller
-                        name="number"
-                        control={control}
-                        render={({ field }) => (
-                            <input
-                                {...field}
-                                type="number"
-                                className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                            />
-                        )}
-                    />
-                </div>
+                <Modal isOpen={isOpen} onOpenChange={onOpenChange}
+                    radius="lg"
+                    classNames={{
+                        body: "py-6 bg-slate-100", // Change to light gray background
+                        backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                        base: "border-[#292f46] bg-white text-[#19172c] ",
+                        header: "border-b-[1px] border-slate-200 bg-slate-100", // Change to light gray background
+                        footer: "border-t-[1px] border-[#292f46] bg-gray-200", // Change to light gray background
+                        closeButton: "bg-red-50 hover:bg-red-100 text-red-300 active:bg-red-100 rounded-md",
+                    }}
+                >
+                    <ModalContent>
+                        {(onClose) => (
+                            <>
+                                <ModalHeader className="flex flex-col gap-1">Table Data Form</ModalHeader>
+                                <ModalBody>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="capacity">
-                        Table Capacity
-                    </label>
-                    <Controller
-                        name="capacity"
-                        control={control}
-                        render={({ field }) => (
-                            <input
-                                {...field}
-                                type="number"
-                                className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                            />
-                        )}
-                    />
-                </div>
+                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                        <div className="w-full  p-3">
+                                            <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Table No</p>
+                                            <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="2"
+                                                {...register("number", {
+                                                    required: "*number  is Required",
+                                                    validate: {
+                                                        isNumber: (value) => !isNaN(value)
+                                                    },
+                                                })} />
+                                            {errors.number?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.number?.message}</p>)}
+                                            {errors.number?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
+                                        </div>
 
-                <div>
-                    <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Save Table
-                    </button>
-                </div>
-            </form> */}
+                                        {/* capacity  */}
+                                        <div className="w-full  p-3">
+                                            <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Table Capacity</p>
+                                            <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="8"
+                                                {...register("capacity", {
+                                                    required: "*capacity  is Required",
+                                                    validate: {
+                                                        isNumber: (value) => !isNaN(value)
+                                                    },
+                                                })} />
+                                            {errors.capacity?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.capacity?.message}</p>)}
+                                            {errors.capacity?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
+                                        </div>
+
+
+                                        <div className="flex flex-wrap pb-3">
+                                            <div className="w-full  p-3">
+                                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Table location</p>
+                                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="Front, row-2 col-1"
+                                                    {...register("location", {
+                                                        required: "*location  is Required",
+                                                    })} />
+                                                {errors.location?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.location?.message}</p>)}
+
+                                            </div>
+                                        </div>
+
+                                        <Button color="success" type='submit'>
+                                            <span className='text-white'>Save</span>
+                                        </Button>
+
+                                    </form>
+                                </ModalBody>
+
+
+
+
+                            </>
+                        )}
+                    </ModalContent>
+                </Modal>
+
+            </>
+
+
+
 
             {/* Display existing table data */}
             <div className="mt-8">
-               
+
                 <div className='flex flex-wrap gap-3'>
                     {existingTableData.map((table, _idx) => (
                         <div key={_idx} className="relative max-w-80 flex flex-col items-center rounded-lg p-4 border-slate-950 shadow-sm shadow-indigo-300">
