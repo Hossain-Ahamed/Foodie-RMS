@@ -5,7 +5,6 @@ import DishCategoryRow from "./DishCategoryRow";
 import { Link } from "react-router-dom";
 import useRestauarantAndBranch from "../../../../Hooks/useRestauarantAndBranch";
 import CategoryPagination from "../../../../components/Pagination/CategoryPagination";
-import Dropdown from "../../../../components/Dashboard/Dropdown/Dropdown";
 import { useState } from "react";
 import SectionTitle from "../../../../components/SectionTitle/SectionTitle";
 
@@ -176,7 +175,6 @@ const DishCategory_List = () => {
                             </button>
                         </span>
                     </div>
-                    {/* dropdown for Pagination range */}
                     <div className="flex items-center flex-col-reverse md:flex-row gap-6">
                         <div>
                             <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900"> Select range </label>

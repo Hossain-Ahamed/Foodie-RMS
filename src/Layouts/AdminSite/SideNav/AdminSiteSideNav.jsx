@@ -4,6 +4,7 @@ import useAuthProvider from '../../../Hooks/useAuthProvider';
 import { PiBowlFoodBold } from "react-icons/pi";
 import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 import { IoFastFoodOutline } from "react-icons/io5";
+import { BsGraphUpArrow } from "react-icons/bs";
 const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
     const { provideSignOut } = useAuthProvider();
@@ -160,7 +161,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     className="group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                 >
                                     <div className="flex items-center gap-2">
-                                        <svg
+                                        {/* <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-5 w-5 opacity-75"
                                             fill="none"
@@ -173,7 +174,8 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                                 strokeLinejoin="round"
                                                 d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
                                             />
-                                        </svg>
+                                        </svg> */}
+                                        <BsGraphUpArrow className='h-5 w-5 opacity-7' />
 
                                         <span className="text-sm font-medium"> Statistics </span>
                                     </div>
@@ -484,7 +486,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     className="group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                 >
                                     <div className="flex items-center gap-2">
-                                        <PiBowlFoodBold />
+                                        <PiBowlFoodBold className='h-5 w-5 opacity-75'/>
 
                                         <span className="text-sm font-medium"> Menu </span>
                                     </div>
@@ -540,7 +542,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     className="group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                                 >
                                     <div className="flex items-center gap-2">
-                                        <svg className="flex-shrink-0 w-4 h-4 text-gray-500 transition duration-75  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 17 20">
+                                        <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 17 20">
                                             <path d="M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z" />
                                         </svg>
 
@@ -606,7 +608,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="flex-shrink-0 w-4 h-4 mr-2 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                                        className="flex-shrink-0 w-5 h-5 mr-2 text-gray-500 transition duration-75 group-hover:text-gray-900"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
