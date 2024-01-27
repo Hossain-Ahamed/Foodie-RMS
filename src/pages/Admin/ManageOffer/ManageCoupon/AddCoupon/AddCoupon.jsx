@@ -78,7 +78,7 @@ const AddCoupon = () => {
 
     // Function to handle form submission
     const onSubmit = async (data) => {
-console.log(data)
+        console.log(data)
 
     };
 

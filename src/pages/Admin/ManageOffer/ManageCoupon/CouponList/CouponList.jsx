@@ -234,7 +234,7 @@ const CouponList = () => {
         return <ErrorPage />
     }
     return (
-        <section aria-label='coupons' className='py-3'>
+        <section aria-label='coupons' className='py-3 max-w-7xl mx-auto'>
 
             <SetTitle title="Coupons" />
             <div className='flex  gap-3'>
@@ -242,13 +242,13 @@ const CouponList = () => {
                     <SectionTitle h1="All Available Coupons" />
                 </div>
                 <div>
-                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-coupon`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Table<IoAddOutline className='text-white' /></Link>
+                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-coupon`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Coupon<IoAddOutline className='text-white' /></Link>
 
                 </div>
 
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                <table className="table-wrp w-full text-sm text-left rtl:text-right text-gray-500 ">
+                <table className=" w-full text-sm text-left rtl:text-right text-gray-500 shaodow shadow-md">
                     <thead className="text-sm text-gray-700  bg-gray-50 ">
                         <tr>
 
