@@ -3,6 +3,7 @@ import { LuEye } from "react-icons/lu";
 import { BiEditAlt } from "react-icons/bi";
 import { TbMoneybag } from "react-icons/tb";
 import Swal from "sweetalert2";
+import { FaTrashAlt } from "react-icons/fa";
 const statusColorMap = {
     active: "success",
 
@@ -36,7 +37,6 @@ const statusColorMap = {
 };
 
 const TableRow = ({ order }) => {
-
     let statusStyle, paymentStatus, icon;
     switch (order.status) {
         case 'Pending':
@@ -131,11 +131,11 @@ const TableRow = ({ order }) => {
                 <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{order?.payment_status}</p></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <span title="View Details" className="inline-flex ml-3 cursor-pointer text-blue-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><LuEye size={25} /></span>
-                <span title="Confirm Order" className="inline-flex ml-3 cursor-pointer text-emerald-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdCheck size={25} /></span>
-                <span title="Edit Order" className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><BiEditAlt size={25} /></span>
-                <span title="Refund Order" className="inline-flex ml-3 cursor-pointer text-amber-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><TbMoneybag size={25} /></span>
-                <span title="Delete Order" onClick={() => handleDeleteOrder(order.orderID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span>
+                <span title="View Details" className="inline-flex ml-3 cursor-pointer text-blue-500"><LuEye size={25} /></span>
+                <span title="Confirm Order" className="inline-flex ml-3 cursor-pointer text-emerald-500"><MdCheck size={25} /></span>
+                <span title="Edit Order" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></span>
+                <span title="Refund Order" className="inline-flex ml-3 cursor-pointer text-amber-500"><TbMoneybag size={25} /></span>
+                <span title="Delete category" onClick={() => handleDeleteOrder(order.orderID)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
             </td>
         </tr>
     )
