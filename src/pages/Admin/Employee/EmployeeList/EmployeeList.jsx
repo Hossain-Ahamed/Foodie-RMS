@@ -6,17 +6,19 @@ import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import EmployeeListRow from './EmployeeListRow';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
+import { Link } from 'react-router-dom';
+import { IoAddOutline } from 'react-icons/io5';
 // "name", "role", "status", "actions", 'id'
 const EmployeeList = () => {
     const axiosSecure = useAxiosSecure();
-    const { branchID, res_id } = useRestauarantAndBranch();
-    const {refetch, data: employees = [], isLoading, error} = useQuery({
+    const { branchID, res_id }= useRestauarantAndBranch();
+    const { refetch, data: employees = [], isLoading, error } = useQuery({
         queryKey: ['employee-list'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/employee-list`);
+            const res = await axiosSecure.get(`/restaurant/${res_id}/"b"ranch/${branchID}/employee-list`);
             return [
                 {
-                    _id: 1,
+                    _id: "1",
                     firstName: "Farhan Hasan",
                     lastName: "Nilok",
                     email: "nilok@gmail.com",
@@ -24,6 +26,7 @@ const EmployeeList = () => {
                     phone: "018399473783",
                     gender: "Male",
                     nid: "8349490384893",
+                    uid : "4385884935",
                     role: "Admin",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -31,10 +34,10 @@ const EmployeeList = () => {
                     city: 'Narayanganj',
                     stateProvince: 'Dhaka',
                     postalCode: '435',
-                    country: "Bangladesh",  
+                    country: "Bangladesh",
                 },
                 {
-                    _id: 2,
+                    _id: "2",
                     firstName: "Fattan Prodan",
                     lastName: "Pathul",
                     email: "nilok@gmail.com",
@@ -42,6 +45,7 @@ const EmployeeList = () => {
                     phone: "018399473783",
                     gender: "Female",
                     nid: "8349490384893",
+                    uid : "4385884935",
                     role: "Customer Service",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -52,14 +56,15 @@ const EmployeeList = () => {
                     country: "Bangladesh",
                 },
                 {
-                    _id: 3,
+                    _id: "3",
                     firstName: "Hossain Ahamed",
                     lastName: "Malu",
                     email: "malu@gmail.com",
-                    branchName: "Fouco",                    
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Shemale",
                     nid: "8349490384893",
+                    uid : "4385884935",
                     role: "Kitchen Staff",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -70,7 +75,7 @@ const EmployeeList = () => {
                     country: "Bangladesh",
                 },
                 {
-                    _id: 4,
+                    _id: "4",
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
@@ -78,6 +83,7 @@ const EmployeeList = () => {
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
+                    uid : "4385884935",
                     role: "Kitchen Staff",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -88,7 +94,7 @@ const EmployeeList = () => {
                     country: "Bangladesh",
                 },
                 {
-                    _id: 5,
+                    _id: "5",
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
@@ -96,6 +102,7 @@ const EmployeeList = () => {
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
+                    uid : "4385884935",
                     role: "Others",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -106,7 +113,7 @@ const EmployeeList = () => {
                     country: "Bangladesh",
                 },
                 {
-                    _id: 6,
+                    _id: "6",
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
@@ -114,6 +121,7 @@ const EmployeeList = () => {
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
+                    uid : "4385884935",
                     role: "Admin",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -127,9 +135,19 @@ const EmployeeList = () => {
         }
     })
     return (
-        <div className='max-w-[1600px] mx-auto'>
-            <SetTitle title="Employee List"/>
-            <SectionTitle h1="Employee List"/>
+        <section className='max-w-[1600px] mx-auto mt-5'>
+            <SetTitle title="Employee List" />
+
+            <div className='flex  gap-3 '>
+                <div className='w-full '>
+                    <SectionTitle h1="Employee List" />
+                </div>
+                <div>
+                    <Link to={`/restaurant/${res_id}/"b"ranch/${branchID}/add-employee`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Employee<IoAddOutline className='text-white' /></Link>
+
+                </div>
+
+            </div>
             <div className='py-8'>
                 <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                     <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
@@ -140,7 +158,7 @@ const EmployeeList = () => {
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
                                     >
-                                        Employee 
+                                        Employee
                                     </th>
                                     <th
                                         scope='col'
@@ -154,8 +172,29 @@ const EmployeeList = () => {
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
                                     >
-                                        Phone 
+                                        Phone
                                     </th>
+
+                                    {/* <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
+                                    >
+                                        Category Name
+                                    </th> */}
+
+
+                                    {/* <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                    >
+                                        Priority
+                                    </th> */}
+                                    {/* <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                    >
+                                        To
+                                    </th> */}
                                     <th
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
@@ -170,13 +209,13 @@ const EmployeeList = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>{employees && employees.map(employee => <EmployeeListRow key={employee._id} employee={employee}/>)}</tbody>
+                            <tbody>{employees && employees.map(employee => <EmployeeListRow key={employee._id} employee={employee} />)}</tbody>
                         </table>
                     </div>
                 </div>
-                
+
             </div>
-        </div>
+        </section>
     );
 };
 

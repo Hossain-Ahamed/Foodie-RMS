@@ -5,11 +5,12 @@ import Swal from 'sweetalert2'
 import ScrollToTop from '../../../../components/ScrollToTop/ScrollToTop';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
-import { getCountries } from '../../../../assets/scripts/Utility';
+import { getAllDistricts, getCountries, getDivisions, getProvinceOfSelectedCity } from '../../../../assets/scripts/Utility';
 import { FormProvider, useForm } from 'react-hook-form';
 const AddBranch = () => {
     const countries = getCountries();
-
+    const AllDistricts = getAllDistricts();
+    const AllDivisions = getDivisions();
     const {
         register,
         handleSubmit,
@@ -35,35 +36,61 @@ const AddBranch = () => {
 
     const generateBranchID = () => {
         const branch = getValues();
-    
+
         // Extract values from the branch object
-        const { streetAddress, city, stateProvince, country, postalCode } = branch;
-    
+        const { streetAddress, city, stateProvince, country, postalCode, branch_name } = branch;
+
         // Check if any of the required fields are missing
         if (!streetAddress || !city || !stateProvince || !country || !postalCode) {
+            let message = "";
+            let fieldName = ""
+            if (!streetAddress) {
+                message = "Street Address Missing"
+                fieldName = "Street Address"
+            } else if (!city) {
+                message = "City Name Missing"
+                fieldName = "Street Address"
+            } else if (!stateProvince) {
+                message = "State / Province Name Missing"
+                fieldName = "State / Province Address"
+            } else if (!country) {
+                message = "Country Name Missing"
+                fieldName = "Country Address"
+            } else if (!postalCode) {
+                message = "Postal Code Missing"
+                fieldName = "Postal Code"
+            
+            } else if (!branch_name) {
+                message = "Branch name Missing"
+                fieldName = "Branch Name"
+            } else {
+                message = "Necessary Data missing"
+                fieldName = "Necessary Data"
+            }
             Swal.fire({
-                icon: 'error',
-                title: 'Necessary Data missing',
-                text: 'Insert all the Information',
+                icon: "error",
+                title: message,
+                text: "Insert " + fieldName,
+
             });
             return;
         }
-    
+
         // Combine values with hyphens
-        const combinedInfo = `${streetAddress}-${city}-${stateProvince}-${country}-${postalCode}`;
-    
+        const combinedInfo = `${branch_name}-${city}-${postalCode}`.replace(/\s/g, '-');
+
         // Append Date.now() to make it unique
-        const uniqueBranchID = `${combinedInfo}-${Date.now()}`;
-        
+        const uniqueBranchID = `${combinedInfo}-${Date.now().toString().slice(-6)}`;
+
         // Set the value in the form
         setValue('branchID', uniqueBranchID);
     };
-    
- 
-     
-     
-       
-  
+
+
+
+
+
+
 
     return (
         <section className='mt-10' aria-label='new banch add form'>
@@ -97,14 +124,26 @@ const AddBranch = () => {
                 {/* City/Town */}
                 <div className="w-full md:w-1/2 p-3">
                     <label htmlFor={`city`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                        City/Town
+                        City / Town
                     </label>
-                    <input
-                        {...register(`city`, { required: 'City/Town is required' })}
-                        className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                        type="text"
-                        placeholder="Enter your city/town"
-                    />
+                    <select
+                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+                        {...register('city', { required: 'City/Town is required' })}
+                        defaultValue=""
+                        onChange={(e) => {setValue('city',e.target.value); setValue(`stateProvince`, getProvinceOfSelectedCity(e.target.value)) }}
+
+                    >
+                        <option value="" disabled>
+                            Select City / Town
+                        </option>
+
+                        {AllDistricts.map((item, _idx) => (
+                            <option key={item?.name} value={item?.name}>
+                                {item?.name}
+                            </option>
+                        ))}
+                    </select>
+
                     {errors.city && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                             {errors?.city.message}
@@ -117,12 +156,22 @@ const AddBranch = () => {
                     <label htmlFor={`stateProvince`} className="mb-1.5 font-medium text-base text-coolGray-800">
                         State / Province
                     </label>
-                    <input
+                    <select
+                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
                         {...register(`stateProvince`, { required: 'State / Province is required' })}
-                        className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                        type="text"
-                        placeholder="Enter your state/province"
-                    />
+                        defaultValue=""
+                    >
+                        <option value="" disabled>
+                            Select Province / State
+                        </option>
+
+                        {AllDivisions.map((item, _idx) => (
+                            <option key={item?.name} value={item?.name}>
+                                {item?.name}
+                            </option>
+                        ))}
+                    </select>
+                    
                     {errors.stateProvince && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                             {errors?.stateProvince.message}

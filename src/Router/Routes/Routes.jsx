@@ -22,7 +22,12 @@ import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
 import ManagePaymentSystem from "../../pages/Admin/ManageRestaurant/ManagePaymentSystem/ManagePaymentSystem";
+
 import Dish_List from "../../pages/Admin/DishManage/Dish_List/Dish_List";
+
+import Test from "../../pages/Shared/VideoPlayer/Test";
+import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
+
 
 
 
@@ -101,6 +106,10 @@ export const router = createBrowserRouter([
                 element: <AddEmployee />
             },
             {
+                path: '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
+                element: <ViewAsAdmin />
+            },
+            {
                 path: '/restaurant/:res_id/branch/:branchID/ongoing-orders',
                 element: <OngoingOrders />
             },
@@ -116,6 +125,10 @@ export const router = createBrowserRouter([
     {
         path: '/login',
         element: <PreventLogIn><Login /></PreventLogIn>
+    },
+    {
+        path: '/test',
+        element: <Test/>
     }
 
 

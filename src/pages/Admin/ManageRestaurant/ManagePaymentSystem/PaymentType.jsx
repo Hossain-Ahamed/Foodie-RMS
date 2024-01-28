@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-hot-toast';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
+import { ScaleLoader } from 'react-spinners';
 
 const PaymentType = () => {
     const axiosSecure = useAxiosSecure();
@@ -80,7 +81,7 @@ const PaymentType = () => {
     };
 
     if (dataLoading) {
-        return <LoadingPage />;
+        return <ScaleLoader size={100} color='#36d7b7' style={{margin:'auto',"height": '50px'}} />;
     }
 
     if (dataError) {

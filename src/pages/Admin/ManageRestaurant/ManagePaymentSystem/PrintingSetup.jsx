@@ -8,6 +8,7 @@ import { Checkbox } from "@nextui-org/react";
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
+import { ScaleLoader } from 'react-spinners';
 const PrintingSetup = () => {
     const [headerText, setHeaderText] = useState("");
     const [greetingText, setGreetingText] = useState("");
@@ -89,7 +90,7 @@ const PrintingSetup = () => {
     }
 
     if (dataLoading) {
-        return <LoadingPage />
+        return  <ScaleLoader size={100} color='#36d7b7' style={{margin:'auto',"height": '50px'}} />;
     }
     if (dataError) {
         return <ErrorPage />

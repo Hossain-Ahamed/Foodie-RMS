@@ -7,6 +7,7 @@ import { useQuery } from 'react-query';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import { Link } from 'react-router-dom';
+import { ScaleLoader } from 'react-spinners';
 const SubscriptionsPurchase = () => {
     const axiosSecure = useAxiosSecure();
     const { res_id, branchID } = useRestauarantAndBranch();
@@ -28,7 +29,7 @@ const SubscriptionsPurchase = () => {
                         "branch_name": "Main Branch",
                         "branchID": "B001",
                         "subscriptionStart": "2023-01-28T12:00:00Z",
-                        "subscriptionEnd": "2025-01-28T12:00:00Z",
+                        "subscriptionEnd": "2025-01-30T12:00:00Z",
                     },
                     {
                         "res_id": 2,
@@ -76,18 +77,18 @@ const SubscriptionsPurchase = () => {
     const getColor = (from, to) => {
         const currentTime = new Date().toISOString();
         if (new Date(to).getMonth() + 1 === new Date().getMonth() + 1) {
-            return { "text": "Extend", "color": 'yellow-500', "status": 'Expire Soon' };
+            return { "text": "Extend", "color": 'warning', "status": 'Expire Soon' };
         } if (currentTime >= from && currentTime <= to) {
-            return { "text": "Extend", "color": 'green-500', "status": 'Continuing' };
+            return { "text": "Extend", "color": 'success', "status": 'Continuing' };
         } else if (currentTime > to) {
-            return { "text": "Renew", "color": 'red-500', "status": "Expired" };
+            return { "text": "Renew", "color": 'danger', "status": "Expired" };
         } else {
             return { "text": "Paid", "color": 'blue-500', "status" : "Paid" };
         }
     };
 
     if (dataLoading) {
-        return <LoadingPage />
+        return  <ScaleLoader size={100} color='#36d7b7' />
     }
 
     if (dataError) {

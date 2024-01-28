@@ -44,6 +44,16 @@ const isValidAddress = (
 const getDivisions = () => {
   return Divisions.divisions;
 };
+const getAllDistricts = ()=>{
+  return Districts.districts;
+}
+
+const getProvinceOfSelectedCity = (name)=>{
+
+  const districtID = Districts.districts.find(item=>item?.name===name)
+
+  return Divisions.divisions.find(i=>i.id===districtID.division_id).name
+}
 const getDistricts = (division_id) => {
   return Districts.districts.filter((i) => i.division_id === division_id);
 };
@@ -187,4 +197,6 @@ export {
   getDistricts,
   getUpazillas,
   getPostOffices,
+  getAllDistricts,
+  getProvinceOfSelectedCity
 };
