@@ -98,10 +98,10 @@ const PrintingSetup = () => {
         <section className='flex gap-7 justify-between'>
             <SetTitle title="Printing setup" />
             <div className='w-full md:w-1/2'>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 " autoComplete="off">
                     <div>
                         <label htmlFor="small-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Header Text</label>
-                        <input type="text" id="small-input" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs " {...register("headerText")} maxLength={40} onChange={(e) => setHeaderText(e.target.value)} />
+                        <input type="text" id="small-input" className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs appearance-none "  {...register("headerText")} maxLength={40} onChange={(e) => setHeaderText(e.target.value)} />
                     </div>
                     <div>
                         <label htmlFor="small-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Greeting Text</label>
