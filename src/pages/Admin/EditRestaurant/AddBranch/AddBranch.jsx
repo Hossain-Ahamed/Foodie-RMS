@@ -181,14 +181,14 @@ const AddBranch = () => {
                         Branch Name
                     </label>
                     <input
-                        {...register(`name`, { required: 'Branch Name is required' })}
+                        {...register(`branch_name`, { required: 'Branch Name is required' })}
                         className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                         type="text"
                         placeholder="Enter branch name"
                     />
-                    { errors.name && (
+                    {errors.branch_name && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                            {errors.name?.message}
+                            {errors.branch_name?.message}
                         </p>
                     )}
                 </div>

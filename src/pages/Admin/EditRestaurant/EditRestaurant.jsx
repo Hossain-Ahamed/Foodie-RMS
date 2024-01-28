@@ -568,18 +568,18 @@ const EditRestaurant = () => {
                                     )}
                                 </div>
                                 <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].name`} className="mb-1.5 font-medium text-base text-coolGray-800">
+                                    <label htmlFor={`branches[${index}].branch_name`} className="mb-1.5 font-medium text-base text-coolGray-800">
                                         Branch Name
                                     </label>
                                     <input
-                                        {...register(`branches[${index}].name`, { required: 'Branch Name is required' })}
+                                        {...register(`branches[${index}].branch_name`, { required: 'Branch Name is required' })}
                                         className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                                         type="text"
                                         placeholder="Enter branch name"
                                     />
-                                    {errors.branches && errors.branches[index]?.name && (
+                                    {errors.branches && errors.branches[index]?.branch_name && (
                                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].name?.message}
+                                            {errors.branches[index].branch_name?.message}
                                         </p>
                                     )}
                                 </div>

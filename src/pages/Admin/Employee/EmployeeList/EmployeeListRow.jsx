@@ -59,6 +59,7 @@ const EmployeeListRow = ({ employee }) => {
                         </div>
                         <div>
                             <span className='text-gray-900 whitespace-no-wrap block'>{employee?.firstName} {employee?.lastName}</span>
+                            <span className='text-gray-900 whitespace-no-wrap block'>{employee?.email}</span>
                         </div>
                     </div>
                     <div className='ml-3'>
@@ -71,12 +72,8 @@ const EmployeeListRow = ({ employee }) => {
                     className='text-gray-900 whitespace-no-wrap block'
                 >
 
-                    {employee?.email}
+                    {employee?.branchName}
                 </span>
-            </td>
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                 
-                <a href={`tel:${employee.phone}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.phone}</a>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <span
@@ -86,6 +83,11 @@ const EmployeeListRow = ({ employee }) => {
                     {employee?.nid}
                 </span>
             </td>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                 
+                <a href={`tel:${employee.phone}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.phone}</a>
+            </td>
+            
             
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <span
@@ -102,7 +104,6 @@ const EmployeeListRow = ({ employee }) => {
                 <span
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
                 >
-                    <span title="View Details" className="inline-flex ml-3 cursor-pointer text-blue-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><LuEye size={25} /></span>
                     <Link title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><BiEditAlt size={25} /></Link>
                     <span title="Delete category" onClick={() => handleDeletecategory(employee._id)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span>
                 </span>

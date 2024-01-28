@@ -20,6 +20,7 @@ const EmployeeList = () => {
                     firstName: "Farhan Hasan",
                     lastName: "Nilok",
                     email: "nilok@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Male",
                     nid: "8349490384893",
@@ -37,6 +38,7 @@ const EmployeeList = () => {
                     firstName: "Fattan Prodan",
                     lastName: "Pathul",
                     email: "nilok@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Female",
                     nid: "8349490384893",
@@ -54,6 +56,7 @@ const EmployeeList = () => {
                     firstName: "Hossain Ahamed",
                     lastName: "Malu",
                     email: "malu@gmail.com",
+                    branchName: "Fouco",                    
                     phone: "018399473783",
                     gender: "Shemale",
                     nid: "8349490384893",
@@ -71,6 +74,7 @@ const EmployeeList = () => {
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
@@ -88,6 +92,7 @@ const EmployeeList = () => {
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
@@ -105,6 +110,7 @@ const EmployeeList = () => {
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
@@ -121,7 +127,7 @@ const EmployeeList = () => {
         }
     })
     return (
-        <div className='max-w-[1600px] mx-auto bg-gray-50'>
+        <div className='max-w-[1600px] mx-auto'>
             <SetTitle title="Employee List"/>
             <SectionTitle h1="Employee List"/>
             <div className='py-8'>
@@ -142,6 +148,10 @@ const EmployeeList = () => {
                                     >Branch</th>
                                     <th
                                         scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                    >Employee ID</th>
+                                    <th
+                                        scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
                                     >
                                         Phone 
@@ -152,10 +162,7 @@ const EmployeeList = () => {
                                     >
                                         Category Name
                                     </th> */}
-                                    <th
-                                        scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
-                                    >Employee ID</th>
+                                    
                                    
                                     {/* <th
                                         scope='col'
