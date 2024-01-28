@@ -68,7 +68,7 @@ const EditRestaurant = () => {
                     "res_Owner_country": "Bangladesh",
                     "branches": [
                         {
-                            "branchName": "Fouco Update",
+                            "branch_name": "Fouco Update",
                             "streetAddress": "Jamtola",
                             "city": "Mymensingh",
                             "stateProvince": "Dhaka",
@@ -153,7 +153,7 @@ const EditRestaurant = () => {
     }
     return (
         <>
-            {/* <SetTitle title="Edit Restaurant" /> */}
+            <SetTitle title="Edit Restaurant" />
             <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 select-none '>
                 <SectionTitle h1={`Restaurant Edit Form`} />
 
@@ -544,11 +544,11 @@ const EditRestaurant = () => {
 
                                 {/* State / Province */}
                                 <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].city`} className="mb-1.5 font-medium text-base text-coolGray-800">
+                                    <label htmlFor={`branches[${index}].stateProvince`} className="mb-1.5 font-medium text-base text-coolGray-800">
                                         State / Province
                                     </label>
                                     <select
-                                        label="Select Dish Category"
+                                    
                                         className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
 
                                         defaultValue={`branches[${index}].stateProvince`}
@@ -602,7 +602,7 @@ const EditRestaurant = () => {
                                         </svg>
                                         <select
                                             {...register(`branches[${index}].country`, { required: 'Country is required' })}
-                                            defaultValue=""
+                                           
                                             className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg appearance-none"
                                         >
                                             <option value="" disabled>Select Country</option>
