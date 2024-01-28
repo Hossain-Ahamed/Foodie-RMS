@@ -22,8 +22,12 @@ import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
 import ManagePaymentSystem from "../../pages/Admin/ManageRestaurant/ManagePaymentSystem/ManagePaymentSystem";
+
+import Dish_List from "../../pages/Admin/DishManage/Dish_List/Dish_List";
+
 import Test from "../../pages/Shared/VideoPlayer/Test";
 import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
+
 
 
 
@@ -86,8 +90,8 @@ export const router = createBrowserRouter([
                 element: <DishCategory_Edit />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/dish',
-                element: < ></>
+                path: '/restaurant/:res_id/branch/:branchID/dish-list',
+                element: <Dish_List />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/add-dish',
