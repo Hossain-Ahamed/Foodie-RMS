@@ -4,6 +4,8 @@ import { useQuery } from 'react-query';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import EmployeeListRow from './EmployeeListRow';
+import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
+import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 // "name", "role", "status", "actions", 'id'
 const EmployeeList = () => {
     const axiosSecure = useAxiosSecure();
@@ -18,6 +20,7 @@ const EmployeeList = () => {
                     firstName: "Farhan Hasan",
                     lastName: "Nilok",
                     email: "nilok@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Male",
                     nid: "8349490384893",
@@ -35,6 +38,7 @@ const EmployeeList = () => {
                     firstName: "Fattan Prodan",
                     lastName: "Pathul",
                     email: "nilok@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Female",
                     nid: "8349490384893",
@@ -52,10 +56,11 @@ const EmployeeList = () => {
                     firstName: "Hossain Ahamed",
                     lastName: "Malu",
                     email: "malu@gmail.com",
+                    branchName: "Fouco",                    
                     phone: "018399473783",
                     gender: "Shemale",
                     nid: "8349490384893",
-                    role: "Accounts",
+                    role: "Kitchen Staff",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     streetAddress: "J A M T O L A",
@@ -69,6 +74,7 @@ const EmployeeList = () => {
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
@@ -86,10 +92,11 @@ const EmployeeList = () => {
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
-                    role: "Waiter",
+                    role: "Others",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     streetAddress: "J A M T O L A",
@@ -103,10 +110,11 @@ const EmployeeList = () => {
                     firstName: "Gazi Fuad",
                     lastName: "Tahsin",
                     email: "sodome@gmail.com",
+                    branchName: "Fouco",
                     phone: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
-                    role: "Inventory Manager",
+                    role: "Admin",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     streetAddress: "J A M T O L A",
@@ -120,6 +128,8 @@ const EmployeeList = () => {
     })
     return (
         <div className='max-w-[1600px] mx-auto'>
+            <SetTitle title="Employee List"/>
+            <SectionTitle h1="Employee List"/>
             <div className='py-8'>
                 <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                     <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
@@ -132,20 +142,28 @@ const EmployeeList = () => {
                                     >
                                         Employee 
                                     </th>
-                                    {/* <th
+                                    <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
-                                    >
-                                        Category Name
-                                    </th> */}
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                    >Branch</th>
                                     <th
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
                                     >Employee ID</th>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
-                                    >Email</th>
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                    >
+                                        Phone 
+                                    </th>
+                                    {/* <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
+                                    >
+                                        Category Name
+                                    </th> */}
+                                    
+                                   
                                     {/* <th
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
