@@ -58,7 +58,7 @@ const useProfile = () => {
                         branch_name : 'Dhanmondi',
                         branchID : 'jfsd845jfdsa',
 
-                        role : 'Admin',
+                        role : 'Super-Admin',
                     },
 
                 ]
