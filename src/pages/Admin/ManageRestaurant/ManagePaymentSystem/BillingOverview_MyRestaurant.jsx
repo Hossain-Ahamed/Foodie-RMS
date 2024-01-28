@@ -3,9 +3,11 @@ import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import BillingHistory from './BillingHistory';
 import SubscriptionsPurchase from './SubscriptionsPurchase';
+import RefundRequest from './RefundRequest';
 const BillingOverview_MyRestaurant = () => {
     return (
         <section>
+           
             <SetTitle title="Billing Overview" />
             <Tabs  aria-label="Disabled Options" className='w-full justify-center'>
                 <Tab key="billingHistory" title="Billing History">
@@ -13,6 +15,9 @@ const BillingOverview_MyRestaurant = () => {
                 </Tab>
                 <Tab key="Subscriptions" title="Subscriptions">
                     <SubscriptionsPurchase/>
+                </Tab>
+                <Tab key="Refund" title="Refund">
+                    <RefundRequest/>
                 </Tab>
             </Tabs>
         </section>
