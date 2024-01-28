@@ -22,6 +22,7 @@ import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
 import ManagePaymentSystem from "../../pages/Admin/ManageRestaurant/ManagePaymentSystem/ManagePaymentSystem";
+import Test from "../../pages/Shared/VideoPlayer/Test";
 
 
 
@@ -115,6 +116,10 @@ export const router = createBrowserRouter([
     {
         path: '/login',
         element: <PreventLogIn><Login /></PreventLogIn>
+    },
+    {
+        path: '/test',
+        element: <Test/>
     }
 
 

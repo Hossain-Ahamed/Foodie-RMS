@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
-import { getCountries, validateEmail, validateMobileNumber } from '../../../assets/scripts/Utility';
+import { getAllDistricts, getCountries, getDivisions, getProvinceOfSelectedCity, validateEmail, validateMobileNumber } from '../../../assets/scripts/Utility';
 import SetTitle from '../../Shared/SetTtitle/SetTitle';
 import { toast } from 'react-hot-toast';
 import Cookies from 'js-cookie';
@@ -13,6 +13,9 @@ import { useQuery } from 'react-query'
 import LoadingPage from '../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../Shared/ErrorPage/ErrorPage';
 const EditRestaurant = () => {
+    const AllDistricts = getAllDistricts();
+    const AllDivisions = getDivisions();
+
     const countries = getCountries();
 
     const { register, handleSubmit, formState: { errors }, setValue, control, getValues } = useForm();
@@ -51,7 +54,7 @@ const EditRestaurant = () => {
             const res1 = {
                 data: {
 
-                    "id" : "87342fdjskllf",
+                    "id": "87342fdjskllf",
                     "res_name": "Fuoco",
                     "res_email": "hossainahamed6872@gmail.com",
                     "res_mobile": "01868726172",
@@ -60,15 +63,15 @@ const EditRestaurant = () => {
                     "res_Owner_mobile": "01868726172",
                     "res_Owner_streetAddress": "J A M T O L A",
                     "res_Owner_city": "Narayanganj",
-                    "res_Owner_stateProvince": "12",
+                    "res_Owner_stateProvince": "Dhaka",
                     "res_Owner_postalCode": "1400",
                     "res_Owner_country": "Bangladesh",
                     "branches": [
                         {
                             "branchName": "Fouco Update",
                             "streetAddress": "Jamtola",
-                            "city": "Naynabad",
-                            "stateProvince": "f",
+                            "city": "Mymensingh",
+                            "stateProvince": "Dhaka",
                             "postalCode": "1440",
                             "country": "Bangladesh",
                             "branchID": "q-Naynabad-f-Bangladesh-1440-1705850705607"
@@ -140,6 +143,8 @@ const EditRestaurant = () => {
 
 
 
+
+
     if (dataLoading) {
         return <LoadingPage />
     }
@@ -148,7 +153,7 @@ const EditRestaurant = () => {
     }
     return (
         <>
-            <SetTitle title="Edit Restaurant" />
+            {/* <SetTitle title="Edit Restaurant" /> */}
             <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 select-none '>
                 <SectionTitle h1={`Restaurant Edit Form`} />
 
@@ -218,12 +223,12 @@ const EditRestaurant = () => {
                                 {errors.res_name?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.res_name.message}</p>)}
 
                             </div>
-                            
+
                             <div className="w-full md:w-1/2 p-3">
                                 <p className="mb-1.5 font-medium text-base text-coolGray-800" data-config-id="auto-txt-3-3">Restaurant ID</p>
                                 <input className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input disabled:cursor-not-allowed " type="text" placeholder="food cart"
-                                   defaultValue={data?.id} disabled />
-                              
+                                    defaultValue={data?.id} disabled />
+
                             </div>
 
 
@@ -347,15 +352,26 @@ const EditRestaurant = () => {
                             </div>
                             {/* City/Town */}
                             <div className="w-full md:w-1/2 p-3">
-                                <label htmlFor="res_Owner_city" className="mb-1.5 font-medium text-base text-gray-800">
-                                    City/Town
-                                </label>
-                                <input
+                               
+                                <select
+                                 
+                                    className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
                                     {...register('res_Owner_city', { required: 'City/Town is required' })}
-                                    className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
-                                    type="text"
-                                    placeholder="Enter your city/town"
-                                />
+                                    onChange={(e)=>{setValue(`res_Owner_stateProvince`,getProvinceOfSelectedCity(e.target.value))}}
+                       
+                                >
+                                    <option value="" disabled>
+                                        Select City / Town
+                                    </option>
+
+                                    {AllDistricts.map((item, _idx) => (
+                                        <option key={item?.name} value={item?.name}>
+                                            {item?.name}
+                                        </option>
+                                    ))}
+                                </select>
+                               
                                 {errors.res_Owner_city && (
                                     <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                                         {errors.res_Owner_city.message}
@@ -365,15 +381,25 @@ const EditRestaurant = () => {
 
                             {/* State / Province */}
                             <div className="w-full md:w-1/2 p-3">
-                                <label htmlFor="res_Owner_stateProvince" className="mb-1.5 font-medium text-base text-gray-800">
-                                    State / Province
-                                </label>
-                                <input
-                                    {...register('res_Owner_stateProvince', { required: 'State / Province is required' })}
-                                    className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
-                                    type="text"
-                                    placeholder="Enter your state/province"
-                                />
+                            <select
+                                 
+                                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
+                                 {...register('res_Owner_stateProvince', { required: 'State / Province is required' })}
+                                 onChange={(e)=>{setValue(`res_Owner_stateProvince`,getProvinceOfSelectedCity(e.target.value))}}
+                    
+                             >
+                                 <option value="" disabled>
+                                     Select State / Province
+                                 </option>
+
+                                 {AllDivisions.map((item, _idx) => (
+                                     <option key={item?.name} value={item?.name}>
+                                         {item?.name}
+                                     </option>
+                                 ))}
+                             </select>
+                              
                                 {errors.res_Owner_stateProvince && (
                                     <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                                         {errors.res_Owner_stateProvince.message}
@@ -490,12 +516,25 @@ const EditRestaurant = () => {
                                     <label htmlFor={`branches[${index}].city`} className="mb-1.5 font-medium text-base text-coolGray-800">
                                         City/Town
                                     </label>
-                                    <input
+                                    <select
+                                        
+                                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
+                                        defaultValue={`branches[${index}].city`}
                                         {...register(`branches[${index}].city`, { required: 'City/Town is required' })}
-                                        className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                                        type="text"
-                                        placeholder="Enter your city/town"
-                                    />
+                                      onChange={(e)=>{setValue(`branches[${index}].stateProvince`,getProvinceOfSelectedCity(e.target.value))}}
+                                    >
+                                        <option value="" disabled>
+                                            Select City
+                                        </option>
+
+                                        {AllDistricts.map((item, _idx) => (
+                                            <option key={item?.name} value={item?.name}>
+                                                {item?.name}
+                                            </option>
+                                        ))}
+                                    </select>
+
                                     {errors.branches && errors.branches[index]?.city && (
                                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                                             {errors.branches[index].city.message}
@@ -505,15 +544,28 @@ const EditRestaurant = () => {
 
                                 {/* State / Province */}
                                 <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].stateProvince`} className="mb-1.5 font-medium text-base text-coolGray-800">
+                                    <label htmlFor={`branches[${index}].city`} className="mb-1.5 font-medium text-base text-coolGray-800">
                                         State / Province
                                     </label>
-                                    <input
+                                    <select
+                                        label="Select Dish Category"
+                                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
+                                        defaultValue={`branches[${index}].stateProvince`}
                                         {...register(`branches[${index}].stateProvince`, { required: 'State / Province is required' })}
-                                        className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                                        type="text"
-                                        placeholder="Enter your state/province"
-                                    />
+                                             >
+                                        <option value="" disabled>
+                                            Select Province / State
+                                        </option>
+
+                                        {AllDivisions.map((item, _idx) => (
+                                            <option key={item?.name} value={item?.name}>
+                                                {item?.name}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                
                                     {errors.branches && errors.branches[index]?.stateProvince && (
                                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                                             {errors.branches[index].stateProvince.message}
