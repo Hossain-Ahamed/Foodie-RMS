@@ -95,12 +95,12 @@ const SubscriptionsPurchase = () => {
     }
     return (
         <section>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 ">
                 <table className=" w-full text-sm text-left rtl:text-right text-gray-500 shaodow shadow-md">
                     <thead className="text-sm text-gray-700  bg-gray-50 border-b">
                         <tr>
 
-                            <th scope="col" className="px-3">
+                            <th scope="col" className="px-3 ">
                                 Name
                             </th>
                             <th scope="col" className="px-3">

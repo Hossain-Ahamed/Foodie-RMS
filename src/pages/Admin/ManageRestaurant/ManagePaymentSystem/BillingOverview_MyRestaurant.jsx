@@ -10,11 +10,12 @@ const BillingOverview_MyRestaurant = () => {
            
             <SetTitle title="Billing Overview" />
             <Tabs  aria-label="Disabled Options" className='w-full justify-center'>
-                <Tab key="billingHistory" title="Billing History">
-                   <BillingHistory/>
-                </Tab>
+                
                 <Tab key="Subscriptions" title="Subscriptions">
                     <SubscriptionsPurchase/>
+                </Tab>
+                <Tab key="billingHistory" title="Billing History">
+                   <BillingHistory/>
                 </Tab>
                 <Tab key="Refund" title="Refund">
                     <RefundRequest/>
