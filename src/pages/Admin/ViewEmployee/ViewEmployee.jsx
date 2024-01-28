@@ -10,8 +10,7 @@ import ScrollToTop from '../../../components/ScrollToTop/ScrollToTop';
 import { Link } from 'react-router-dom';
 const ViewEmployee = ({ title, data, editable }) => {
 
-    // admin , developer , mine 
-    console.log(data)
+  
     return (
         <>
             <ScrollToTop />
