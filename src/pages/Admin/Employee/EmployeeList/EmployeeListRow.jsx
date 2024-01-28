@@ -7,7 +7,7 @@ import { MdClear, MdOutlineCheckCircle } from 'react-icons/md';
 import { LuEye } from 'react-icons/lu';
 
 const EmployeeListRow = ({ employee }) => {
-    const { branchName, restaurantName } = useRestauarantAndBranch();
+    const { branchName, restaurantName, res_id, branchID } = useRestauarantAndBranch();
     let statusStyle, paymentStatus, icon;
     switch (employee.role) {
         case 'Admin':
@@ -84,11 +84,11 @@ const EmployeeListRow = ({ employee }) => {
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                 
+
                 <a href={`tel:${employee.phone}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.phone}</a>
             </td>
-            
-            
+
+
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <span
                     className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${statusStyle}`}
@@ -104,7 +104,7 @@ const EmployeeListRow = ({ employee }) => {
                 <span
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
                 >
-                    <Link title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><BiEditAlt size={25} /></Link>
+                    <Link title="Edit category" to={`/restaurant/${res_id}/branch/${branchID}/view-employee/${employee?._id}`} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><BiEditAlt size={25} /></Link>
                     <span title="Delete category" onClick={() => handleDeletecategory(employee._id)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span>
                 </span>
             </td>

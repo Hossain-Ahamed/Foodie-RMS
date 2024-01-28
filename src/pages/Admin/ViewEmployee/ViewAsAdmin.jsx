@@ -5,18 +5,20 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from 'react-query';
 import { Skeleton } from '@nextui-org/react';
 import ErrorPage from '../../Shared/ErrorPage/ErrorPage';
+import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 
 const ViewAsAdmin = () => {
     const { employeeID } = useParams();
 
     const axiosSecure = useAxiosSecure();
+    const { branchID, res_id } = useRestauarantAndBranch();
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['employeeData', employeeID],
         enabled: true,
         cacheTime: 0,
         queryFn: async () => {
-            const res = await axiosSecure.get(`/get-employee-data/${employeeID}`);
+        const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-employee-data/${employeeID}`);
 
             //   to do uncomment 
             // setSelectedImage0(res.data?.profilePhoto);

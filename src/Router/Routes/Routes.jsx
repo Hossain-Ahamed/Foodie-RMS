@@ -23,6 +23,7 @@ import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/Co
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
 import ManagePaymentSystem from "../../pages/Admin/ManageRestaurant/ManagePaymentSystem/ManagePaymentSystem";
 import Test from "../../pages/Shared/VideoPlayer/Test";
+import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
 
 
 
@@ -99,6 +100,10 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:res_id/branch/:branchID/add-employee',
                 element: <AddEmployee />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
+                element: <ViewAsAdmin />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/ongoing-orders',
