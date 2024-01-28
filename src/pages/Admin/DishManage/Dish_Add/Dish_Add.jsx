@@ -11,7 +11,97 @@ import { MdOutlinePercent } from 'react-icons/md'
 import { validateSalesTax } from '../../../../assets/scripts/Utility'
 import { MdDelete } from "react-icons/md";
 import { CiSquarePlus } from "react-icons/ci";
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure'
+import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch'
+import { useQuery } from 'react-query';
+import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage'
+import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 const Dish_Add = () => {
+
+  const axiosSecure = useAxiosSecure();
+  const { branchID, res_id } = useRestauarantAndBranch();
+
+  const { refetch: categoryRefetch, data: categories = [], isLoading, error } = useQuery({
+    queryKey: ['categories', res_id, branchID],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-all-categories`)
+
+      // return res.data.categories;
+      return [
+        {
+          "_id": "1",
+          "title": "Italian Cuisine",
+          "description": "Delicious Italian dishes",
+          "active": true,
+          "img": "italian_cuisine.jpg"
+        },
+        {
+          "_id": "2",
+          "title": "Mexican Flavors",
+          "description": "Spicy and savory Mexican dishes",
+          "active": true,
+          "img": "mexican_flavors.jpg"
+        },
+        {
+          "_id": "3",
+          "title": "Asian Fusion",
+          "description": "A fusion of flavors from various Asian cuisines",
+          "active": true,
+          "img": "asian_fusion.jpg"
+        },
+        {
+          "_id": "4",
+          "title": "Vegetarian Delights",
+          "description": "Healthy and tasty vegetarian options",
+          "active": true,
+          "img": "vegetarian_delights.jpg"
+        },
+        {
+          "_id": "5",
+          "title": "Seafood Specialties",
+          "description": "Fresh and succulent seafood dishes",
+          "active": true,
+          "img": "seafood_specialties.jpg"
+        },
+        {
+          "_id": "6",
+          "title": "Sweet Treats",
+          "description": "Indulge in delightful desserts",
+          "active": true,
+          "img": "sweet_treats.jpg"
+        },
+        {
+          "_id": "7",
+          "title": "Grill Master",
+          "description": "Sizzling grills and BBQ delights",
+          "active": true,
+          "img": "grill_master.jpg"
+        },
+        {
+          "_id": "8",
+          "title": "Healthy Bites",
+          "description": "Nutrient-packed and wholesome options",
+          "active": true,
+          "img": "healthy_bites.jpg"
+        },
+        {
+          "_id": "9",
+          "title": "Cozy Cafés",
+          "description": "Relax and unwind in charming cafés",
+          "active": true,
+          "img": "cozy_cafes.jpg"
+        },
+        {
+          "_id": "10",
+          "title": "Exotic Eats",
+          "description": "Explore exotic flavors from around the world",
+          "active": true,
+          "img": "exotic_eats.jpg"
+        }
+      ]
+
+    }
+  })
   const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({
     defaultValues: {
       active: true,
@@ -52,6 +142,13 @@ const Dish_Add = () => {
 
   };
 
+  if (isLoading) {
+    return <LoadingPage />
+  }
+
+  if (error) {
+    return <ErrorPage />
+  }
 
 
   return (
@@ -115,8 +212,32 @@ const Dish_Add = () => {
                 />
               </div>
             </div>
-            {/* title  */}
+            {/* category  */}
             <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
+              <div className="w-full  p-3">
+                <select
+                  label="Select Dish Category"
+                  className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
+                  defaultValue=""
+                  {...register("category", {
+                    required: "*category  is Required",
+                  })}
+                >
+                  <option value="" disabled>
+                    Select Dish Category
+                  </option>
+
+                  {categories.map((item, _idx) => (
+                    <option key={item?.title} value={item?.title}>
+                      {item?.title}
+                    </option>
+                  ))}
+                </select>
+
+                {errors.category?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.category?.message}</p>)}
+
+              </div>
               <div className="w-full  p-3">
                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Title</p>
                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: Rice Bowl"
@@ -174,7 +295,7 @@ const Dish_Add = () => {
               </div>
               <div className="w-full p-3 pt-0">
 
-              NB: Offer and regular price must be same if no offer are given
+                NB: Offer and regular price must be same if no offer are given
               </div>
 
 

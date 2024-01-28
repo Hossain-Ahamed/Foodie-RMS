@@ -133,7 +133,7 @@ const PrintingSetup = () => {
                     </div>
                 </form>
             </div>
-            <div className='w-full md:w-1/2  filter grayscale'>
+            <div className='w-full md:w-1/2  filter grayscale select-none cursor-move'>
               
                 <div className="w-80 h-fit min-h-[300px] bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 p-4">
                     <div className='flex justify-center items-center flex-col'>
