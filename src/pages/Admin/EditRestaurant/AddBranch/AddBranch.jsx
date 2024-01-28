@@ -38,7 +38,7 @@ const AddBranch = () => {
         const branch = getValues();
 
         // Extract values from the branch object
-        const { streetAddress, city, stateProvince, country, postalCode } = branch;
+        const { streetAddress, city, stateProvince, country, postalCode, branch_name } = branch;
 
         // Check if any of the required fields are missing
         if (!streetAddress || !city || !stateProvince || !country || !postalCode) {
@@ -59,6 +59,10 @@ const AddBranch = () => {
             } else if (!postalCode) {
                 message = "Postal Code Missing"
                 fieldName = "Postal Code"
+            
+            } else if (!branch_name) {
+                message = "Branch name Missing"
+                fieldName = "Branch Name"
             } else {
                 message = "Necessary Data missing"
                 fieldName = "Necessary Data"
@@ -73,10 +77,10 @@ const AddBranch = () => {
         }
 
         // Combine values with hyphens
-        const combinedInfo = `${streetAddress}-${city}-${postalCode}`.replace(/\s/g, '-');
+        const combinedInfo = `${branch_name}-${city}-${postalCode}`.replace(/\s/g, '-');
 
         // Append Date.now() to make it unique
-        const uniqueBranchID = `${combinedInfo}-${Date.now()}`;
+        const uniqueBranchID = `${combinedInfo}-${Date.now().toString().slice(-6)}`;
 
         // Set the value in the form
         setValue('branchID', uniqueBranchID);
