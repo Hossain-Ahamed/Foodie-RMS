@@ -87,7 +87,7 @@ const AddCoupon = () => {
             <SetTitle title="Add Coupon" />
             <SectionTitle h1="Add Coupon" />
 
-            <form onSubmit={handleSubmit(onSubmit)} className='max-w-[500px] mx-auto  p-4'>
+            <form onSubmit={handleSubmit(onSubmit)} className='max-w-[500px] mx-auto  p-4' autoComplete='off'>
 
                 <div className="flex flex-wrap pb-3">
                     <div className="w-full">

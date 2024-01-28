@@ -15,7 +15,7 @@ const ManagePaymentSystem = () => {
     const { role } = permitted.find(res => res.branchID === branchID && res.res_id === res_id)
 
 
-    if (!(role === "Admin" || role === "Super-Admin")) {
+    if (!(role === "Super-Admin")) {
         disabledbuttons.push("MyBilling");
     }
 
