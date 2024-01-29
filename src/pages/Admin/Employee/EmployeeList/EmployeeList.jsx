@@ -15,7 +15,7 @@ const EmployeeList = () => {
     const { refetch, data: employees = [], isLoading, error } = useQuery({
         queryKey: ['employee-list'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/restaurant/${res_id}/"b"ranch/${branchID}/employee-list`);
+            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/employee-list`);
             return [
                 {
                     _id: "1",
@@ -143,7 +143,7 @@ const EmployeeList = () => {
                     <SectionTitle h1="Employee List" />
                 </div>
                 <div>
-                    <Link to={`/restaurant/${res_id}/"b"ranch/${branchID}/add-employee`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Employee<IoAddOutline className='text-white' /></Link>
+                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-employee`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Employee<IoAddOutline className='text-white' /></Link>
 
                 </div>
 

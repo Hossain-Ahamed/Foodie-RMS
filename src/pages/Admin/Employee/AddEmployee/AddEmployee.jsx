@@ -7,10 +7,76 @@ import toast from 'react-hot-toast';
 import ScrollToTop from '../../../../components/ScrollToTop/ScrollToTop';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
+import useRestauarantAndBranch from './../../../../Hooks/useRestauarantAndBranch';
+import { useQuery } from 'react-query';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
+import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 
 
 const AddEmployee = () => {
     const countries = getCountries();
+    const axiosSecure = useAxiosSecure();
+    const [text, setText] = useState("Per Month Salary");
+
+    const { res_id } = useRestauarantAndBranch();
+    const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
+        queryKey: ['branches', res_id],
+        enabled: true,
+        cacheTime: 0,
+        queryFn: async () => {
+
+
+            let res = await axiosSecure.get(`/restaurant/${res_id}/get-restaurant-name-and-all-branches`);
+
+
+            res = {
+                data: {
+
+
+                    "_id": "87342fdjskllf",
+                    "res_name": "Fuoco",
+                    "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    "branches": [
+                        {
+                            "branch_name": "Fouco Update",
+
+                            "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
+                        },
+                        {
+                            "branch_name": "Fouco Chasara",
+
+                            "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
+                        },
+                        {
+                            "branch_name": "Fouco jamtola",
+
+                            "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
+                        },
+                        {
+                            "branch_name": "Fouco pagla",
+
+                            "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
+                        },
+                    ],
+
+
+
+                }
+            }
+
+
+            // Set options array
+            setValue('res_id', res?.data?._id);
+            setValue('res_img', res?.data?.img);
+            setValue('res_name', res?.data?.res_name);
+
+
+            return res?.data;
+        },
+
+    });
+
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
     // handle image
@@ -19,38 +85,37 @@ const AddEmployee = () => {
     const handleImageUpload0 = (event) => {
         const file = event.target.files[0];
         setSelectedImage0(URL.createObjectURL(file));
-    
+
         setValue("profilePhoto", file);
 
     };
 
     const onSubmit = (data) => {
+        console.log(data);
         if (!selectedImage0) {
             toast.error('Profile Photo needed');
             return;
         }
-    
-        const formData = new FormData();
-    
-        // Loop through object keys and append each field to formData
-        for (const key in data) {
-            if (Object.prototype.hasOwnProperty.call(data, key)) {
-                formData.append(key, data[key]);
-            }
-        }
-    
-        console.log(data);
-        // Now `formData` contains all the fields with the same names as in the `data` object
-        // Continue with the rest of your submission logic
+
+
     };
-    
+
+    if (dataLoading) {
+        return <LoadingPage />
+    }
+
+    if (dataError) {
+        return <ErrorPage />
+    }
+
 
     return (
         <>
-            <ScrollToTop />
+
             <SetTitle title="Add Employee" />
-            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 select-none '>
+            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 select-none ' autoComplete='off'>
                 <SectionTitle h1="Employee Form" />
+                {/* necessary info  */}
                 <div className="w-full md:w-3/4 p-3 mt-8">
                     <div className="p-6 h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-dashboard border-gray-500/50">
                         <div className="flex flex-wrap pb-3 -m-3">
@@ -120,7 +185,7 @@ const AddEmployee = () => {
                                                     id={`${gender.toLowerCase()}-gender`}
                                                     type="radio"
                                                     value={gender}
-                                                    {...register('gender')}
+                                                    {...register('gender', { required: "*select gender" })}
                                                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-400/40 focus:ring-blue-500"
                                                 />
                                                 <label
@@ -133,6 +198,11 @@ const AddEmployee = () => {
                                         </li>
                                     ))}
                                 </ul>
+                                {errors.gender && (
+                                    <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
+                                        {errors.gender?.message}
+                                    </p>
+                                )}
                             </div>
                             {/* D.O.B  */}
                             <div className="w-full md:w-1/2 p-3">
@@ -157,7 +227,7 @@ const AddEmployee = () => {
                                 )}
                             </div>
                             {/* NID  */}
-                            <div className="w-full md:w-1/2 p-3">
+                            <div className="w-full  p-3">
                                 <label htmlFor="nid" className="mb-1.5 font-medium text-base text-gray-800">
                                     NID
                                 </label>
@@ -178,71 +248,7 @@ const AddEmployee = () => {
                             </div>
 
 
-                            {/* role  */}
-                            <div className="w-full md:w-1/2 p-3 ">
-                                <label htmlFor="role" className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-17-3">
-                                    Role
-                                </label>
-                                <div className="relative">
-                                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11.3333 6.1133C11.2084 5.98913 11.0395 5.91943 10.8633 5.91943C10.6872 5.91943 10.5182 5.98913 10.3933 6.1133L8.00001 8.47329L5.64001 6.1133C5.5151 5.98913 5.34613 5.91943 5.17001 5.91943C4.99388 5.91943 4.82491 5.98913 4.70001 6.1133C4.63752 6.17527 4.58792 6.249 4.55408 6.33024C4.52023 6.41148 4.50281 6.49862 4.50281 6.58663C4.50281 6.67464 4.52023 6.76177 4.55408 6.84301C4.58792 6.92425 4.63752 6.99799 4.70001 7.05996L7.52667 9.88663C7.58865 9.94911 7.66238 9.99871 7.74362 10.0326C7.82486 10.0664 7.912 10.0838 8.00001 10.0838C8.08801 10.0838 8.17515 10.0664 8.25639 10.0326C8.33763 9.99871 8.41136 9.94911 8.47334 9.88663L11.3333 7.05996C11.3958 6.99799 11.4454 6.92425 11.4793 6.84301C11.5131 6.76177 11.5305 6.67464 11.5305 6.58663C11.5305 6.49862 11.5131 6.41148 11.4793 6.33024C11.4454 6.249 11.3958 6.17527 11.3333 6.1133Z" fill="#8896AB"></path>
-                                    </svg>
-                                    <select
-                                        id="role"
-                                        className="appearance-none w-full py-2.5 px-4 text-gray-900 text-base font-normal bg-white border outline-none border-gray-400/40 hover:border-green-500 rounded-lg shadow-input"
-                                        defaultValue=""
-                                        {...register('role', { required: '*Select Role is required' })}
-                                    >
-                                        <option value="" disabled>Select Role</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Accounts">Accounts</option>
-                                        <option value="Developer">Developer</option>
-                                    </select>
-                                </div>
-                                {errors.role && (
-                                    <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                        {errors.role.message}
-                                    </p>
-                                )}
-                            </div>
                         </div>
-
-                        {/* notes  */}
-                        <div className="py-3">
-                            <div className="w-full">
-                                <div className="flex flex-wrap">
-                                    <div className="w-full">
-                                        <p className="mb-1 text-sm text-gray-800 font-semibold" data-config-id="auto-txt-7-3">
-                                            Comment/Notes
-                                        </p>
-                                        <textarea
-                                            {...register('commentNotes')}
-                                            className="block w-full h-64 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
-                                            defaultValue="N/A" // Set default value here
-                                        ></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* <div className="py-3">
-                        <div className="w-full md:w-9/12">
-                            <div className="flex flex-wrap -m-3">
-                                <div className="w-full md:w-1/3 p-3">
-                                    <p className="mb-1.5 text-sm text-gray-800 font-semibold" data-config-id="auto-txt-8-3">Photo</p>
-                                    <div className="flex flex-wrap items-center -m-3">
-                                        <div className="w-auto p-3">
-                                            <img src="flex-ui-assets/images/dashboard/htmlForms/avatar.png" alt="" data-config-id="auto-img-1-3" />
-                                        </div>
-                                        <div className="w-auto p-3">
-                                            <button className="flex flex-wrap justify-center w-full px-4 py-2 font-medium text-sm text-gray-500 hover:text-gray-600 border border-gray-400/40 hover:border-gray-400/40 rounded-md shadow-button">
-                                                <p data-config-id="auto-txt-9-3">Change</p>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
 
                         {/* pp */}
                         <p className="mt-3 mb-1.5 font-medium text-gray-800 text-base" data-config-id="auto-txt-10-3">
@@ -412,6 +418,184 @@ const AddEmployee = () => {
                 </div>
 
 
+                {/* salary  & job info*/}
+                <div className="w-full md:w-3/4 p-3 mt-8">
+                    <div className="p-6 h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-dashboard border-gray-500/50">
+                        <div className="flex flex-wrap pb-3 -m-3">
+
+                            {/* res name   */}
+                            <div className="w-full md:w-1/2 p-3">
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Restaurant name</p>
+                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="John"
+                                    {...register("res_name", {
+                                        required: "*Restaurant Name is Required",
+                                    })} readOnly />
+                                {errors.res_name?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.res_name.message}</p>)}
+
+                            </div>
+                            {/* res id   */}
+                            <div className="w-full md:w-1/2 p-3">
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-4-3">Restaurant ID</p>
+                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="Doe"
+                                    {...register("res_id", {
+                                        required: "*restaurant ID is Required",
+
+                                    })} readOnly />
+                                {errors.res_id?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.res_id.message}</p>)}
+
+                            </div>
+
+
+                            {/* branch name   */}
+                            <div className="w-full md:w-1/2 p-3">
+                                <label htmlFor="Branch" className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-17-3">
+                                    Branch Name
+                                </label>
+                                <div className="relative">
+                                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.3333 6.1133C11.2084 5.98913 11.0395 5.91943 10.8633 5.91943C10.6872 5.91943 10.5182 5.98913 10.3933 6.1133L8.00001 8.47329L5.64001 6.1133C5.5151 5.98913 5.34613 5.91943 5.17001 5.91943C4.99388 5.91943 4.82491 5.98913 4.70001 6.1133C4.63752 6.17527 4.58792 6.249 4.55408 6.33024C4.52023 6.41148 4.50281 6.49862 4.50281 6.58663C4.50281 6.67464 4.52023 6.76177 4.55408 6.84301C4.58792 6.92425 4.63752 6.99799 4.70001 7.05996L7.52667 9.88663C7.58865 9.94911 7.66238 9.99871 7.74362 10.0326C7.82486 10.0664 7.912 10.0838 8.00001 10.0838C8.08801 10.0838 8.17515 10.0664 8.25639 10.0326C8.33763 9.99871 8.41136 9.94911 8.47334 9.88663L11.3333 7.05996C11.3958 6.99799 11.4454 6.92425 11.4793 6.84301C11.5131 6.76177 11.5305 6.67464 11.5305 6.58663C11.5305 6.49862 11.5131 6.41148 11.4793 6.33024C11.4454 6.249 11.3958 6.17527 11.3333 6.1133Z" fill="#8896AB"></path>
+                                    </svg>
+                                    <select
+                                        id="Branch"
+                                        className="appearance-none w-full py-2.5 px-4 text-gray-900 text-base font-normal bg-white border outline-none border-gray-400/40 hover:border-green-500 rounded-lg shadow-input"
+                                        defaultValue=""
+                                        {...register('branch_name', { required: '*Branch Name is required' })}
+
+                                        onChange={(e) => { data?.branches && Array.isArray(data?.branches) && setValue('branchID', data.branches.find(i => i.branch_name === e.target.value).branchID) }}
+                                    >
+                                        <option value="" disabled>Select Branch</option>
+                                        {
+                                            data?.branches && Array.isArray(data?.branches) && data?.branches.map((index, _idx) => <option key={_idx} value={index?.branch_name}>{index?.branch_name}</option>)
+
+                                        }
+                                    </select>
+                                </div>
+                                {errors.branch_name && (
+                                    <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
+                                        {errors.branch_name.message}
+                                    </p>
+                                )}
+                            </div>
+
+
+                            {/* branch id  */}
+                            <div className="w-full md:w-1/2 p-3">
+                                <label htmlFor="Branch-id" className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-17-3">
+                                    Branch ID
+                                </label>
+                                <div className="relative">
+                                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.3333 6.1133C11.2084 5.98913 11.0395 5.91943 10.8633 5.91943C10.6872 5.91943 10.5182 5.98913 10.3933 6.1133L8.00001 8.47329L5.64001 6.1133C5.5151 5.98913 5.34613 5.91943 5.17001 5.91943C4.99388 5.91943 4.82491 5.98913 4.70001 6.1133C4.63752 6.17527 4.58792 6.249 4.55408 6.33024C4.52023 6.41148 4.50281 6.49862 4.50281 6.58663C4.50281 6.67464 4.52023 6.76177 4.55408 6.84301C4.58792 6.92425 4.63752 6.99799 4.70001 7.05996L7.52667 9.88663C7.58865 9.94911 7.66238 9.99871 7.74362 10.0326C7.82486 10.0664 7.912 10.0838 8.00001 10.0838C8.08801 10.0838 8.17515 10.0664 8.25639 10.0326C8.33763 9.99871 8.41136 9.94911 8.47334 9.88663L11.3333 7.05996C11.3958 6.99799 11.4454 6.92425 11.4793 6.84301C11.5131 6.76177 11.5305 6.67464 11.5305 6.58663C11.5305 6.49862 11.5131 6.41148 11.4793 6.33024C11.4454 6.249 11.3958 6.17527 11.3333 6.1133Z" fill="#8896AB"></path>
+                                    </svg>
+                                    <select
+                                        id="Branch"
+                                        className="disabled:cursor-not-allowed  appearance-none w-full py-2.5 px-4 text-gray-900 text-base font-normal bg-white border outline-none border-gray-400/40 hover:border-green-500 rounded-lg shadow-input"
+                                        defaultValue=""
+                                        {...register('branchID', { required: '*Branch Name is required' })}
+
+                                        disabled
+                                    >
+                                        <option value="" disabled>Select Branch ID</option>
+                                        {
+                                            data?.branches && Array.isArray(data?.branches) && data?.branches.map((index, _idx) => <option key={_idx} value={index?.branchID}>{index?.branchID}</option>)
+
+                                        }
+                                    </select>
+                                </div>
+                                {errors.branch_name && (
+                                    <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
+                                        {errors.branch_name.message}
+                                    </p>
+                                )}
+                            </div>
+
+
+
+
+
+                            {/* role  */}
+                            <div className="w-full md:w-1/2 p-3 ">
+                                <label htmlFor="role" className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-17-3">
+                                    Role
+                                </label>
+                                <div className="relative">
+                                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.3333 6.1133C11.2084 5.98913 11.0395 5.91943 10.8633 5.91943C10.6872 5.91943 10.5182 5.98913 10.3933 6.1133L8.00001 8.47329L5.64001 6.1133C5.5151 5.98913 5.34613 5.91943 5.17001 5.91943C4.99388 5.91943 4.82491 5.98913 4.70001 6.1133C4.63752 6.17527 4.58792 6.249 4.55408 6.33024C4.52023 6.41148 4.50281 6.49862 4.50281 6.58663C4.50281 6.67464 4.52023 6.76177 4.55408 6.84301C4.58792 6.92425 4.63752 6.99799 4.70001 7.05996L7.52667 9.88663C7.58865 9.94911 7.66238 9.99871 7.74362 10.0326C7.82486 10.0664 7.912 10.0838 8.00001 10.0838C8.08801 10.0838 8.17515 10.0664 8.25639 10.0326C8.33763 9.99871 8.41136 9.94911 8.47334 9.88663L11.3333 7.05996C11.3958 6.99799 11.4454 6.92425 11.4793 6.84301C11.5131 6.76177 11.5305 6.67464 11.5305 6.58663C11.5305 6.49862 11.5131 6.41148 11.4793 6.33024C11.4454 6.249 11.3958 6.17527 11.3333 6.1133Z" fill="#8896AB"></path>
+                                    </svg>
+                                    <select
+                                        id="role"
+                                        className="appearance-none w-full py-2.5 px-4 text-gray-900 text-base font-normal bg-white border outline-none border-gray-400/40 hover:border-green-500 rounded-lg shadow-input"
+                                        defaultValue=""
+                                        {...register('role', { required: '*Select Role is required' })}
+                                    >
+                                        <option value="" disabled>Select Role</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Kitchen Stuff">Kitchen Stuff</option>
+                                        <option value="Customer Service">Customer Service</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                                {errors.role && (
+                                    <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
+                                        {errors.role.message}
+                                    </p>
+                                )}
+                            </div>
+
+
+                            {/* salary_type  */}
+                            <div className="w-full md:w-1/2 p-3 ">
+                                <label htmlFor="salary_type" className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-17-3">
+                                    Salary Type
+                                </label>
+                                <div className="relative">
+                                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.3333 6.1133C11.2084 5.98913 11.0395 5.91943 10.8633 5.91943C10.6872 5.91943 10.5182 5.98913 10.3933 6.1133L8.00001 8.47329L5.64001 6.1133C5.5151 5.98913 5.34613 5.91943 5.17001 5.91943C4.99388 5.91943 4.82491 5.98913 4.70001 6.1133C4.63752 6.17527 4.58792 6.249 4.55408 6.33024C4.52023 6.41148 4.50281 6.49862 4.50281 6.58663C4.50281 6.67464 4.52023 6.76177 4.55408 6.84301C4.58792 6.92425 4.63752 6.99799 4.70001 7.05996L7.52667 9.88663C7.58865 9.94911 7.66238 9.99871 7.74362 10.0326C7.82486 10.0664 7.912 10.0838 8.00001 10.0838C8.08801 10.0838 8.17515 10.0664 8.25639 10.0326C8.33763 9.99871 8.41136 9.94911 8.47334 9.88663L11.3333 7.05996C11.3958 6.99799 11.4454 6.92425 11.4793 6.84301C11.5131 6.76177 11.5305 6.67464 11.5305 6.58663C11.5305 6.49862 11.5131 6.41148 11.4793 6.33024C11.4454 6.249 11.3958 6.17527 11.3333 6.1133Z" fill="#8896AB"></path>
+                                    </svg>
+                                    <select
+                                        id="salary_type"
+                                        className="appearance-none w-full py-2.5 px-4 text-gray-900 text-base font-normal bg-white border outline-none border-gray-400/40 hover:border-green-500 rounded-lg shadow-input"
+                                        defaultValue="Monthly"
+                                        {...register('salary_type', { required: '*Select Role is required' })}
+                                        onChange={(e) => { setValue('salary_type', e.target.value); setText(e.target.value === "Daily" ? "Per Day Salary" : "Per Month Salary") }}
+                                    >
+                                        <option value="" disabled>Select Salary Type</option>
+                                        <option value="Monthly" >Monthly</option>
+                                        <option value="Daily">Daily</option>
+                                    </select>
+                                </div>
+                                {errors.salary_type && (
+                                    <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
+                                        {errors.salary_type.message}
+                                    </p>
+                                )}
+                            </div>
+
+
+                            {/* Salary Unit amount    */}
+                            <div className="w-full  p-3">
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">{text}</p>
+                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="8000"
+                                    {...register("salary_unit", {
+                                        required: "*Salary amount is Required",
+                                        validate: {
+                                            notNumber: (value) => !isNaN(value)
+                                        },
+                                    })} />
+                                {errors.salary_unit?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.salary_unit.message}</p>)}
+                                {errors.salary_unit?.type === "notNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*Not a number</p>)}
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
                 {/* emergency contact  */}
                 <div className="w-full md:w-3/4 p-3">
                     <div className="p-6 h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-dashboard border-gray-500/50">
@@ -515,7 +699,9 @@ const AddEmployee = () => {
 
                 </div>
 
-            </form>
+
+
+            </form >
         </>
     );
 };

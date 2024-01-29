@@ -54,7 +54,7 @@ const EditRestaurant = () => {
             const res1 = {
                 data: {
 
-                    "id": "87342fdjskllf",
+                    "_id": "87342fdjskllf",
                     "res_name": "Fuoco",
                     "res_email": "hossainahamed6872@gmail.com",
                     "res_mobile": "01868726172",
@@ -227,7 +227,7 @@ const EditRestaurant = () => {
                             <div className="w-full md:w-1/2 p-3">
                                 <p className="mb-1.5 font-medium text-base text-coolGray-800" data-config-id="auto-txt-3-3">Restaurant ID</p>
                                 <input className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input disabled:cursor-not-allowed " type="text" placeholder="food cart"
-                                    defaultValue={data?.id} disabled />
+                                    defaultValue={data?._id} disabled />
 
                             </div>
 
