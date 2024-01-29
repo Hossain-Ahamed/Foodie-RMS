@@ -22,112 +22,58 @@ const DishCategory_List = () => {
             const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/ongoing-orders?search=${searchQuery}&currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
             return [
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Active",
-                    order_site: "Onsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Active",
-                    order_site: "Onsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj2",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Inactive",
-                    order_site: "Onsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj3",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: false
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Active",
-                    order_site: "Onsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj4",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Inactive",
-                    order_site: "Offsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj5",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: false
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Inactive",
-                    order_site: "Offsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj6",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Active",
-                    order_site: "Offsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj7",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Inactive",
-                    order_site: "Offsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj8",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: false
                 },
                 {
-                    profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    category_name: "Meat Box",
-                    branchID: "19/7 chasara",
-                    res_id: "Falafel",
-                    table: "4",
-                    status: "Active",
-                    order_site: "Offsite",
-                    customer_phone: "018838229933",
-                    location: "Narayanganj9",
-                    categoryID: 123,
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
                 },
             ]
         }
@@ -224,28 +170,14 @@ const DishCategory_List = () => {
                                         >
                                             Category
                                         </th>
-                                        {/* <th
-                                        scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
-                                    >
-                                        Category Name
-                                    </th> */}
                                         <th
                                             scope='col'
                                             className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
-                                        >status</th>
-                                        {/* <th
-                                        scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
-                                    >
-                                        Priority
-                                    </th> */}
-                                        {/* <th
-                                        scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
-                                    >
-                                        To
-                                    </th> */}
+                                        >Status</th>
+                                        <th
+                                            scope='col'
+                                            className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
+                                        >Description</th>
                                         <th
                                             scope='col'
                                             className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
