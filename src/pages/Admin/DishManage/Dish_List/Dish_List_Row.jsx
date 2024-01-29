@@ -53,7 +53,7 @@ const Dish_List_Row = ({dish}) => {
                             />
                         </div>
                         <div>
-                            <span className='text-gray-900 whitespace-no-wrap block'>{dish?.dishTitle}</span>
+                            <span className='text-gray-900 whitespace-no-wrap block'>{dish?.title}</span>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ const Dish_List_Row = ({dish}) => {
                     className='text-gray-900 whitespace-no-wrap block text-center'
                 >
 
-                    {dish?.categoryName}
+                    {dish?.category}
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
@@ -83,7 +83,7 @@ const Dish_List_Row = ({dish}) => {
                     className='text-gray-900 whitespace-no-wrap block'
                 >
 
-                    {dish?.preparationCost} ৳
+                    {dish?.preparation_cost} ৳
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
@@ -91,7 +91,7 @@ const Dish_List_Row = ({dish}) => {
                     className='text-gray-900 whitespace-no-wrap block'
                 >
 
-                    {dish?.regularPrice} ৳
+                    {dish?.price} ৳
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
@@ -100,11 +100,11 @@ const Dish_List_Row = ({dish}) => {
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
 
-                <span className='text-gray-600 whitespace-no-wrap block'>{dish?.salesTax} %</span>
+                <span className='text-gray-600 whitespace-no-wrap block'>{dish?.sales_tax} %</span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
 
-                <span className='text-gray-600 whitespace-no-wrap block'>{dish?.supplymentDuty} %</span>
+                <span className='text-gray-600 whitespace-no-wrap block'>{dish?.supplementary_duty} %</span>
             </td>
 
             <td className='py-5 border-b border-gray-200 bg-white text-sm'>

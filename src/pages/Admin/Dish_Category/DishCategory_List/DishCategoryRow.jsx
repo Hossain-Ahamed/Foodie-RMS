@@ -3,6 +3,7 @@ import { BiEditAlt } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useRestauarantAndBranch from "../../../../Hooks/useRestauarantAndBranch";
+import { FaTrashAlt } from "react-icons/fa";
 const statusColorMap = {
     active: "success",
 
@@ -40,31 +41,15 @@ const DishCategoryRow = ({ category }) => {
     const { branchName, restaurantName } = useRestauarantAndBranch();
     let statusStyle, paymentStatus, icon;
     switch (category.status) {
-        case 'Active':
+        case true:
             statusStyle = 'bg-emerald-100 text-emerald-700'
             icon = <MdOutlineCheckCircle className="-ms-1 me-1.5 h-4 w-4" />
             break
-        case 'Inactive':
+        case false:
             statusStyle = 'bg-red-100 text-red-700'
             icon = <MdClear className="-ms-1 me-1.5 h-4 w-4" />
             break
     }
-    // switch (category.payment_status) {
-    //     case 'Pending':
-    //         paymentStatus = 'bg-blue-100 text-blue-700'
-    //         break
-    //     case 'Paid':
-    //         paymentStatus = 'bg-emerald-100 text-emerald-700'
-    //         break
-    //     case 'Refunded':
-    //         paymentStatus = 'bg-amber-100 text-amber-700'
-
-    //         break
-    //     case 'Not Refunded':
-    //         paymentStatus = 'bg-purple-100 text-purple-700'
-
-    //         break
-    // }
 
     const handleDeletecategory = id => {
         console.log(id)
@@ -90,16 +75,16 @@ const DishCategoryRow = ({ category }) => {
         <tr>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <div className='flex items-center'>
-                    <div className='flex items-center gap-5'>
+                    <div className='flex items-center flex-col md:flex-row gap-5'>
                         <div className=''>
                             <img
                                 alt='profile'
-                                src={category?.profilePhoto}
+                                src={category?.categoryPhoto}
                                 className='mx-auto object-cover rounded h-10 w-15 '
                             />
                         </div>
                         <div>
-                            <span className='text-gray-900 whitespace-no-wrap block'>{category?.category_name}</span>
+                            <span className='text-gray-900 whitespace-no-wrap block'>{category?.categoryTitle}</span>
                             <span className='text-gray-900 whitespace-no-wrap block'>Dish: </span>
                         </div>
                     </div>
@@ -108,10 +93,6 @@ const DishCategoryRow = ({ category }) => {
                     </div>
                 </div>
             </td>
-            {/* <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
-                 
-                <span className='text-gray-600 whitespace-no-wrap block'>{category?.status}</span>
-            </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
                     className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${statusStyle}`}
@@ -120,15 +101,21 @@ const DishCategoryRow = ({ category }) => {
                         icon
                     }
 
-                    <p className="whitespace-nowrap text-sm text-center">{category?.status}</p>
+                    <p className="whitespace-nowrap text-sm text-center">{category?.status ? "Active" : "Inactive"}</p>
                 </span>
             </td>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
+                 
+                <span className='text-gray-600 whitespace-no-wrap block'>{category?.description}</span>
+            </td>
+           
             {/* <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{category?.payment_status}</p></span>
             </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <Link to={`/restaurant/${restaurantName}/branch/${branchName}/edit-category/:${category?.categoryID}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><BiEditAlt size={25} /></Link>
-                <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span>
+                <Link to={`/restaurant/${restaurantName}/branch/${branchName}/edit-category/:${category?.categoryID}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
+                {/* <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span> */}
+                <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
             </td>
         </tr>
     )

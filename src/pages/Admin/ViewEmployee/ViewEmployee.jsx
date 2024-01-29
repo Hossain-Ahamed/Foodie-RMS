@@ -8,9 +8,8 @@ import { IoIosTransgender } from "react-icons/io";
 import user from '../../../assets/images/Home/user.png';
 import ScrollToTop from '../../../components/ScrollToTop/ScrollToTop';
 import { Link } from 'react-router-dom';
+import ChangePasswordModal from '../../../components/Modal/ChangePasswordModal';
 const ViewEmployee = ({ title, data, editable }) => {
-
-  
     return (
         <>
             <ScrollToTop />
@@ -26,6 +25,7 @@ const ViewEmployee = ({ title, data, editable }) => {
                                 editable && <Link to={`/admin/employee-list/edit/${data?.id}`} className="inline-flex items-center rounded-md bg-blue-50 px-4 cursor-pointer py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Edit</Link>
 
                             }
+                            <ChangePasswordModal userEmail={data?.email}/>
                         </div>
                         <p className='text-lg font-semibold'>Personal Information</p>
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
