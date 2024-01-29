@@ -112,8 +112,8 @@ const AddEmployee = () => {
     return (
         <>
 
-            {/* <SetTitle title="Add Employee" /> */}
-            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 select-none '>
+            <SetTitle title="Add Employee" />
+            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 select-none ' autoComplete='off'>
                 <SectionTitle h1="Employee Form" />
                 {/* necessary info  */}
                 <div className="w-full md:w-3/4 p-3 mt-8">
@@ -575,7 +575,7 @@ const AddEmployee = () => {
                             {/* Salary Unit amount    */}
                             <div className="w-full  p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">{text}</p>
-                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="number" placeholder="8000"
+                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="8000"
                                     {...register("salary_unit", {
                                         required: "*Salary amount is Required",
                                         validate: {
