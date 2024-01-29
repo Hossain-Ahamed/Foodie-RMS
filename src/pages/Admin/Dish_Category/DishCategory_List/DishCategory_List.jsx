@@ -22,54 +22,63 @@ const DishCategory_List = () => {
             const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/ongoing-orders?search=${searchQuery}&currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
             return [
                 {
+                    categoryID: "fa235f",
                     categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     categoryTitle: "Meat Box",
                     description: "Hello guys chai pee lo",
                     status: true
                 },
                 {
+                    categoryID: "fa235f",
                     categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     categoryTitle: "Meat Box",
                     description: "Hello guys chai pee lo",
                     status: true
                 },
                 {
+                    categoryID: "fa235f",
                     categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     categoryTitle: "Meat Box",
                     description: "Hello guys chai pee lo",
                     status: false
                 },
                 {
+                    categoryID: "fa235f",
                     categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     categoryTitle: "Meat Box",
                     description: "Hello guys chai pee lo",
                     status: true
                 },
                 {
+                    categoryID: "fa235f",
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Rice Bowl",
+                    description: "Hello guys chai pee lo",
+                    status: false
+                },
+                {
+                    categoryID: "fa235f",
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
+                },
+                {
+                    categoryID: "fa235f",
+                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    categoryTitle: "Meat Box",
+                    description: "Hello guys chai pee lo",
+                    status: true
+                },
+                {
+                    categoryID: "fa235f",
                     categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     categoryTitle: "Meat Box",
                     description: "Hello guys chai pee lo",
                     status: false
                 },
                 {
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-                {
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-                {
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: false
-                },
-                {
+                    categoryID: "fa235f",
                     categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     categoryTitle: "Meat Box",
                     description: "Hello guys chai pee lo",
@@ -186,7 +195,7 @@ const DishCategory_List = () => {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>{categories.map(category => <DishCategoryRow key={category.location} category={category} />)}</tbody>
+                                <tbody>{categories.map((category, id) => <DishCategoryRow key={id} category={category} />)}</tbody>
                             </table>
                         </div>
                     </div>

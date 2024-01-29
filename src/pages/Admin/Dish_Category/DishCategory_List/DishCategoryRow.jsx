@@ -3,6 +3,7 @@ import { BiEditAlt } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useRestauarantAndBranch from "../../../../Hooks/useRestauarantAndBranch";
+import { FaTrashAlt } from "react-icons/fa";
 const statusColorMap = {
     active: "success",
 
@@ -74,7 +75,7 @@ const DishCategoryRow = ({ category }) => {
         <tr>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <div className='flex items-center'>
-                    <div className='flex items-center gap-5'>
+                    <div className='flex items-center flex-col md:flex-row gap-5'>
                         <div className=''>
                             <img
                                 alt='profile'
@@ -112,8 +113,9 @@ const DishCategoryRow = ({ category }) => {
                 <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{category?.payment_status}</p></span>
             </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <Link to={`/restaurant/${restaurantName}/branch/${branchName}/edit-category/:${category?.categoryID}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><BiEditAlt size={25} /></Link>
-                <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span>
+                <Link to={`/restaurant/${restaurantName}/branch/${branchName}/edit-category/:${category?.categoryID}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
+                {/* <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span> */}
+                <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
             </td>
         </tr>
     )
