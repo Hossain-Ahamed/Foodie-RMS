@@ -1,0 +1,28 @@
+[
+    { "title": "Appetizers" },
+    { "title": "Main Courses" },
+    { "title": "Desserts" },
+    { "title": "Beverages" },
+    { "title": "Salads" },
+    { "title": "Soups" },
+    { "title": "Sandwiches" },
+    { "title": "Pizzas" },
+    { "title": "Burgers" },
+    { "title": "Seafood" },
+    { "title": "Vegetarian" },
+    { "title": "Vegan" },
+    { "title": "Gluten-Free" },
+    { "title": "Italian" },
+    { "title": "Mexican" },
+    { "title": "Asian" },
+    { "title": "Mediterranean" },
+    { "title": "Indian" },
+    { "title": "Sushi" },
+    { "title": "Steakhouse" },
+    { "title": "BBQ" },
+    { "title": "Breakfast" },
+    { "title": "Brunch" },
+    { "title": "Lunch" },
+    { "title": "Dinner" }
+  ]
+  

@@ -4,7 +4,8 @@ import Upazillas from "../../assets/bangladesh-geojson/bd-upazilas.json";
 import PostCodes from "../../assets/bangladesh-geojson/bd-postcodes.json";
 
 import countries from "../../assets/bangladesh-geojson/countries_data.json";
-
+import categories from "../data/categroy.json"
+import expenseType from "../data/expenseType.json"
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 
@@ -183,6 +184,15 @@ const validateSalesTax = (value) => {
   return true;
 };
 
+
+const getAllCategories = () =>{
+  return categories;
+}
+
+
+const getAllExpenseType = () =>{
+  return expenseType;
+}
 export {
   validateMobileNumber,
   validateSalesTax,
@@ -198,5 +208,8 @@ export {
   getUpazillas,
   getPostOffices,
   getAllDistricts,
-  getProvinceOfSelectedCity
+  getProvinceOfSelectedCity,
+  getAllCategories,
+  getAllExpenseType,
+  
 };
