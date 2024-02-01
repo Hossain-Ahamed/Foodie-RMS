@@ -29,6 +29,7 @@ import Test from "../../pages/Shared/VideoPlayer/Test";
 import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
 import ExpenseAndSalary from "../../pages/Admin/Expenses/ExpensesAndSalary/ExpenseAndSalary";
 import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
+import SearchEmployeePage_ToAdd from "../../pages/Admin/Employee/AddEmployee/SearchEmployeePage_ToAdd";
 
 
 
@@ -113,7 +114,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/add-employee',
-                element: <AddEmployee />
+                element: <SearchEmployeePage_ToAdd />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
