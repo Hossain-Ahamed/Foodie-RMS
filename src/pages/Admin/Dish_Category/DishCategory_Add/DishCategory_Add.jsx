@@ -5,10 +5,13 @@ import toast from 'react-hot-toast';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import { Checkbox } from '@nextui-org/react';
+import { getAllCategories } from '../../../../assets/scripts/Utility';
 
 const DishCategory_Add = () => {
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
 
+
+  const categories = getAllCategories();
   // handle image
   const [active, setActive] = useState(true);
   useEffect(() => {
@@ -109,17 +112,35 @@ const DishCategory_Add = () => {
                 />
               </div>
             </div>
-            {/* title  */}
             <div className="flex flex-wrap pb-3 -m-3">
+
+            {/* title  */}
               <div className="w-full  p-3">
-                <p className="mb-1.5 font-medium text-base text-coolGray-800" data-config-id="auto-txt-3-3">Category Title</p>
-                <input className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input" type="text" placeholder="ie: FastFood"
+                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3"> Title of Category </p>
+                <select
+                  label="Select Category"
+                  className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
+                  defaultValue=""
                   {...register("title", {
-                    required: "*title  is Required",
-                  })} />
+                    required: "*title category  is Required",
+                  })}
+                >
+                  <option value="" disabled>
+                    Select  Category
+                  </option>
+
+                  {categories.map((item, _idx) => (
+                    <option key={item?.title} value={item?.title}>
+                      {item?.title}
+                    </option>
+                  ))}
+                </select>
+
                 {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
 
               </div>
+
 
               {/* description  */}
               <div className="w-full p-3">
