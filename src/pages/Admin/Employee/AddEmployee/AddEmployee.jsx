@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getCountries, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
 import toast from 'react-hot-toast';
-import ScrollToTop from '../../../../components/ScrollToTop/ScrollToTop';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import useRestauarantAndBranch from './../../../../Hooks/useRestauarantAndBranch';

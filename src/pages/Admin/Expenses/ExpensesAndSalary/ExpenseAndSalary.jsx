@@ -79,10 +79,10 @@ const ExpenseAndSalary = () => {
             <SetTitle title="Expense & Salary" />
             <div className='flex  gap-3 '>
                 <div className='w-full '>
-                    <SectionTitle h1="Employee List" />
+                    <SectionTitle h1="Expense & Salary" />
                 </div>
                 <div>
-                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-expense`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Expense<IoAddOutline className='text-white' /></Link>
+                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-expenses`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Expense<IoAddOutline className='text-white' /></Link>
 
                 </div>
 
