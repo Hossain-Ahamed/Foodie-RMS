@@ -12,7 +12,7 @@ const OngoingOrderTable = () => {
             const res = await axiosSecure.get(`/ongoing-orders`);
             return [
                 {
-                    orderID: "234783bfc",
+                    id: "234783bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -24,7 +24,7 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    orderID: "234763bfc",
+                    id: "234763bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -36,7 +36,7 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    orderID: "234483bfc",
+                    id: "234483bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -48,7 +48,7 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    orderID: "294783bfc",
+                    id: "294783bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -60,7 +60,7 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    orderID: "834783bfc",
+                    id: "834783bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -123,7 +123,7 @@ const OngoingOrderTable = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>{OngoingOrders.map(order => <TableRow key={order.orderID} order={order}/>)}</tbody>
+                            <tbody>{OngoingOrders.map(order => <TableRow key={order.id} order={order}/>)}</tbody>
                         </table>
                     </div>
                 </div>

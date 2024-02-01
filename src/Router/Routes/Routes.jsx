@@ -27,6 +27,8 @@ import Dish_List from "../../pages/Admin/DishManage/Dish_List/Dish_List";
 
 import Test from "../../pages/Shared/VideoPlayer/Test";
 import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
+import ExpenseAndSalary from "../../pages/Admin/Expenses/ExpensesAndSalary/ExpenseAndSalary";
+import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
 
 
 
@@ -72,6 +74,14 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:res_id/branch/:branchID/coupon-list',
                 element: <CouponList />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/expenses',
+                element: <ExpenseAndSalary />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/add-expenses',
+                element: <AddExpense />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/add-coupon',

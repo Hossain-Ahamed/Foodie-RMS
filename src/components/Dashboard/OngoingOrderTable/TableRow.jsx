@@ -135,7 +135,7 @@ const TableRow = ({ order }) => {
                 <span title="Confirm Order" className="inline-flex ml-3 cursor-pointer text-emerald-500"><MdCheck size={25} /></span>
                 <span title="Edit Order" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></span>
                 <span title="Refund Order" className="inline-flex ml-3 cursor-pointer text-amber-500"><TbMoneybag size={25} /></span>
-                <span title="Delete category" onClick={() => handleDeleteOrder(order.orderID)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
+                <span title="Delete category" onClick={() => handleDeleteOrder(order.id)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
             </td>
         </tr>
     )
