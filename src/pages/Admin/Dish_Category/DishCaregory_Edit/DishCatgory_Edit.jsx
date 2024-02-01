@@ -10,9 +10,11 @@ import { useQuery } from 'react-query';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
+import { getAllCategories } from '../../../../assets/scripts/Utility';
 
 const DishCategory_Edit = () => {
   const { categoryID } = useParams();
+  const categories = getAllCategories();
 
   const axiosSecure = useAxiosSecure();
   const { branchID, res_id } = useRestauarantAndBranch();
@@ -29,7 +31,7 @@ const DishCategory_Edit = () => {
 
       const prev = {
         id: 1,
-        title: 'Burgers',
+        title: 'Italian',
         description: "tui moros na k",
         img: 'https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no',
         active: false,
@@ -154,13 +156,29 @@ const DishCategory_Edit = () => {
             </div>
             {/* title  */}
             <div className="flex flex-wrap pb-3 -m-3">
+              {/* title  */}
               <div className="w-full  p-3">
-                <p className="mb-1.5 font-medium text-base text-coolGray-800" data-config-id="auto-txt-3-3">Category Title</p>
-                <input className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input" type="text" placeholder="ie: FastFood"
-                defaultValue={data?.title}
-                {...register("title", {
-                    required: "*title  is Required",
-                  })} />
+                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3"> Title of Category </p>
+                <select
+                  label="Select Category"
+                  className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+  
+                  defaultValue={data?.title}
+                  {...register("title", {
+                    required: "*title category  is Required",
+                  })}
+                >
+                  <option value="" disabled>
+                    Select  Category
+                  </option>
+
+                  {categories.map((item, _idx) => (
+                    <option key={item?.title} value={item?.title}>
+                      {item?.title}
+                    </option>
+                  ))}
+                </select>
+
                 {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
 
               </div>
@@ -173,7 +191,7 @@ const DishCategory_Edit = () => {
                       Description
                     </p>
                     <textarea
-                    defaultValue={data?.description}
+                      defaultValue={data?.description}
                       {...register('description', { required: "*Description is required" })}
                       className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
 
