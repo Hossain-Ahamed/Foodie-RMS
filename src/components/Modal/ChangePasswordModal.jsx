@@ -17,23 +17,22 @@ export default function ChangePasswordModal({ userEmail }) {
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     const onSubmit = (data) => {
-        verifyEmailPassword(data.email, data.password, data.confirmPass)
-        
-        axiosSecure.post(`/change-passwords`, data)
-        .then(data => {
-            toast.success('Password Change successfully')
-            onOpenChange();
-        })
-        .catch(err => {
-            console.log(err)
-            toast.error(err?.response?.data?.message)
-        })
+        verifyEmailPassword(data, data.email, data.password, data.confirmPass)
     }
 
-    const verifyEmailPassword = (email, password, confirmPass) => {
+    const verifyEmailPassword = (data, email, password, confirmPass) => {
         if (userEmail === email) {
             if (password === confirmPass) {
-                toast.success('Password changed successfully.')
+                axiosSecure.post(`/change-passwords`, data)
+                    .then(data => {
+                        toast.success('Password Change successfully')
+                        onOpenChange();
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        toast.error(err?.response?.data?.message)
+                        onOpenChange();
+                    })
             } else {
                 toast.error("Password didn't matched, Try again.")
             }
