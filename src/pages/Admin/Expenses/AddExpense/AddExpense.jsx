@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { Checkbox } from '@nextui-org/react'
 // import Dish_Add_Description from './Dish_Add_Description';
 import { MdOutlinePercent } from 'react-icons/md'
-import { getAllExpenseType, validateSalesTax } from '../../../../assets/scripts/Utility'
+import { getAllExpenseType, getEmployeeData, getVendor, validateSalesTax } from '../../../../assets/scripts/Utility'
 import { MdDelete } from "react-icons/md";
 import { CiSquarePlus } from "react-icons/ci";
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure'
@@ -19,10 +19,12 @@ import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 
 const AddExpense = () => {
     // state to catch the purchase if user select option other than purchase vendor will be disabled
-    const [purchase, setPurchase] = useState('');
+    const [expenseCategory, SetExpenseCategory] = useState('');
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
-    const expenseTypes = getAllExpenseType();
+    const expenseType = getAllExpenseType();
+    const vendorData = getVendor();
+    const employeeData = getEmployeeData()
     const { refetch: categoryRefetch, data: categories = [], isLoading, error } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
@@ -75,10 +77,10 @@ const AddExpense = () => {
         },
     });
 
-    const { fields: optionFields, append: optionAppend, remove: optionRemove, } = useFieldArray({
-        control,
-        name: 'transactions',
-    });
+    // const { fields: optionFields, append: optionAppend, remove: optionRemove, } = useFieldArray({
+    //     control,
+    //     name: 'transactions',
+    // });
     // const { fields: addOnFields, append: addOnAppend, remove: addOnRemove, } = useFieldArray({
     //     control,
     //     name: 'addOn',
@@ -99,7 +101,11 @@ const AddExpense = () => {
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        console.log(data)
+        const expenseAmount = parseFloat(data.expense);
+        const paymentAmount = parseFloat(data.paymentAmount);
+        let due = expenseAmount - paymentAmount
+        console.log(data, due, expenseAmount, paymentAmount)
+
         if (!selectedImage0) {
 
             toast.error('Cover Photo needed');
@@ -138,7 +144,7 @@ const AddExpense = () => {
                             <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Title</p>
                             <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: Employee Wages"
                                 {...register("title", {
-                                    required: "*title  is Required",
+                                    required: "*Title  is Required",
                                 })} />
                             {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
 
@@ -151,21 +157,20 @@ const AddExpense = () => {
 
                                     defaultValue=""
                                     {...register("category", {
-                                        required: "*category  is Required",
+                                        required: "*Category  is Required",
                                     })}
-                                    onChange={event => setPurchase(event.target.value)}
+                                    onChange={event => SetExpenseCategory(event.target.value)}
                                 >
                                     <option value="" disabled>
                                         Select Expense Category
                                     </option>
 
-                                    {expenseTypes.map((item, _idx) => (
+                                    {expenseType.map((item, _idx) => (
                                         <option key={item?.title} value={item?.title}>
                                             {item?.title}
                                         </option>
                                     ))}
                                 </select>
-
                                 {errors.category?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.category?.message}</p>)}
                             </div>
 
@@ -187,7 +192,7 @@ const AddExpense = () => {
                                 </div>
 
                             </div> */}
-                            <div className="w-full p-3">
+                            <div className="w-full md:w-1/2 p-3">
                                 <label htmlFor="dob" className="mb-1.5 font-medium text-base text-gray-800">
                                     Bill Date
                                 </label>
@@ -208,16 +213,6 @@ const AddExpense = () => {
                                     </p>
                                 )}
                             </div>
-                        </div>
-                        <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
-                            {/* price */}
-                            <div className="w-full md:w-1/2 p-3 pb-0">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Vendor / Supplier</p>
-                                <input className={`${purchase !== "Purchase" && "cursor-not-allowed"} w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input`} type="text"
-                                    {...register("vendor", {
-                                    })} disabled={purchase !== "Purchase"} />
-                                {errors.vendor?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]'>{errors?.vendor?.message}</p>)}
-                            </div>
                             <div className="w-full md:w-1/2 p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Expenditure</p>
                                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="1000"
@@ -228,8 +223,67 @@ const AddExpense = () => {
                                         },
                                     })} />
                                 {errors.expense?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.expense?.message}</p>)}
-                                {errors.offerPrice?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
+                                {errors.expense?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
                             </div>
+                        </div>
+                        <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
+
+                            {/* Pay to */}
+                            <div className="w-full md:w-1/2 p-3 pb-0">
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Pay To</p>
+                                <select
+                                    label="Select Dish Category"
+                                    className={`${(expenseCategory === "Purchase" || expenseCategory === "Salaries") || "cursor-not-allowed"} w-full bg-gray-50 border
+                                     border-gray-300 text-gray-900 text-sm
+                                      rounded-lg focus:ring-gray-500
+                                       focus:border-gray-500 block p-2.5`}
+
+                                    disabled={!(expenseCategory === "Purchase" || expenseCategory === "Salaries")}
+                                    defaultValue=""
+                                    // jdi expense type purchase or salary na hole disable thakbe
+                                    {...register("payTo", {
+                                        required: "*Pay To is Required",
+                                    })}
+                                    onChange={event => SetExpenseCategory(event.target.value)}
+                                >
+                                    <option value="" disabled>
+                                        Select Whom to Pay
+                                    </option>
+
+                                    {/* jdi expense type salary hoi tahole employee name ashbe drowpdown otherwise vendor der list ashbe */}
+                                    {expenseCategory === "Purchase"
+                                        ? vendorData.map((item, _idx) => (
+                                            <option key={item?.title} value={item?.title}>
+                                                {item?.title}
+                                            </option>
+                                        ))
+                                        : employeeData.map((employee, _idx) => (
+                                            <option key={employee?.name} value={employee?.name}>
+                                                {employee?.name}
+                                            </option>))}
+                                </select>
+                                {(expenseCategory === "Purchase" || expenseCategory === "Salaries") && errors.payTo?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payTo?.message}</p>)}
+                                {/* expense type jdi purchase or salary hoi tahole "whom to pay" dropdown select na korle error dibe */}
+                            </div>
+                            <div className="w-full md:w-1/2 p-3">
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Vendor ID</p>
+                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="1000"
+                                    {...register("vendorID", {
+                                    })} />
+                                {errors.vendorID?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.vendorID?.message}</p>)}
+                            </div>
+                            {/* <div className="w-full md:w-1/2 p-3">
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Expenditure</p>
+                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="1000"
+                                    {...register("expense", {
+                                        required: "*Expense amount is Required",
+                                        validate: {
+                                            isNumber: (value) => !isNaN(value)
+                                        },
+                                    })} />
+                                {errors.expense?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.expense?.message}</p>)}
+                                {errors.offerPrice?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
+                            </div> */}
                             <div className="w-full p-3">
                                 <p className="mt-3 mb-1.5 font-medium text-coolGray-800 text-base" data-config-id="auto-txt-10-3">
                                     Attachments
@@ -284,13 +338,12 @@ const AddExpense = () => {
                             <div className="w-full p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Description</p>
                                 <textarea
-                                    {...register('vendorDescription', { required: "*Description is required" })}
+                                    {...register('vendorDescription')}
                                     className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
-
                                 ></textarea>
-                                {errors.vendorDescription?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.vendorDescription?.message}</p>)}
+
                             </div>
-                            
+
                             {/* <div className="w-full p-3 pt-0">
 
                                 NB: Offer and regular price must be same if no offer are given
@@ -356,59 +409,59 @@ const AddExpense = () => {
 
                 <div className='w-full h-full p-3 select-none'>
                     {/* --------------------------------------------------------------------------
-          ------------------OPTIONS-----------------------------------------------------
-          ------------------------------------------------------------------------------ */}
+                    ------------------OPTIONS-----------------------------------------------------
+                    ------------------------------------------------------------------------------ */}
                     <div className="flex flex-wrap pb-3 m-3 border-1 rounded p-2">
                         <div className="p-6 h-full w-full   overflow-hidden bg-white  shadow-dashboard">
                             <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Transaction</p>
                             <small>You can make payments in segments or make full payment at once and find the detailed transaction here.</small>
                             {/* {optionFields.map((branch, index) => ( */}
-                                <div className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
+                            <div className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
 
-                                    {/* */}
-                                    <div className="w-full md:w-1/2 p-1">
-                                        <p className="mb-1.5 font-medium text-base text-gray-800">Payment Date</p>
-                                        <input
-                                            id="bill"
-                                            className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
-                                            type="date"
-                                            min="1800-01-01"
-                                            max={new Date().toISOString().split('T')[0]}
-                                            {...register('paymentDate', {
-                                                required: '*Payment Date is required',
+                                {/* */}
+                                <div className="w-full md:w-1/2 p-1">
+                                    <p className="mb-1.5 font-medium text-base text-gray-800">Payment Date</p>
+                                    <input
+                                        id="bill"
+                                        className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
+                                        type="date"
+                                        min="1800-01-01"
+                                        max={new Date().toISOString().split('T')[0]}
+                                        {...register(`paymentDate`, {
+                                            required: '*Bill Date is required',
 
-                                            })}
-                                        />
-                                        {errors.paymentDate && (
-                                            <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                                {errors.paymentDate.message}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <div className="w-full md:w-1/2 p-1">
-                                        <p className="mb-1.5 font-medium text-base text-gray-800">Payment Amount</p>
-                                        <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: 1000"
-                                            {...register("paymentAmount", {
-                                                required: "*Payment Amount  is Required",
-                                            })} />
-                                        {errors.paymentAmount?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.paymentAmount?.message}</p>)}
-                                    </div>
-                                    <div className="w-full p-1">
-                                        <textarea
+                                        })}
+                                    />
+                                    {errors.paymentDate && (
+                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
+                                            {errors.paymentDate.message}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="w-full md:w-1/2 p-1">
+                                    <p className="mb-1.5 font-medium text-base text-gray-800">Payment Amount</p>
+                                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: 1000"
+                                        {...register(`paymentAmount`, {
+                                            required: "*Payment Amount  is Required",
+                                        })} />
+                                    {errors.paymentAmount?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.paymentAmount?.message}</p>)}
+                                </div>
+                                <div className="w-full p-1">
+                                    <textarea
                                         placeholder='Description'
-                                            {...register('description', { required: "*Description is required" })}
-                                            className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
+                                        {...register(`description`, { required: "*Description is required" })}
+                                        className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
 
-                                        ></textarea>
-                                        {errors.description?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.description?.message}</p>)}
-                                    </div>
-
-
+                                    ></textarea>
+                                    {errors.description?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.description?.message}</p>)}
+                                </div>
 
 
 
-                                    {/* Remove  Button */}
-                                    {/* <div className='w-full flex flex-wrap justify-end items-center gap-2'>
+
+
+                                {/* Remove  Button */}
+                                {/* <div className='w-full flex flex-wrap justify-end items-center gap-2'>
                                         <button
                                             type="button"
                                             onClick={() => optionRemove(index)}
@@ -419,8 +472,8 @@ const AddExpense = () => {
 
                                     </div> */}
 
-                                </div>
-                            {/* // ))} */}
+                            </div>
+                            {/* ))} */}
 
                             {/* add option  */}
                             {/* <div className='w-full flex flex-wrap justify-start items-center gap-2'>
