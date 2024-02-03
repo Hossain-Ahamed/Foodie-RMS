@@ -31,6 +31,7 @@ import ExpenseAndSalary from "../../pages/Admin/Expenses/ExpensesAndSalary/Expen
 import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
 import SearchEmployeePage_ToAdd from "../../pages/Admin/Employee/AddEmployee/SearchEmployeePage_ToAdd";
 import AddExistingEmployee from "../../pages/Admin/Employee/AddEmployee/AddExistingEmployee";
+import EditEmployee from "../../pages/Admin/Employee/EditEmployee/EditEmployee";
 
 
 
@@ -124,6 +125,10 @@ export const router = createBrowserRouter([
             {
                 path: '/restaurant/:res_id/branch/:branchID/add-existing-employee/:employeeID',
                 element: <AddExistingEmployee/>
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/update-employee-profile/:employeeID',
+                element: <EditEmployee/>
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',

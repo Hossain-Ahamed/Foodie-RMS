@@ -25,7 +25,7 @@ const ViewAsAdmin = () => {
             // return res?.data;
 
             const prev = {
-                id: 1,
+                _id: 1,
                 f_name: 'Farhan Hasan',
                 l_name: 'Nilok',
                 email: 'a@gmail.com',
