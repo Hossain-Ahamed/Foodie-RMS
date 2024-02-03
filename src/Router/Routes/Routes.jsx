@@ -32,6 +32,7 @@ import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
 import SearchEmployeePage_ToAdd from "../../pages/Admin/Employee/AddEmployee/SearchEmployeePage_ToAdd";
 import AddExistingEmployee from "../../pages/Admin/Employee/AddEmployee/AddExistingEmployee";
 import EditEmployee from "../../pages/Admin/Employee/EditEmployee/EditEmployee";
+import MembershipContainer from "../../pages/Admin/ManageOffer/ManageMembership/MembershipContainer/MembershipContainer";
 
 
 
@@ -75,8 +76,16 @@ export const router = createBrowserRouter([
                 element: <ManagePaymentSystem />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/coupon-list',
+                path: '/coupon-list',
                 element: <CouponList />
+            },
+            {
+                path: '/membership',
+                element: <MembershipContainer />
+            },
+            {
+                path: '/add-coupon',
+                element: <AddCoupon />
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/expenses',
@@ -86,10 +95,7 @@ export const router = createBrowserRouter([
                 path: '/restaurant/:res_id/branch/:branchID/add-expenses',
                 element: <AddExpense />
             },
-            {
-                path: '/restaurant/:res_id/branch/:branchID/add-coupon',
-                element: <AddCoupon />
-            },
+          
             {
                 path: '/restaurant/:res_id/branch/:branchID/category',
                 element: <DishCategory_List />

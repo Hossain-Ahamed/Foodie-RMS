@@ -85,7 +85,7 @@ const EmployeeListRow = ({ employee }) => {
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
 
-                <a href={`tel:${employee.mobile}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.phone}</a>
+                <a href={`tel:${employee.mobile}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.mobile}</a>
             </td>
 
 

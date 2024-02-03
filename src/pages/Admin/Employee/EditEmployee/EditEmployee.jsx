@@ -770,7 +770,7 @@ const EditEmployee = () => {
                                     className="form-checkbox h-3.5 w-3.5 "
                                     required
                                 />
-                                <label htmlFor="confirmation" className="ml-2 text-xs text-gray-700 cursor-pointer">
+                                <label htmlFor="confirmation" className="ml-2 text-xs text-gray-700 cursor-pointer select-none ">
                                     Confirm correct input to avoid issues in the RMS system. Wrong input may lead to issues finding the employee next time.
                                 </label>
                             </div>
