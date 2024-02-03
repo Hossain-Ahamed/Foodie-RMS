@@ -8,6 +8,8 @@ import categories from "../data/categroy.json";
 import expenseType from "../data/expenseType.json";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
+import vendorData from "../data/vendor.json"
+import employeeData from "../data/employee.json"
 
 const getCountries = () => {
   return countries;
@@ -255,6 +257,15 @@ function getMonthNumber(month) {
   return String(months.indexOf(month) + 1).padStart(2, "0");
 }
 
+
+const getVendor = () => {
+  return vendorData;
+}
+
+const getEmployeeData = () => {
+  return employeeData;
+}
+
 export {
   validateMobileNumber,
   validateSalesTax,
@@ -273,5 +284,10 @@ export {
   getProvinceOfSelectedCity,
   getAllCategories,
   getAllExpenseType,
+
+  getVendor,
+  getEmployeeData
+
   getformatDate,
+
 };
