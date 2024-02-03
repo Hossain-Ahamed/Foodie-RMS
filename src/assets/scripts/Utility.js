@@ -286,7 +286,7 @@ export {
   getAllExpenseType,
 
   getVendor,
-  getEmployeeData
+  getEmployeeData,
 
   getformatDate,
 

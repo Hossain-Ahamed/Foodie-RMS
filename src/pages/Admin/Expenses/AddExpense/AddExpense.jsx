@@ -20,57 +20,93 @@ import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 const AddExpense = () => {
     // state to catch the purchase if user select option other than purchase vendor will be disabled
     const [expenseCategory, SetExpenseCategory] = useState('');
+    const [optionList, setOptionList] = useState([]);
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
     const expenseType = getAllExpenseType();
     const vendorData = getVendor();
     const employeeData = getEmployeeData()
-    const { refetch: categoryRefetch, data: categories = [], isLoading, error } = useQuery({
+    const drowpdownCategory = ["Purchase","Salaries"]
+    const { refetch: dataRefetch, data: data = [], isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
             const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-all-categories`)
 
             // return res.data.categories;
-            return [
-                {
-                    "_id": "1",
-                    "title": "Purchase",
-                    "active": true,
-                },
-                {
-                    "_id": "2",
-                    "title": "Rent",
-                    "active": true,
-                },
-                {
-                    "_id": "3",
-                    "title": "Wages",
-                    "active": true,
-                },
-                {
-                    "_id": "4",
-                    "title": "Service/Utility Bills",
-                    "active": true,
-                },
-                {
-                    "_id": "5",
-                    "title": "Cost of Items sold",
-                    "active": true,
-                },
-                {
-                    "_id": "6",
-                    "title": "Charges/Tax",
-                    "active": true,
-                },
-                {
-                    "_id": "7",
-                    "title": "Others",
-                    "active": true,
-                },
-            ]
+            return {
+                vendors: [
+                    {
+                        "name": "Ma er Doa",
+                        "_id": "1"
+                    },
+                    {
+                        "name": "Bap er Doa",
+                        "_id": "2"
+                    },
+                    {
+                        "name": "Vai vai store",
+                        "_id": "3"
+                    },
+                    {
+                        "name": "Tong",
+                        "_id": "4"
+                    },
+                    {
+                        "name": "Mama Vigina Store",
+                        "_id": "5"
+                    },
+                    {
+                        "name": "Khalur Dan",
+                        "_id": "6"
+                    }
+                ],
+
+                employees: [
+                    {
+                        "name": "Tahsin",
+                        "_id": "malu"
+                    },
+                    {
+                        "name": "Pathul",
+                        "_id": "shemale"
+                    },
+                    {
+                        "name": "Hossain",
+                        "_id": "gay"
+                    },
+                    {
+                        "name": "Nilok",
+                        "_id": "Straight"
+                    },
+                    {
+                        "name": "Mokles",
+                        "_id": "null"
+                    },
+                    {
+                        "name": "Satoru",
+                        "_id": "Gojo"
+                    }
+                ]
+            }
 
         }
     })
+
+    useEffect(() => {
+        setOptionList([])
+        if(expenseCategory === "Purchase"){
+            if(data?.vendors && Array.isArray(data?.vendors)){
+
+                setOptionList(data?.vendors)
+            }
+        } else if (expenseCategory === "Salaries") {
+            if (data?.employees && Array.isArray(data?.employees)) {
+
+                setOptionList(data?.employees)
+            }
+        }
+    }, [expenseCategory, setOptionList, data])
+
     const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({
         defaultValues: {
             active: true,
@@ -101,6 +137,7 @@ const AddExpense = () => {
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
+        console.log(data);
         const expenseAmount = parseFloat(data.expense);
         const paymentAmount = parseFloat(data.paymentAmount);
         let due = expenseAmount - paymentAmount
@@ -119,7 +156,7 @@ const AddExpense = () => {
         return <LoadingPage />
     }
 
-    if (error) {
+    if (dataError) {
         return <ErrorPage />
     }
 
@@ -132,25 +169,9 @@ const AddExpense = () => {
 
                 <div className="w-full  ">
                     <div className=" h-full">
-
-
-                        {/* pp */}
-                        <div className=''>
-
-                            {/* image 1  */}
-                        </div>
                         {/* category  */}
-                        <div className="w-full  p-3">
-                            <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Title</p>
-                            <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: Employee Wages"
-                                {...register("title", {
-                                    required: "*Title  is Required",
-                                })} />
-                            {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
-
-                        </div>
                         <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
-                            <div className="w-full  p-3">
+                            <div className="w-full p-3">
                                 <select
                                     label="Select Dish Category"
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
@@ -159,7 +180,12 @@ const AddExpense = () => {
                                     {...register("category", {
                                         required: "*Category  is Required",
                                     })}
-                                    onChange={event => SetExpenseCategory(event.target.value)}
+                                    onChange={event => { 
+                                        SetExpenseCategory(event.target.value); 
+                                        setValue('category',event.target.value);
+                                        setValue('payTo', '');
+                                        setValue('payeeID', '');
+                                    }}
                                 >
                                     <option value="" disabled>
                                         Select Expense Category
@@ -197,7 +223,7 @@ const AddExpense = () => {
                                     Bill Date
                                 </label>
                                 <input
-                                    id="dob"
+                                    id="bill"
                                     className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
                                     type="date"
                                     min="1800-01-01"
@@ -229,68 +255,68 @@ const AddExpense = () => {
                         <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
 
                             {/* Pay to */}
-                            <div className="w-full md:w-1/2 p-3 pb-0">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Pay To</p>
-                                <select
-                                    label="Select Dish Category"
-                                    className={`${(expenseCategory === "Purchase" || expenseCategory === "Salaries") || "cursor-not-allowed"} w-full bg-gray-50 border
+                            {
+                                drowpdownCategory.includes(expenseCategory)
+                                ?
+                                    <div className="w-full md:w-1/2 p-3 pb-0">
+                                        <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Pay To</p>
+                                        <select
+                                            label="Select Whom to Pay"
+                                            className={`${(expenseCategory === "Purchase" || expenseCategory === "Salaries") || "cursor-not-allowed"} w-full bg-gray-50 border
                                      border-gray-300 text-gray-900 text-sm
                                       rounded-lg focus:ring-gray-500
                                        focus:border-gray-500 block p-2.5`}
 
-                                    disabled={!(expenseCategory === "Purchase" || expenseCategory === "Salaries")}
-                                    defaultValue=""
-                                    // jdi expense type purchase or salary na hole disable thakbe
-                                    {...register("payTo", {
-                                        required: "*Pay To is Required",
-                                    })}
-                                    onChange={event => SetExpenseCategory(event.target.value)}
-                                >
-                                    <option value="" disabled>
-                                        Select Whom to Pay
-                                    </option>
-
-                                    {/* jdi expense type salary hoi tahole employee name ashbe drowpdown otherwise vendor der list ashbe */}
-                                    {expenseCategory === "Purchase"
-                                        ? vendorData.map((item, _idx) => (
-                                            <option key={item?.title} value={item?.title}>
-                                                {item?.title}
+                                            disabled={!(expenseCategory === "Purchase" || expenseCategory === "Salaries")}
+                                            defaultValue=""
+                                            // jdi expense type purchase or salary na hole disable thakbe
+                                            {...register("payTo", {
+                                            })}
+                                            onChange={(e) => { optionList && Array.isArray(optionList) && setValue('payeeID', optionList.find(i => i?.name === e.target.value)?._id) }}
+                                        >
+                                            <option value="" disabled>
+                                                Select Whom to Pay
                                             </option>
-                                        ))
-                                        : employeeData.map((employee, _idx) => (
-                                            <option key={employee?.name} value={employee?.name}>
-                                                {employee?.name}
-                                            </option>))}
-                                </select>
-                                {(expenseCategory === "Purchase" || expenseCategory === "Salaries") && errors.payTo?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payTo?.message}</p>)}
-                                {/* expense type jdi purchase or salary hoi tahole "whom to pay" dropdown select na korle error dibe */}
-                            </div>
+
+                                            {/* jdi expense type salary hoi tahole employee name ashbe drowpdown otherwise vendor der list ashbe */}
+                                            {optionList && Array.isArray(optionList) && optionList.map((item, _idx) => (
+                                                    <option key={_idx} value={item?.name}>
+                                                        {item?.name}
+                                                    </option>
+                                                ))
+                                            }
+                                        </select>
+                                        {(expenseCategory === "Purchase" || expenseCategory === "Salaries") && errors.payTo?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payTo?.message}</p>)}
+                                        {/* expense type jdi purchase or salary hoi tahole "whom to pay" dropdown select na korle error dibe */}
+                                    </div>
+                                    : <div className="w-full md:w-1/2 p-3">
+                                        <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Pay To</p>
+                                        <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="Alexa"
+                                            {...register("payTo", {
+                                                required: "*Pay To is Required"
+                                            })} />
+                                        {errors.payTo?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payTo?.message}</p>)}
+                                    </div>
+                            }
+                            {/* payee ID */}
                             <div className="w-full md:w-1/2 p-3">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Vendor ID</p>
-                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="1000"
-                                    {...register("vendorID", {
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Payee ID</p>
+                                <input className="disabled:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="0000"
+                                    defaultValue={!drowpdownCategory.includes(expenseCategory) && 'N/A'}
+                                    disabled={drowpdownCategory.includes(expenseCategory)}
+                                    {...register("payeeID", {
+                                        required: "*Payee ID is required"
                                     })} />
-                                {errors.vendorID?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.vendorID?.message}</p>)}
+                                {errors.payeeID?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payeeID?.message}</p>)}
                             </div>
-                            {/* <div className="w-full md:w-1/2 p-3">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Expenditure</p>
-                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="1000"
-                                    {...register("expense", {
-                                        required: "*Expense amount is Required",
-                                        validate: {
-                                            isNumber: (value) => !isNaN(value)
-                                        },
-                                    })} />
-                                {errors.expense?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.expense?.message}</p>)}
-                                {errors.offerPrice?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
-                            </div> */}
+                            
                             <div className="w-full p-3">
                                 <p className="mt-3 mb-1.5 font-medium text-coolGray-800 text-base" data-config-id="auto-txt-10-3">
                                     Attachments
                                 </p>
                                 <div>
 
-                                    {/* iamge 1  */}
+                                    {/* Attachment Image */}
                                     <div
                                         className=" flex items-center justify-center relative  h-60"
 
@@ -338,70 +364,13 @@ const AddExpense = () => {
                             <div className="w-full p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Description</p>
                                 <textarea
+                                defaultValue="N/A"
                                     {...register('vendorDescription')}
                                     className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
                                 ></textarea>
 
                             </div>
-
-                            {/* <div className="w-full p-3 pt-0">
-
-                                NB: Offer and regular price must be same if no offer are given
-                            </div>
-
-
-                            {/* preparation_cost */}
-                            {/* <div className="w-full  p-3">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Preparation Cost</p>
-                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="700"
-                                    {...register("preparation_cost", {
-                                        required: "*preparation_cost  is Required",
-                                        validate: {
-                                            isNumber: (value) => !isNaN(value)
-                                        },
-                                    })} />
-                                {errors.preparation_cost?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.preparation_cost?.message}</p>)}
-                                {errors.preparation_cost?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.preparation_cost?.message}</p>)}
-
-                            </div> */}
                         </div>
-
-                        {/* tax  */}
-
-                        {/* <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
-                            {/* Sale Tax */}
-                        {/* <div className="w-1/2  p-3 relative">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Sales Tax</p>
-                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="30"
-                                    defaultValue={0}
-                                    {...register("sales_tax", {
-                                        required: "*sales_tax  is Required",
-                                        min: 0,
-                                        max: 100,
-                                        validate: validateSalesTax,
-                                    })} />
-                                <span className='absolute right-6 top-14'><MdOutlinePercent /></span>
-                                {errors.sales_tax?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.sales_tax?.message}</p>)}
-                                {errors.sales_tax?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*must be number 0-100</p>)}
-
-                            </div> */}
-
-                        {/* Suppelementary Duty  */}
-                        {/* <div className="w-1/2  p-3 relative">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Suppelementary Duty  </p>
-                                <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="30"
-                                    defaultValue={0}
-                                    {...register("supplementary_duty", {
-                                        required: "*supplementary_duty  is Required",
-                                        min: 0,
-                                        max: 100,
-                                        validate: validateSalesTax
-                                    })} />
-                                <span className='absolute right-6 top-14'><MdOutlinePercent /></span>
-                                {errors.supplementary_duty?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.supplementary_duty?.message}</p>)}
-                                {errors.supplementary_duty?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*must be number 0-100</p>)}
-                            </div> */}
-                        {/* </div> */}
                     </div>
                 </div>
 
@@ -409,26 +378,25 @@ const AddExpense = () => {
 
                 <div className='w-full h-full p-3 select-none'>
                     {/* --------------------------------------------------------------------------
-                    ------------------OPTIONS-----------------------------------------------------
+                    ------------------Transaction-----------------------------------------------------
                     ------------------------------------------------------------------------------ */}
                     <div className="flex flex-wrap pb-3 m-3 border-1 rounded p-2">
                         <div className="p-6 h-full w-full   overflow-hidden bg-white  shadow-dashboard">
                             <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Transaction</p>
                             <small>You can make payments in segments or make full payment at once and find the detailed transaction here.</small>
-                            {/* {optionFields.map((branch, index) => ( */}
                             <div className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
 
                                 {/* */}
                                 <div className="w-full md:w-1/2 p-1">
                                     <p className="mb-1.5 font-medium text-base text-gray-800">Payment Date</p>
                                     <input
-                                        id="bill"
+                                        id="payment"
                                         className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
                                         type="date"
                                         min="1800-01-01"
                                         max={new Date().toISOString().split('T')[0]}
                                         {...register(`paymentDate`, {
-                                            required: '*Bill Date is required',
+                                            required: '*Payment Date is required',
 
                                         })}
                                     />
@@ -447,7 +415,16 @@ const AddExpense = () => {
                                     {errors.paymentAmount?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.paymentAmount?.message}</p>)}
                                 </div>
                                 <div className="w-full p-1">
+                                    <p className="mb-1.5 font-medium text-base text-gray-800">Reference ID/Transaction ID</p>
+                                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="*** *** ***"
+                                        {...register(`reference`, {
+                                            required: "*Ref/TransactionID is Required",
+                                        })} />
+                                    {errors.reference?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.reference?.message}</p>)}
+                                </div>
+                                <div className="w-full p-1">
                                     <textarea
+                                    defaultValue="N/A"
                                         placeholder='Description'
                                         {...register(`description`, { required: "*Description is required" })}
                                         className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
@@ -456,40 +433,12 @@ const AddExpense = () => {
                                     {errors.description?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.description?.message}</p>)}
                                 </div>
 
-
-
-
-
-                                {/* Remove  Button */}
-                                {/* <div className='w-full flex flex-wrap justify-end items-center gap-2'>
-                                        <button
-                                            type="button"
-                                            onClick={() => optionRemove(index)}
-                                            className="flex-shrink-0 px-2 py-2 bg-slate-200 hover:bg-slate-300 font-medium text-sm text-white border border-slate-400 rounded-md shadow-button"
-                                        >
-                                            <MdDelete size={18} className='text-red-300' />
-                                        </button>
-
-                                    </div> */}
-
                             </div>
-                            {/* ))} */}
-
-                            {/* add option  */}
-                            {/* <div className='w-full flex flex-wrap justify-start items-center gap-2'>
-                                <button
-                                    type="button"
-                                    onClick={() => optionAppend({})}
-                                    className="flex   font-medium text-sm  rounded-md shadow-button "
-                                >
-                                    <CiSquarePlus className='text-green-400 text-5xl' title='Add New' />
-                                </button>
-                            </div> */}
                         </div>
                     </div>
 
                     {/* -------------------------------------------------------------------------------------------- */}
-                    <div className=' flex flex-wrap justify-center items-end gap-3 p-1'>
+                    <div className='flex flex-wrap justify-center items-end gap-3 p-1'>
                         {/* save button  */}
                         <button type='submit' className="flex flex-wrap justify-center w-full max-w-96  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
                             <p data-config-id="auto-txt-22-3">Create</p>
