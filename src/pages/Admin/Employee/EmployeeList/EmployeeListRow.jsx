@@ -58,7 +58,7 @@ const EmployeeListRow = ({ employee }) => {
                             />
                         </div>
                         <div>
-                            <span className='text-gray-900 whitespace-no-wrap block'>{employee?.firstName} {employee?.lastName}</span>
+                            <span className='text-gray-900 whitespace-no-wrap block'>{employee?.f_name} {employee?.l_name}</span>
                             <span className='text-gray-900 whitespace-no-wrap block'>{employee?.email}</span>
                         </div>
                     </div>
@@ -85,7 +85,7 @@ const EmployeeListRow = ({ employee }) => {
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
 
-                <a href={`tel:${employee.phone}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.phone}</a>
+                <a href={`tel:${employee.mobile}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.phone}</a>
             </td>
 
 

@@ -30,6 +30,7 @@ import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
 import ExpenseAndSalary from "../../pages/Admin/Expenses/ExpensesAndSalary/ExpenseAndSalary";
 import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
 import SearchEmployeePage_ToAdd from "../../pages/Admin/Employee/AddEmployee/SearchEmployeePage_ToAdd";
+import AddExistingEmployee from "../../pages/Admin/Employee/AddEmployee/AddExistingEmployee";
 
 
 
@@ -113,8 +114,16 @@ export const router = createBrowserRouter([
                 element: <Dish_Edit />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/add-employee',
+                path: '/add-employee',
                 element: <SearchEmployeePage_ToAdd />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/add-new-employee',
+                element: <AddEmployee />
+            },
+            {
+                path: '/restaurant/:res_id/branch/:branchID/add-existing-employee/:employeeID',
+                element: <AddExistingEmployee/>
             },
             {
                 path: '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
