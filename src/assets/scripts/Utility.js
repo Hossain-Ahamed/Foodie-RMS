@@ -4,8 +4,8 @@ import Upazillas from "../../assets/bangladesh-geojson/bd-upazilas.json";
 import PostCodes from "../../assets/bangladesh-geojson/bd-postcodes.json";
 
 import countries from "../../assets/bangladesh-geojson/countries_data.json";
-import categories from "../data/categroy.json"
-import expenseType from "../data/expenseType.json"
+import categories from "../data/categroy.json";
+import expenseType from "../data/expenseType.json";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import vendorData from "../data/vendor.json"
@@ -47,16 +47,15 @@ const isValidAddress = (
 const getDivisions = () => {
   return Divisions.divisions;
 };
-const getAllDistricts = ()=>{
+const getAllDistricts = () => {
   return Districts.districts;
-}
+};
 
-const getProvinceOfSelectedCity = (name)=>{
+const getProvinceOfSelectedCity = (name) => {
+  const districtID = Districts.districts.find((item) => item?.name === name);
 
-  const districtID = Districts.districts.find(item=>item?.name===name)
-
-  return Divisions.divisions.find(i=>i.id===districtID.division_id).name
-}
+  return Divisions.divisions.find((i) => i.id === districtID.division_id).name;
+};
 const getDistricts = (division_id) => {
   return Districts.districts.filter((i) => i.division_id === division_id);
 };
@@ -171,7 +170,6 @@ const getPcInfo = async () => {
   }
 };
 
-
 const validateSalesTax = (value) => {
   if (isNaN(value)) {
     return "*is not a number";
@@ -186,15 +184,79 @@ const validateSalesTax = (value) => {
   return true;
 };
 
-
-const getAllCategories = () =>{
+const getAllCategories = () => {
   return categories;
-}
+};
 
-
-const getAllExpenseType = () =>{
+const getAllExpenseType = () => {
   return expenseType;
+};
+
+function getformatDate(inputDate) {
+  // Define regular expression patterns for different date formats
+  const patterns = [
+    /(\d{1,2})[ -/](\d{1,2})[ -/](\d{4})/,
+    /(\d{1,2})[ ]?([a-zA-Z]+)[ ]?(\d{4})/,
+    /(\d{1,2})[ ]?([a-zA-Z]+)[ ]?(\d{2})/,
+    /(\d{1,2})[ ]?(\d{1,2})[ ]?(\d{4})/,
+    /(\d{2})(\d{2})(\d{4})/,
+  ];
+
+  // Loop through patterns and check for a match
+  for (const pattern of patterns) {
+    const match = inputDate.match(pattern);
+    if (match) {
+      // Format the matched components as DD/MM/YYYY
+      const day = match[1].padStart(2, "0");
+      const month = match[2].match(/\d+/)
+        ? match[2].padStart(2, "0")
+        : getMonthNumber(match[2].toLowerCase());
+      const year = match[3].length === 2 ? "20" + match[3] : match[3];
+
+      return `${year}-${month}-${day}`;
+    }
+  }
+
+  return "Invalid date format";
 }
+
+function getMonthNumber(month) {
+  const months = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+
+  if (String(months.indexOf(month) + 1).padStart(2, "0") == "00") {
+    const fullMonths = [
+      "janauary",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+    ];
+    return String(fullMonths.indexOf(month) + 1).padStart(2, "0");
+  }
+
+  return String(months.indexOf(month) + 1).padStart(2, "0");
+}
+
 
 const getVendor = () => {
   return vendorData;
@@ -222,7 +284,10 @@ export {
   getProvinceOfSelectedCity,
   getAllCategories,
   getAllExpenseType,
+
   getVendor,
   getEmployeeData
-  
+
+  getformatDate,
+
 };

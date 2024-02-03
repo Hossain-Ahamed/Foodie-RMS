@@ -19,11 +19,11 @@ const EmployeeList = () => {
             return [
                 {
                     _id: "1",
-                    firstName: "Farhan Hasan",
-                    lastName: "Nilok",
+                    f_name: "Farhan Hasan",
+                    l_name: "Nilok",
                     email: "nilok@gmail.com",
                     branchName: "Fouco",
-                    phone: "018399473783",
+                    mobile: "018399473783",
                     gender: "Male",
                     nid: "8349490384893",
                     uid : "4385884935",
@@ -38,11 +38,11 @@ const EmployeeList = () => {
                 },
                 {
                     _id: "2",
-                    firstName: "Fattan Prodan",
-                    lastName: "Pathul",
+                    f_name: "Fattan Prodan",
+                    l_name: "Pathul",
                     email: "nilok@gmail.com",
                     branchName: "Fouco",
-                    phone: "018399473783",
+                    mobile: "018399473783",
                     gender: "Female",
                     nid: "8349490384893",
                     uid : "4385884935",
@@ -57,11 +57,11 @@ const EmployeeList = () => {
                 },
                 {
                     _id: "3",
-                    firstName: "Hossain Ahamed",
-                    lastName: "Malu",
+                    f_name: "Hossain Ahamed",
+                    l_name: "Malu",
                     email: "malu@gmail.com",
                     branchName: "Fouco",
-                    phone: "018399473783",
+                    mobile: "018399473783",
                     gender: "Shemale",
                     nid: "8349490384893",
                     uid : "4385884935",
@@ -76,11 +76,11 @@ const EmployeeList = () => {
                 },
                 {
                     _id: "4",
-                    firstName: "Gazi Fuad",
-                    lastName: "Tahsin",
+                    f_name: "Gazi Fuad",
+                    l_name: "Tahsin",
                     email: "sodome@gmail.com",
                     branchName: "Fouco",
-                    phone: "018399473783",
+                    mobile: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
                     uid : "4385884935",
@@ -95,11 +95,11 @@ const EmployeeList = () => {
                 },
                 {
                     _id: "5",
-                    firstName: "Gazi Fuad",
-                    lastName: "Tahsin",
+                    f_name: "Gazi Fuad",
+                    l_name: "Tahsin",
                     email: "sodome@gmail.com",
                     branchName: "Fouco",
-                    phone: "018399473783",
+                    mobile: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
                     uid : "4385884935",
@@ -114,11 +114,11 @@ const EmployeeList = () => {
                 },
                 {
                     _id: "6",
-                    firstName: "Gazi Fuad",
-                    lastName: "Tahsin",
+                    f_name: "Gazi Fuad",
+                    l_name: "Tahsin",
                     email: "sodome@gmail.com",
                     branchName: "Fouco",
-                    phone: "018399473783",
+                    mobile: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
                     uid : "4385884935",
@@ -143,7 +143,7 @@ const EmployeeList = () => {
                     <SectionTitle h1="Employee List" />
                 </div>
                 <div>
-                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-employee`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Employee<IoAddOutline className='text-white' /></Link>
+                    <Link to={`/add-employee`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Employee<IoAddOutline className='text-white' /></Link>
 
                 </div>
 
@@ -172,7 +172,7 @@ const EmployeeList = () => {
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
                                     >
-                                        Phone
+                                        mobile
                                     </th>
 
                                     {/* <th

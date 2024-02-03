@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { getCountries, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
+import { getCountries, getformatDate, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
 import toast from 'react-hot-toast';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
@@ -11,72 +11,153 @@ import { useQuery } from 'react-query';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
+import { useParams } from 'react-router-dom';
+import { Checkbox } from '@nextui-org/react';
 
 
-const AddEmployee = () => {
+const EditEmployee = () => {
+    const { employeeID } = useParams();
     const countries = getCountries();
     const axiosSecure = useAxiosSecure();
     const [text, setText] = useState("Per Month Salary");
 
-    const { res_id } = useRestauarantAndBranch();
+
+
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+
+
+    const { res_id, branchID } = useRestauarantAndBranch();
+
+
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
-        queryKey: ['branches', res_id],
+        queryKey: ['existing-employee-data', res_id, branchID, employeeID],
         enabled: true,
         cacheTime: 0,
         queryFn: async () => {
 
 
-            let res = await axiosSecure.get(`/restaurant/${res_id}/get-restaurant-name-and-all-branches`);
+            let res = await axiosSecure.get(`/restaurant/${res_id}/edit-employee-data`);
 
 
             res = {
                 data: {
+                    employeeData: {
+                        _id: "1",
+                        f_name: "Farhan Hasan",
+                        l_name: "Nilok",
+                        email: "nilok@gmail.com",
+
+                        mobile: "01839947378",
+                        gender: "Male",
+                        nid: "8349490384893",
+                        uid: "4385884935",
+
+                        DOB: "27-01-2001",
+                        profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                        streetAddress: "J A M T O L A",
+                        city: 'Narayanganj',
+                        stateProvince: 'Dhaka',
+                        postalCode: '435',
+                        country: "Bangladesh",
+
+                        emergencyName: "Md. Hossain Ahamed",
+                        emergencyRelation: "8",
+                        emergencyPhoneNumber: "01868726172",
+                        emergencyEmail: "hossainahamed6872@gmail.com",
+                        emergencyAddress: "J A M T O L A",
+
+                        res_id: "87342fdjskllf",
+                        res_img: "http://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                        res_name: "Fuoco",
+                        branch_name: "Fouco pagla",
+                        branchID: "q-pagla-f-Bangladesh-1440-1705850705607",
+                        role: "Kitchen Stuff",
+                        salary_type: "Monthly",
+                        salary_unit: "2",
+
+                    },
+                    restaurantData: {
 
 
-                    "_id": "87342fdjskllf",
-                    "res_name": "Fuoco",
-                    "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    "branches": [
-                        {
-                            "branch_name": "Fouco Update",
+                        "_id": "87342fdjskllf",
+                        "res_name": "Fuoco",
+                        "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                        "branches": [
+                            {
+                                "branch_name": "Fouco Update",
 
-                            "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
-                        },
-                        {
-                            "branch_name": "Fouco Chasara",
+                                "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
+                            },
+                            {
+                                "branch_name": "Fouco Chasara",
 
-                            "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
-                        },
-                        {
-                            "branch_name": "Fouco jamtola",
+                                "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
+                            },
+                            {
+                                "branch_name": "Fouco jamtola",
 
-                            "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
-                        },
-                        {
-                            "branch_name": "Fouco pagla",
+                                "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
+                            },
+                            {
+                                "branch_name": "Fouco pagla",
 
-                            "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
-                        },
-                    ],
+                                "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
+                            },
+                        ],
 
 
 
+                    }
                 }
             }
 
 
             // Set options array
-            setValue('res_id', res?.data?._id);
-            setValue('res_img', res?.data?.img);
-            setValue('res_name', res?.data?.res_name);
+            setValue('res_id', res?.data?.restaurantData?._id);
+            setValue('res_img', res?.data?.restaurantData?.img);
+            setValue('res_name', res?.data?.restaurantData?.res_name);
 
+
+
+            // employee data
+            setValue('f_name', res?.data?.employeeData?.f_name);
+            setValue('l_name', res?.data?.employeeData?.l_name);
+            setValue('email', res?.data?.employeeData?.email);
+            setValue('mobile', res?.data?.employeeData?.mobile);
+            setValue('gender', res?.data?.employeeData?.gender);
+            setValue('nid', res?.data?.employeeData?.nid);
+            setValue('uid', res?.data?.employeeData?.uid);
+            setValue('DOB', getformatDate(res?.data?.employeeData?.DOB));
+
+            setValue('profilePhoto', res?.data?.employeeData?.profilePhoto); setSelectedImage0(res?.data?.employeeData?.profilePhoto);
+            setValue('streetAddress', res?.data?.employeeData?.streetAddress);
+            setValue('city', res?.data?.employeeData?.city);
+            setValue('stateProvince', res?.data?.employeeData?.stateProvince);
+            setValue('postalCode', res?.data?.employeeData?.postalCode);
+            setValue('country', res?.data?.employeeData?.country);
+            setValue('emergencyName', res?.data?.employeeData?.emergencyName);
+            setValue('emergencyRelation', res?.data?.employeeData?.emergencyRelation);
+            setValue('emergencyPhoneNumber', res?.data?.employeeData?.emergencyPhoneNumber);
+            setValue('emergencyEmail', res?.data?.employeeData?.emergencyEmail);
+            setValue('emergencyAddress', res?.data?.employeeData?.emergencyAddress);
+
+            // salary 
+            setValue('res_id', res?.data?.employeeData?.res_id);
+            setValue('res_name', res?.data?.employeeData?.res_name);
+            setValue('res_img', res?.data?.employeeData?.res_img);
+            setValue('branch_name', res?.data?.employeeData?.branch_name);
+            setValue('branchID', res?.data?.employeeData?.branchID);
+            setValue('role', res?.data?.employeeData?.role);
+            setValue('salary_type', res?.data?.employeeData?.salary_type);
+            setValue('salary_unit', res?.data?.employeeData?.salary_unit);
+
+
+            //----------------------------------------------------
 
             return res?.data;
         },
 
     });
-
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
     // handle image
     const [selectedImage0, setSelectedImage0] = useState(null);
@@ -111,9 +192,9 @@ const AddEmployee = () => {
     return (
         <>
 
-            <SetTitle title="Add Employee" />
-            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center pb-12 select-none ' autoComplete='off'>
-                <SectionTitle h1="Employee Form" />
+            {/* <SetTitle title="Update Employee" /> */}
+            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center pb-12 ' autoComplete='off'>
+                <SectionTitle h1="Update Employee Profile" />
                 {/* necessary info  */}
                 <div className="w-full md:w-3/4 p-3">
                     <div className="p-6 h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-dashboard border-gray-500/50">
@@ -528,22 +609,15 @@ const AddEmployee = () => {
                             {/* res name   */}
                             <div className="w-full md:w-1/2 p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Restaurant name</p>
-                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="John"
-                                    {...register("res_name", {
-                                        required: "*Restaurant Name is Required",
-                                    })} readOnly />
-                                {errors.res_name?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.res_name.message}</p>)}
+                                <p className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="John"
+                                >{data?.employeeData?.res_name}</p>
 
                             </div>
                             {/* res id   */}
                             <div className="w-full md:w-1/2 p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-4-3">Restaurant ID</p>
-                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="Doe"
-                                    {...register("res_id", {
-                                        required: "*restaurant ID is Required",
-
-                                    })} readOnly />
-                                {errors.res_id?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.res_id.message}</p>)}
+                                <p className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="John"
+                                >{data?.employeeData?.res_id}</p>
 
                             </div>
 
@@ -563,11 +637,11 @@ const AddEmployee = () => {
                                         defaultValue=""
                                         {...register('branch_name', { required: '*Branch Name is required' })}
 
-                                        onChange={(e) => { data?.branches && Array.isArray(data?.branches) && setValue('branchID', data.branches.find(i => i.branch_name === e.target.value).branchID) }}
+                                        onChange={(e) => { data?.restaurantData?.branches && Array.isArray(data?.restaurantData?.branches) && setValue('branchID', data?.restaurantData?.branches.find(i => i.branch_name === e.target.value).branchID) }}
                                     >
                                         <option value="" disabled>Select Branch</option>
                                         {
-                                            data?.branches && Array.isArray(data?.branches) && data?.branches.map((index, _idx) => <option key={_idx} value={index?.branch_name}>{index?.branch_name}</option>)
+                                            data?.restaurantData?.branches && Array.isArray(data?.restaurantData?.branches) && data?.restaurantData?.branches.map((index, _idx) => <option key={_idx} value={index?.branch_name}>{index?.branch_name}</option>)
 
                                         }
                                     </select>
@@ -599,7 +673,7 @@ const AddEmployee = () => {
                                     >
                                         <option value="" disabled>Select Branch ID</option>
                                         {
-                                            data?.branches && Array.isArray(data?.branches) && data?.branches.map((index, _idx) => <option key={_idx} value={index?.branchID}>{index?.branchID}</option>)
+                                            data?.restaurantData?.branches && Array.isArray(data?.restaurantData?.branches) && data?.restaurantData?.branches.map((index, _idx) => <option key={_idx} value={index?.branchID}>{index?.branchID}</option>)
 
                                         }
                                     </select>
@@ -676,7 +750,7 @@ const AddEmployee = () => {
 
                             {/* Salary Unit amount    */}
                             <div className="w-full  p-3">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">{text}</p>
+                                <label className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">{text}</label>
                                 <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="8000"
                                     {...register("salary_unit", {
                                         required: "*Salary amount is Required",
@@ -688,6 +762,21 @@ const AddEmployee = () => {
                                 {errors.salary_unit?.type === "notNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*Not a number</p>)}
 
                             </div>
+
+                            <div className='flex px-4 py-2 w-full '>
+                                <input
+                                    id="confirmation"
+                                    type="checkbox"
+                                    className="form-checkbox h-3.5 w-3.5 "
+                                    required
+                                />
+                                <label htmlFor="confirmation" className="ml-2 text-xs text-gray-700 cursor-pointer">
+                                    Confirm correct input to avoid issues in the RMS system. Wrong input may lead to issues finding the employee next time.
+                                </label>
+                            </div>
+
+
+
 
                             <button type='submit' className="flex flex-wrap justify-center w-full md:w-auto md:ml-auto px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
                                 <p data-config-id="auto-txt-22-3">Save</p>
@@ -707,4 +796,4 @@ const AddEmployee = () => {
     );
 };
 
-export default AddEmployee;
+export default EditEmployee;
