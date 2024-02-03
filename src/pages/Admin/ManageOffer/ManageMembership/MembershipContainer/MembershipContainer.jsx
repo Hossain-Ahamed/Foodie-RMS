@@ -4,6 +4,9 @@ import { Tabs } from '@nextui-org/react';
 import { Tab } from '@nextui-org/react';
 import { Card } from '@nextui-org/react';
 import { CardBody } from '@nextui-org/react';
+import MembershipRules from '../MembershipRules/MembershipRules';
+import AllMembers from '../AllMembers/AllMembers';
+import CouponForEligableCustomers from '../CouponForEligableCustomers/CouponForEligableCustomers';
 
 const MembershipContainer = () => {
     const { branchID, res_id } = useRestauarantAndBranch();
@@ -15,29 +18,29 @@ const MembershipContainer = () => {
         <section className='max-w-4xl mx-auto'>
             <div className="flex w-full flex-col">
                 <Tabs disabledKeys={disabledbuttons} aria-label="Disabled Options" className='w-full justify-center'>
-                    <Tab key="PaymentMethod" title="Payment Method">
+                    <Tab key="Manage Membership" title="Manage Membership">
                         <Card>
                             <CardBody>
-                               {branchID}
+                                <MembershipRules />
                             </CardBody>
                         </Card>
                     </Tab>
 
-                    <Tab key="printingSetup" title="Printing Set up">
+                    <Tab key="Our Members" title="Our Members">
                         <Card>
                             <CardBody>
-                               {res_id}
+                                <AllMembers />
                             </CardBody>
                         </Card>
                     </Tab>
 
-                    <Tab key="MyBilling" title="Billing overview">
+                    {/* <Tab key="Coupon For Members" title="Coupon for Members">
                         <Card>
                             <CardBody>
-                              d
+                                <CouponForEligableCustomers />
                             </CardBody>
                         </Card>
-                    </Tab>
+                    </Tab> */}
 
                 </Tabs>
             </div>
