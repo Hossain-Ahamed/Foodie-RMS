@@ -100,7 +100,7 @@ const SearchEmployeePage_ToAdd = () => {
                 gender: "Male",
                 nid: "8349490384893",
                 uid: "4385884935",
-                role: "Admin",
+             
                 DOB: "27-01-2001",
                 profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                 streetAddress: "J A M T O L A",
@@ -119,7 +119,7 @@ const SearchEmployeePage_ToAdd = () => {
                 gender: "Female",
                 nid: "8349490384893",
                 uid: "4385884935",
-                role: "Customer Service",
+                
                 DOB: "27-01-2001",
                 profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                 streetAddress: "J A M T O L A",
@@ -138,7 +138,7 @@ const SearchEmployeePage_ToAdd = () => {
                 gender: "Shemale",
                 nid: "8349490384893",
                 uid: "4385884935",
-                role: "Kitchen Staff",
+                
                 DOB: "27-01-2001",
                 profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                 streetAddress: "J A M T O L A",
@@ -157,7 +157,7 @@ const SearchEmployeePage_ToAdd = () => {
                 gender: "Sodome",
                 nid: "8349490384893",
                 uid: "4385884935",
-                role: "Kitchen Staff",
+                
                 DOB: "27-01-2001",
                 profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                 streetAddress: "J A M T O L A",
@@ -176,7 +176,7 @@ const SearchEmployeePage_ToAdd = () => {
                 gender: "Sodome",
                 nid: "8349490384893",
                 uid: "4385884935",
-                role: "Others",
+                
                 DOB: "27-01-2001",
                 profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                 streetAddress: "J A M T O L A",
@@ -195,7 +195,7 @@ const SearchEmployeePage_ToAdd = () => {
                 gender: "Sodome",
                 nid: "8349490384893",
                 uid: "4385884935",
-                role: "Admin",
+               
                 DOB: "27-01-2001",
                 profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                 streetAddress: "J A M T O L A",
@@ -205,6 +205,8 @@ const SearchEmployeePage_ToAdd = () => {
                 country: "Bangladesh",
             },
         ]);
+
+        
 
     
         setLoadingonSearch(false)
