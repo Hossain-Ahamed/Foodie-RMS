@@ -58,11 +58,12 @@ const SearchEmployeePage_ToAdd = () => {
 
         const trimmedData = trimObjectFields(data);
 
+       
         if (isObjectEmpty(trimmedData)) {
             toast.error('No data inserted');
             return;
         }
-
+        setSearchedResult([])
         setLoadingonSearch(true);
         setSearchedResult(false);
 
@@ -208,7 +209,7 @@ const SearchEmployeePage_ToAdd = () => {
 
         
 
-    
+   
         setLoadingonSearch(false)
         setSearchedValueReceived(true);
         // ---------------------------------
