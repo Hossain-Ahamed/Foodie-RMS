@@ -141,12 +141,10 @@ const MembershipRulesEdit = ({ data, handleChange }) => {
 
                                         </div>
                                     </div>
-                                    <Button type='submit' color="success" variant="flat" onPress={onClose}>
+                                    <Button type='submit' color="success" variant="flat" onPress={onClose} className='ml-5'>
                                         Update
                                     </Button>
-                                    <Button color="danger" variant="light" onPress={onClose}>
-                                        Close
-                                    </Button>
+                                 
                                 </form>
                             </ModalBody>
                             
