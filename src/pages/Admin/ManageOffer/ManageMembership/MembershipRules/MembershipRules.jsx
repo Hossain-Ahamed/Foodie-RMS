@@ -7,7 +7,7 @@ import MembershipRulesEdit from './MembershipRulesEdit';
 import LoadingPage from '../../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../../Shared/ErrorPage/ErrorPage';
 import { toast } from 'react-hot-toast';
-import  swal  from 'sweetalert2';
+import swal from 'sweetalert2';
 
 const MembershipRules = () => {
     const axiosSecure = useAxiosSecure();
@@ -30,7 +30,7 @@ const MembershipRules = () => {
                     MinimumOrderAmountTillNow: 5000,
                     percentageOffer: 5,
                     MaximumLimit_in_TK: 4750,
-                    rules: "No One can do that ",
+                    rules: "No One can do that\nhello\nno one ",
 
                 }
             }
@@ -41,11 +41,11 @@ const MembershipRules = () => {
     });
 
     const handleChange = async (rulesData) => {
-    
+
         await axiosSecure.patch(`/restaurant/${res_id}/edit-member-rules`, rulesData)
             .then(res => {
-                
-               
+
+
                 toast.success('saved successfully')
                 dataRefetch();
             }).catch(error => {
@@ -70,7 +70,7 @@ const MembershipRules = () => {
                     <SectionTitle h2="Membership Conditions" />
                 </div>
                 <div className='w-1/4 flex justify-end'>
-                    <MembershipRulesEdit  data={data} handleChange={handleChange} />
+                    <MembershipRulesEdit data={data} handleChange={handleChange} />
                 </div>
             </div>
 
@@ -117,9 +117,17 @@ const MembershipRules = () => {
                     </div>
                     <div className="flex flex-wrap pb-3 -m-3 px-4">
                         <p className="mb-1.5 font-medium text-base text-gray-800 " data-config-id="auto-txt-3-3">Conditions : </p>
-                        <div className=" w-full relative px-3  border border-gray-400/40 rounded-lg py-2 revert-tailwind" >
-                            {data?.rules || "there are no conditions"}
-                        </div>
+
+                        <p className="w-full relative px-3 border border-gray-400/40 rounded-lg py-2 revert-tailwind">
+                            {data?.rules.split('\n').map((line, index) => (
+                                <React.Fragment key={index}>
+                                    {line}
+                                    <br />
+                                </React.Fragment>
+                            )) || "there are no conditions"}
+                        </p>
+
+
 
                     </div>
                 </div>
