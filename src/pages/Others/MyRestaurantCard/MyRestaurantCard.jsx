@@ -14,7 +14,7 @@ const MyRestaurantCard = ({ data, setBranchAndRestaurantName }) => {
             role: data?.role,
         })
         
-        navigate(`/restaurant/${data?.res_id}/branch/${data?.branchID}/ongoing-orders`)
+        navigate(`/ongoing-orders`)
 
     }
     return (

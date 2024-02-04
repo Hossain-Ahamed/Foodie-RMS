@@ -106,7 +106,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     </li>
                                     <li>
                                         <NavLink
-                                            to={`restaurant/${res_id}/branch/${branchID}/manage-shifts`}
+                                            to={`/manage-shifts`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -122,7 +122,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     </li>
                                     <li>
                                         <NavLink
-                                            to={`restaurant/${res_id}/branch/${branchID}/manage-tables`}
+                                            to={`/manage-tables`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -138,7 +138,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                     </li>
                                     <li>
                                         <NavLink
-                                            to={`restaurant/${res_id}/branch/${branchID}/manage-payment-system`}
+                                            to={`/manage-payment-system`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -278,7 +278,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/expenses`}
+                                        <NavLink to={`/expenses`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -291,7 +291,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/purchase`}
+                                        <NavLink to={`/purchase`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -304,7 +304,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/vendors`}
+                                        <NavLink to={`/vendors`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -363,7 +363,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/customers`}
+                                        <NavLink to={`/customers`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -376,7 +376,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/all-employee-list`}
+                                        <NavLink to={`/all-employee-list`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -389,7 +389,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/employee-list`}
+                                        <NavLink to={`/employee-list`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -402,7 +402,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/add-employee`}
+                                        <NavLink to={`/add-employee`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -447,7 +447,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/ongoing-orders`}
+                                        <NavLink to={`/ongoing-orders`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -460,7 +460,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/place-order`}
+                                        <NavLink to={`/place-order`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -509,7 +509,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/category`}
+                                        <NavLink to={`/category`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -521,7 +521,7 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`restaurant/${res_id}/branch/${branchID}/dish-list`}
+                                        <NavLink to={`/dish-list`}
                                             className={({ isActive }) =>
                                                 isActive
                                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"

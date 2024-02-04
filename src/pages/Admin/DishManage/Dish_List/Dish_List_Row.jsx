@@ -111,7 +111,7 @@ const Dish_List_Row = ({dish}) => {
                 <span
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-center'
                 >
-                    <Link to={`/restaurant/${res_id}/branch/${branchID}/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
+                    <Link to={`/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
                     <span title="Delete category" onClick={() => handleDeletecategory(dish._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
                 </span>
             </td>

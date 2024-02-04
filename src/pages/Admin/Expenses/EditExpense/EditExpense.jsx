@@ -1,111 +1,74 @@
-import React, { useEffect, useState } from 'react'
-import ScrollToTop from '../../../../components/ScrollToTop/ScrollToTop'
+import React, { useState } from 'react'
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle'
 import SetTitle from '../../../Shared/SetTtitle/SetTitle'
-import { useFieldArray, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { Checkbox } from '@nextui-org/react'
-// import Dish_Add_Description from './Dish_Add_Description';
-import { MdOutlinePercent } from 'react-icons/md'
-import { getAllExpenseType, getEmployeeData, getVendor, validateSalesTax } from '../../../../assets/scripts/Utility'
-import { MdDelete } from "react-icons/md";
-import { CiSquarePlus } from "react-icons/ci";
+import { getAllExpenseType } from '../../../../assets/scripts/Utility'
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure'
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch'
 import { useQuery } from 'react-query';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage'
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 
-const AddExpense = () => {
+const EditExpense = () => {
     // state to catch the purchase if user select option other than purchase vendor will be disabled
     const [expenseCategory, SetExpenseCategory] = useState('');
     const [optionList, setOptionList] = useState([]);
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
     const expenseType = getAllExpenseType();
-    const vendorData = getVendor();
-    const employeeData = getEmployeeData()
-    const drowpdownCategory = ["Purchase","Salaries"]
+    const drowpdownCategory = ["Purchase", "Salaries"]
     const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/add-expenses`)
+            let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/add-expenses`)
 
             // return res.data.categories;
-            return {
-                vendors: [
-                    {
-                        "name": "Ma er Doa",
-                        "_id": "1"
-                    },
-                    {
-                        "name": "Bap er Doa",
-                        "_id": "2"
-                    },
-                    {
-                        "name": "Vai vai store",
-                        "_id": "3"
-                    },
-                    {
-                        "name": "Tong",
-                        "_id": "4"
-                    },
-                    {
-                        "name": "Mama Vigina Store",
-                        "_id": "5"
-                    },
-                    {
-                        "name": "Khalur Dan",
-                        "_id": "6"
-                    }
-                ],
+            res = {
+                data: {
 
-                employees: [
-                    {
-                        "name": "Tahsin",
-                        "_id": "malu"
-                    },
-                    {
-                        "name": "Pathul",
-                        "_id": "shemale"
-                    },
-                    {
-                        "name": "Hossain",
-                        "_id": "gay"
-                    },
-                    {
-                        "name": "Nilok",
-                        "_id": "Straight"
-                    },
-                    {
-                        "name": "Mokles",
-                        "_id": "null"
-                    },
-                    {
-                        "name": "Satoru",
-                        "_id": "Gojo"
-                    }
-                ]
+                    active: true,
+                    category: "Rent",
+                    billDate: "2024-02-04",
+                    expense: "1000",
+                    payTo: "Mokles",
+                    payeeID: "939efx3",
+                    vendorDescription: "Hello Vai",
+                    img: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+                    transactions: [
+                        {
+                            paymentDate: "2024-02-03",
+                            paymentAmount: "1000",
+                            reference: "19ds32038sd82",
+                            description: "Baki nai",
+                        },
+                        {
+                            paymentDate: "2024-02-03",
+                            paymentAmount: "1000",
+                            reference: "19ds32038sd82",
+                            description: "Baki nai",
+                        }
+                    ]
+
+                }
             }
 
+            setValue("category", res?.data?.category)
+            setValue("billDate", res?.data?.billDate)
+            setValue("expense", res?.data?.expense)
+            setValue("payTo", res?.data?.payTo)
+
+            setValue("payeeID", res?.data?.payeeID)
+            setValue("vendorDescription", res?.data?.vendorDescription)
+            setValue("paymentDate", res?.data?.paymentDate)
+            setValue("paymentAmount", res?.data?.paymentAmount)
+            setValue("reference", res?.data?.reference)
+            setValue("description", res?.data?.description)
+            setValue("img", res?.data?.img)
+
+            return res?.data
         }
     })
-
-    useEffect(() => {
-        setOptionList([])
-        if(expenseCategory === "Purchase"){
-            if(data?.vendors && Array.isArray(data?.vendors)){
-
-                setOptionList(data?.vendors)
-            }
-        } else if (expenseCategory === "Salaries") {
-            if (data?.employees && Array.isArray(data?.employees)) {
-
-                setOptionList(data?.employees)
-            }
-        }
-    }, [expenseCategory, setOptionList, data])
 
     const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({
         defaultValues: {
@@ -113,42 +76,8 @@ const AddExpense = () => {
         },
     });
 
-    // const { fields: optionFields, append: optionAppend, remove: optionRemove, } = useFieldArray({
-    //     control,
-    //     name: 'transactions',
-    // });
-    // const { fields: addOnFields, append: addOnAppend, remove: addOnRemove, } = useFieldArray({
-    //     control,
-    //     name: 'addOn',
-    // });
-
-
-    const [descriptionContent, setDescriptionContent] = useState("");
-
-    const [selectedImage0, setSelectedImage0] = useState(null);
-
-    const handleImageUpload0 = (event) => {
-        const file = event.target.files[0];
-        setSelectedImage0(URL.createObjectURL(file));
-        setValue("img", file);
-
-    };
-
-    const navigate = useNavigate();
-
     const onSubmit = async (data) => {
         console.log(data);
-        const expenseAmount = parseFloat(data.expense);
-        const paymentAmount = parseFloat(data.paymentAmount);
-        let due = expenseAmount - paymentAmount
-        console.log(data, due, expenseAmount, paymentAmount)
-
-        if (!selectedImage0) {
-
-            toast.error('Cover Photo needed');
-            return;
-        }
-
 
     };
 
@@ -163,11 +92,11 @@ const AddExpense = () => {
 
     return (
         <section className='max-w-7xl mx-auto py-12'>
-            <SectionTitle h1="Add Expense" />
-            <SetTitle title="Add Expense" />
+            <SectionTitle h1="Edit Expense" />
+            <SetTitle title="Edit Expense" />
             <form onSubmit={handleSubmit(onSubmit)} className='grid grid-cols-1 md:grid-cols-2 justify-center items-start px-6 py-5 border border-gray-300 overflow-hidden bg-white rounded-md shadow-dashboard'>
 
-                <div className="w-full  ">
+                <div className="w-full mt-3">
                     <div className=" h-full">
                         {/* category  */}
                         <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
@@ -180,9 +109,9 @@ const AddExpense = () => {
                                     {...register("category", {
                                         required: "*Category  is Required",
                                     })}
-                                    onChange={event => { 
-                                        SetExpenseCategory(event.target.value); 
-                                        setValue('category',event.target.value);
+                                    onChange={event => {
+                                        SetExpenseCategory(event.target.value);
+                                        setValue('category', event.target.value);
                                         setValue('payTo', '');
                                         setValue('payeeID', '');
                                     }}
@@ -257,15 +186,15 @@ const AddExpense = () => {
                             {/* Pay to */}
                             {
                                 drowpdownCategory.includes(expenseCategory)
-                                ?
+                                    ?
                                     <div className="w-full md:w-1/2 p-3 pb-0">
                                         <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Pay To</p>
                                         <select
                                             label="Select Whom to Pay"
                                             className={`${(expenseCategory === "Purchase" || expenseCategory === "Salaries") || "cursor-not-allowed"} w-full bg-gray-50 border
-                                         border-gray-300 text-gray-900 text-sm
-                                           rounded-lg focus:ring-gray-500
-                                         focus:border-gray-500 block p-2.5`}
+                                     border-gray-300 text-gray-900 text-sm
+                                      rounded-lg focus:ring-gray-500
+                                       focus:border-gray-500 block p-2.5`}
 
                                             disabled={!(expenseCategory === "Purchase" || expenseCategory === "Salaries")}
                                             defaultValue=""
@@ -280,10 +209,10 @@ const AddExpense = () => {
 
                                             {/* jdi expense type salary hoi tahole employee name ashbe drowpdown otherwise vendor der list ashbe */}
                                             {optionList && Array.isArray(optionList) && optionList.map((item, _idx) => (
-                                                    <option key={_idx} value={item?.name}>
-                                                        {item?.name}
-                                                    </option>
-                                                ))
+                                                <option key={_idx} value={item?.name}>
+                                                    {item?.name}
+                                                </option>
+                                            ))
                                             }
                                         </select>
                                         {(expenseCategory === "Purchase" || expenseCategory === "Salaries") && errors.payTo?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payTo?.message}</p>)}
@@ -312,11 +241,50 @@ const AddExpense = () => {
                             <div className="w-full p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Description</p>
                                 <textarea
-                                defaultValue="N/A"
+                                    defaultValue="N/A"
                                     {...register('vendorDescription')}
                                     className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
                                 ></textarea>
 
+                            </div>
+                            <div className="flex flex-wrap pb-3 m-3 border-1 rounded p-2 select-none">
+                                <div className="p-6 h-full w-full overflow-hidden bg-white shadow-dashboard">
+                                    <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Previous Transaction</p>
+                                    {
+                                        data?.transactions && Array.isArray(data?.transactions) && data?.transactions?.map((payment, _idx) =>
+                                            <div key={_idx} className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
+
+                                                {/* */}
+                                                <div className="w-full md:w-1/2 p-1">
+                                                    <p className="mb-1.5 font-medium text-base text-gray-800">Payment Date</p>
+                                                    <p
+                                                        className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
+                                                    >{payment?.paymentDate} </p>
+                                                </div>
+                                                <div className="w-full md:w-1/2 p-1">
+                                                    <p className="mb-1.5 font-medium text-base text-gray-800">Payment Amount</p>
+                                                    <p
+                                                        className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
+                                                    >{payment?.paymentAmount} </p>
+                                                </div>
+                                                <div className="w-full p-1">
+                                                    <p className="mb-1.5 font-medium text-base text-gray-800">Reference ID/Transaction ID</p>
+                                                    <p
+                                                        className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
+                                                    >{payment?.reference} </p>
+                                                </div>
+                                                <div className="w-full p-1">
+                                                    <p
+                                                        className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
+                                                    >{payment?.description} </p>
+
+                                                </div>
+
+                                            </div>
+                                        )
+                                    }
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -328,9 +296,10 @@ const AddExpense = () => {
                     {/* --------------------------------------------------------------------------
                     ------------------Transaction-----------------------------------------------------
                     ------------------------------------------------------------------------------ */}
+                    
                     <div className="flex flex-wrap pb-3 m-3 border-1 rounded p-2">
                         <div className="p-6 h-full w-full   overflow-hidden bg-white  shadow-dashboard">
-                            <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Transaction</p>
+                            <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">New Transaction</p>
                             <small>You can make payments in segments or make full payment at once and find the detailed transaction here.</small>
                             <div className="flex flex-wrap p-3 my-1 mb-3 border rounded relative">
 
@@ -372,7 +341,7 @@ const AddExpense = () => {
                                 </div>
                                 <div className="w-full p-1">
                                     <textarea
-                                    defaultValue="N/A"
+                                        defaultValue="N/A"
                                         placeholder='Description'
                                         {...register(`description`, { required: "*Description is required" })}
                                         className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
@@ -389,7 +358,7 @@ const AddExpense = () => {
                     <div className='flex flex-wrap justify-center items-end gap-3 p-1'>
                         {/* save button  */}
                         <button type='submit' className="flex flex-wrap justify-center w-full max-w-96  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                            <p data-config-id="auto-txt-22-3">Create</p>
+                            <p data-config-id="auto-txt-22-3">Edit</p>
                         </button>
                     </div>
                 </div>
@@ -399,4 +368,4 @@ const AddExpense = () => {
     )
 }
 
-export default AddExpense
+export default EditExpense

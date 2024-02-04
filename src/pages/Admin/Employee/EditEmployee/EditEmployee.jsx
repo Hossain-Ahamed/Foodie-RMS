@@ -676,7 +676,7 @@ const EditEmployee = () => {
                                             data?.restaurantData?.branches && Array.isArray(data?.restaurantData?.branches) && data?.restaurantData?.branches.map((index, _idx) => <option key={_idx} value={index?.branchID}>{index?.branchID}</option>)
 
                                         }
-                                    </select>
+                                    </select> 
                                 </div>
                                 {errors.branch_name && (
                                     <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
