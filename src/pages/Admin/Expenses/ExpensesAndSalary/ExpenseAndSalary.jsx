@@ -5,11 +5,9 @@ import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import { useQuery } from 'react-query';
 import ExpenseRow from './ExpenseRow';
 import { Link } from 'react-router-dom';
-import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { IoAddOutline } from 'react-icons/io5';
 
 const ExpenseAndSalary = () => {
-    const { branchID, res_id }= useRestauarantAndBranch();
     const axiosSecure = useAxiosSecure();
     const { refetch, data: expenses = [], isLoading, error } = useQuery({
         queryKey: ['expenses'],
@@ -17,7 +15,7 @@ const ExpenseAndSalary = () => {
             const res = await axiosSecure.get(`/expenses`);
             return [
                 {
-                    id: "3020fdk",
+                    _id: "3020fdk",
                     title: "Electricity",
                     expenseType: "Utility / Service bill",
                     billDate: "24-01-2024",
@@ -28,7 +26,7 @@ const ExpenseAndSalary = () => {
                     dueBill: 100,
                 },
                 {
-                    id: "3020fdk",
+                    _id: "3020fdk",
                     title: "Stuff Wage",
                     expenseType: "Utility / Service bill",
                     billDate: "24-01-2024",
@@ -39,7 +37,7 @@ const ExpenseAndSalary = () => {
                     dueBill: 0,
                 },
                 {
-                    id: "3020fdk",
+                    _id: "3020fdk",
                     title: "Electricity",
                     expenseType: "Utility / Service bill",
                     billDate: "24-01-2024",
@@ -50,7 +48,7 @@ const ExpenseAndSalary = () => {
                     dueBill: 100,
                 },
                 {
-                    id: "3020fdk",
+                    _id: "3020fdk",
                     title: "Electricity",
                     expenseType: "Utility / Service bill",
                     billDate: "24-01-2024",
@@ -61,7 +59,7 @@ const ExpenseAndSalary = () => {
                     dueBill: 0,
                 },
                 {
-                    id: "3020fdk",
+                    _id: "3020fdk",
                     title: "Electricity",
                     expenseType: "Utility / Service bill",
                     billDate: "24-01-2024",
@@ -82,14 +80,14 @@ const ExpenseAndSalary = () => {
                     <SectionTitle h1="Expense & Salary" />
                 </div>
                 <div>
-                    <Link to={`/restaurant/${res_id}/branch/${branchID}/add-expenses`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Expense<IoAddOutline className='text-white' /></Link>
+                    <Link to={`/add-expenses`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Expense<IoAddOutline className='text-white' /></Link>
 
                 </div>
 
             </div>
             <div className='py-8'>
                 <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
-                    <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
+                    <div className='inline-block min-w-full shadow rounded-lg overflow-h_idden'>
                         <table className='min-w-full leading-normal'>
                             <thead>
                                 <tr>
@@ -150,7 +148,7 @@ const ExpenseAndSalary = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>{expenses.map((expense, id) => <ExpenseRow key={id} expense={expense} />)}</tbody>
+                            <tbody>{expenses.map((expense, _idx) => <ExpenseRow key={_idx} expense={expense} />)}</tbody>
                         </table>
                     </div>
                 </div>

@@ -33,6 +33,7 @@ import SearchEmployeePage_ToAdd from "../../pages/Admin/Employee/AddEmployee/Sea
 import AddExistingEmployee from "../../pages/Admin/Employee/AddEmployee/AddExistingEmployee";
 import EditEmployee from "../../pages/Admin/Employee/EditEmployee/EditEmployee";
 import MembershipContainer from "../../pages/Admin/ManageOffer/ManageMembership/MembershipContainer/MembershipContainer";
+import EditExpense from "../../pages/Admin/Expenses/EditExpense/EditExpense";
 
 
 
@@ -60,20 +61,23 @@ export const router = createBrowserRouter([
                 element: <AddBranch />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID',
+                path: '/:res_id/branch/:branchID',
                 element: <Statistics />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/manage-shifts',
+                path: '/manage-shifts',
                 element: <TimeTable />
+                // '/restaurant/:res_id/branch/:branchID/manage-shifts',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/manage-tables',
+                path: '/manage-tables',
                 element: <TableManagement />
+                // '/restaurant/:res_id/branch/:branchID/manage-tables',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/manage-payment-system',
+                path: '/manage-payment-system',
                 element: <ManagePaymentSystem />
+                // 'restaurant/:res_id/branch/:branchID/manage-payment-system',
             },
             {
                 path: '/coupon-list',
@@ -88,65 +92,84 @@ export const router = createBrowserRouter([
                 element: <AddCoupon />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/expenses',
+                path: '/expenses',
                 element: <ExpenseAndSalary />
+                // '/restaurant/:res_id/branch/:branchID/expenses',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/add-expenses',
+                path: '/add-expenses',
                 element: <AddExpense />
+                // '/restaurant/:res_id/branch/:branchID/add-expenses',
+            },
+            {
+                path: '/edit-expenses/:expenseID',
+                element: <EditExpense />
+                // '/restaurant/:res_id/branch/:branchID/edit-expenses',
             },
           
             {
-                path: '/restaurant/:res_id/branch/:branchID/category',
+                path: '/category',
                 element: <DishCategory_List />
+                // '/restaurant/:res_id/branch/:branchID/category',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/add-category',
+                path: '/add-category',
                 element: <DishCategory_Add />
+                // '/restaurant/:res_id/branch/:branchID/add-category',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/edit-category/:categoryID',
+                path: '/edit-category/:categoryID',
                 element: <DishCategory_Edit />
+                // '/restaurant/:res_id/branch/:branchID/edit-category/:categoryID',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/dish-list',
+                path: '/dish-list',
                 element: <Dish_List />
+                // '/restaurant/:res_id/branch/:branchID/dish-list',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/add-dish',
+                path: '/add-dish',
                 element: <Dish_Add />
+                // '/restaurant/:res_id/branch/:branchID/add-dish',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/edit-dish/:id',
+                path: '/edit-dish/:dishID',
                 element: <Dish_Edit />
+                // '/restaurant/:res_id/branch/:branchID/edit-dish/:dishID',
             },
             {
                 path: '/add-employee',
                 element: <SearchEmployeePage_ToAdd />
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/add-new-employee',
+                path: '/add-new-employee',
                 element: <AddEmployee />
+            //    '/restaurant/:res_id/branch/:branchID/add-new-employee',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/add-existing-employee/:employeeID',
+                path: '/add-existing-employee/:employeeID',
                 element: <AddExistingEmployee/>
+                // '/restaurant/:res_id/branch/:branchID/add-existing-employee/:employeeID',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/update-employee-profile/:employeeID',
+                path: '/update-employee-profile/:employeeID',
                 element: <EditEmployee/>
+                // '/restaurant/:res_id/branch/:branchID/update-employee-profile/:employeeID',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
+                path: '/view-employee/:employeeID',
                 element: <ViewAsAdmin />
+                // '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/ongoing-orders',
+                path: '/ongoing-orders',
                 element: <OngoingOrders />
+                // '/restaurant/:res_id/branch/:branchID/ongoing-orders',
             },
             {
-                path: '/restaurant/:res_id/branch/:branchID/employee-list',
+                path: '/employee-list',
                 element: <EmployeeList />
+                // '/restaurant/:res_id/branch/:branchID/employee-list',
             },
 
 
