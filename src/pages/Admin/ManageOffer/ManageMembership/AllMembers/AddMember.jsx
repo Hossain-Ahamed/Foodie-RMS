@@ -5,7 +5,9 @@ import { useForm } from "react-hook-form";
 import { toast } from 'react-hot-toast';
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-export default function AddMember({refetch : memberListRefetch}) {
+import LoadingPageWIthIconOnly from './../../../../Shared/LoadingPages/LoadingPageWIthIconOnly/LoadingPageWIthIconOnly';
+
+export default function AddMember({ refetch: memberListRefetch , handleAddMember }) {
     const { res_id } = useRestauarantAndBranch();
 
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
@@ -57,7 +59,7 @@ export default function AddMember({refetch : memberListRefetch}) {
             toast.error('No data inserted');
             return;
         }
-      
+
         setSearchedResult([])
         setLoadingonSearch(true);
         setSearchedResult(false);
@@ -89,46 +91,47 @@ export default function AddMember({refetch : memberListRefetch}) {
             {
                 _id: "1",
                 displayName: "Farhan Hasan",
-                
+
                 email: "nilok@gmail.com",
-                
+
                 phoneNumber: "018399473783",
-               
-               
+
+
                 uid: "4385884935",
 
-               
+
                 photoURL: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-               
+                amount : 450,
             },
             {
                 _id: "2",
-                f_name: "Fattan Prodan",
-                
+                displayName: "Fattan Prodan",
+
                 email: "nilok@gmail.com",
-              
+
                 phoneNumber: "018399473783",
-               
-               
+
+
                 uid: "4385884935",
 
                 photoURL: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-           
+                amount : 450,
             },
-          
+
             {
                 _id: "6",
-                f_name: "Gazi Fuad",
-                
+                displayName: "Gazi Fuad",
+
                 email: "sodome@gmail.com",
-               
+
                 phoneNumber: "018399473783",
-                
+
                 uid: "4385884935",
 
-      
+
                 photoURL: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-              
+                amount : 450,
+
             },
         ]);
 
@@ -144,19 +147,17 @@ export default function AddMember({refetch : memberListRefetch}) {
      * --------------------------------------------------------------------------------
      */
 
-    const handleAddMember = (data)=>{
-        console.log(data)
-    }
+    
 
     return (
         <>
-            <Button onPress={onOpen}>Add Member</Button>
+            <Button onPress={onOpen} color="success" className="text-white">Add Member</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-                <ModalContent>
+                <ModalContent className="w-fit min-w-[580px]">
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">Add Member</ModalHeader>
-                            <ModalBody>
+                            <ModalBody >
                                 <form onSubmit={handleSubmit(onSubmit)} className='select-none ' autoComplete='off'>
                                     <div className="px-3 pt-2 h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-dashboard border-gray-500/50">
                                         <div className="flex flex-wrap pt-3 pb-5 -m-3">
@@ -204,95 +205,116 @@ export default function AddMember({refetch : memberListRefetch}) {
 
 
                                     </div>
-                                    {/* show search result here  */}
-                                    <div className="w-full mt-3 ">
-                                        <div className="px-6  h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-dashboard border-gray-500/50">
-                                            <div className='py-2'>
-                                                <div className='-mx-4 py-2 overflow-x-auto'>
-                                                    <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
-                                                        {
-                                                            SearchedResult &&
-                                                            Array.isArray(SearchedResult) &&
-                                                            SearchedResult.length > 0 && <>
-                                                                <table className='min-w-full leading-normal'>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th
-                                                                                scope='col'
-                                                                                className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
-                                                                            >
-                                                                                Profile
-                                                                            </th>
-                                                                          
-                                                                        
-                                                                            <th
-                                                                                scope='col'
-                                                                                className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
-                                                                            >
-                                                                                Mobile
-                                                                            </th>
-                                                                           
-
-                                                                            <th
-                                                                                scope='col'
-                                                                                className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
-                                                                            >
-                                                                                Add
-                                                                            </th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>{
-                                                                        SearchedResult.map((item, _idx) => <tr key={_idx}>
-                                                                            <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
-                                                                                <div className='flex items-center '>
-                                                                                    <div className='flex items-center gap-5 flex-col md:flex-row'>
-                                                                                        <div className=''>
-                                                                                            <img
-                                                                                                alt='profile'
-                                                                                                src={item?.photoURL}
-                                                                                                className='mx-auto object-cover rounded h-10 w-15 '
-                                                                                            />
-                                                                                        </div>
-                                                                                        <div>
-                                                                                            <span className='text-gray-900 whitespace-no-wrap block'>{item?.displayName} </span>
-                                                                                            <span className='text-gray-900 whitespace-no-wrap block'>{item?.email}</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                  
-                                                                                </div>
-                                                                            </td>
-                                                                          
-                                                                          
-                                                                            <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
-                                                                                {item?.phoneNumber}
-                                                                            </td>
-                                                                           
-
-
-
-                                                                            <td className='py-5 border-b border-gray-200 bg-white text-sm'>
-                                                                                <span
-                                                                                    className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
-                                                                                >
-                                                                                    <button onClick={()=>handleAddMember(item)} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></button>
-                                                                                </span>
-                                                                            </td>
-
-                                                                        </tr>)}
-                                                                    </tbody>
-                                                                </table>
-                                                            </>
-                                                        }
-
-
-
-                                                    </div>
-
-                                                </div>
-
+                                    {
+                                        loadingOnSearch ?
+                                            <div className="h-[300px]">
+                                                <LoadingPageWIthIconOnly />
                                             </div>
-                                        </div>
-                                    </div>
+
+                                            :
+                                            <>
+                                                {/* show search result here  */}
+                                                <div className="w-full mt-3 ">
+                                                    <div className="px-6  h-full border border-gray-100 overflow-hidden bg-white rounded-md shadow-dashboard border-gray-500/50">
+                                                        <div className='py-2'>
+                                                            <div className='-mx-4 py-2 overflow-x-auto'>
+                                                                <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
+                                                                    {
+                                                                        SearchedResult &&
+                                                                        Array.isArray(SearchedResult) &&
+                                                                        SearchedResult.length > 0 && <>
+                                                                            <table className='min-w-full leading-normal'>
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th
+                                                                                            scope='col'
+                                                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                                                        >
+                                                                                            Profile
+                                                                                        </th>
+
+
+                                                                                        <th
+                                                                                            scope='col'
+                                                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-center text-sm uppercase font-normal'
+                                                                                        >
+                                                                                            Mobile
+                                                                                        </th>
+                                                                                        <th
+                                                                                            scope='col'
+                                                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-center text-sm uppercase font-normal'
+                                                                                        >
+                                                                                            Order Amount
+                                                                                        </th>
+
+
+                                                                                        <th
+                                                                                            scope='col'
+                                                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                                                                        >
+                                                                                            Add
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>{
+                                                                                    SearchedResult.map((item, _idx) => <tr key={_idx}>
+                                                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
+                                                                                            <div className='flex items-center '>
+                                                                                                <div className='flex items-center gap-5 flex-col md:flex-row'>
+                                                                                                    <div className=''>
+                                                                                                        <img
+                                                                                                            alt='profile'
+                                                                                                            src={item?.photoURL}
+                                                                                                            className='mx-auto object-cover rounded h-10 w-15 '
+                                                                                                        />
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span className='text-gray-900 whitespace-no-wrap block'>{item?.displayName} </span>
+                                                                                                        <span className='text-gray-900 whitespace-no-wrap block'>{item?.email}</span>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </td>
+
+
+                                                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm text-center'>
+                                                                                            {item?.phoneNumber}
+                                                                                        </td>
+
+                                                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm text-center'>
+                                                                                            {item?.amount} ৳
+                                                                                        </td>
+
+
+
+
+                                                                                        <td className='py-5 border-b border-gray-200 bg-white text-sm'>
+                                                                                            <span
+                                                                                                className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
+                                                                                            >
+                                                                                                <button onClick={() => handleAddMember(item,reset,onOpenChange)} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></button>
+                                                                                            </span>
+                                                                                        </td>
+
+                                                                                    </tr>)}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </>
+                                                                    }
+
+
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </>
+                                    }
+
                                 </form>
                             </ModalBody>
                             <ModalFooter>

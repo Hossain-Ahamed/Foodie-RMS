@@ -7,6 +7,8 @@ import { CardBody } from '@nextui-org/react';
 import MembershipRules from '../MembershipRules/MembershipRules';
 import AllMembers from '../AllMembers/AllMembers';
 import CouponForEligableCustomers from '../CouponForEligableCustomers/CouponForEligableCustomers';
+import SectionTitle from '../../../../../components/SectionTitle/SectionTitle';
+import SetTitle from '../../../../Shared/SetTtitle/SetTitle';
 
 const MembershipContainer = () => {
     const { branchID, res_id } = useRestauarantAndBranch();
@@ -17,6 +19,7 @@ const MembershipContainer = () => {
     return (
         <section className='max-w-4xl mx-auto'>
             <div className="flex w-full flex-col">
+                <SetTitle title="Membership"/>
                 <Tabs disabledKeys={disabledbuttons} aria-label="Disabled Options" className='w-full justify-center'>
                     <Tab key="Manage Membership" title="Manage Membership">
                         <Card>
