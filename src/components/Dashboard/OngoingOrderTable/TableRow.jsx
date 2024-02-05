@@ -112,7 +112,7 @@ const TableRow = ({ order }) => {
                 </div>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
-                <p className='text-gray-900 whitespace-no-wrap'>#{order?.orderID} ({order.order_site})</p>
+                <p className='text-gray-900 whitespace-no-wrap'>#{order?._id} ({order.order_site})</p>
                 <span className='text-gray-600 whitespace-no-wrap block'><span className="text-gray-900">Branch:</span> {order?.branch} {order?.order_site === "Onsite" && <span><span className="text-gray-900">table:</span> {order?.table}</span>}</span>
                 {order?.order_site === "Offsite" && <span className='text-gray-900 whitespace-no-wrap'>{order?.location}</span>}
             </td>

@@ -1,6 +1,6 @@
 import { Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react';
-import React, { useState } from 'react';
-import { Link, Navigate, Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
 import useProfile from '../../Hooks/useProfile';
 import LoadingPage from '../../pages/Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../pages/Shared/ErrorPage/ErrorPage';
@@ -12,6 +12,15 @@ const AdminSite = () => {
     const [isChecked, setChecked] = useState(false);
 
     const { profileLoading, profileError } = useProfile();
+
+    const location = useLocation()
+    useEffect(() => {
+        console.log(location?.pathname);
+        if(location.pathname==='/'){
+            localStorage.removeItem('_foodie_rms_bd_rd')
+
+        }
+    }, [location])
 
     /**
      * 

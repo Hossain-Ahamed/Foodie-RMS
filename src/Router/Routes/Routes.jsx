@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
                 element: <ViewAsMyProfile />
             },
             {
-                path: '/edit-restaurant/:res_id',
+                path: '/edit-restaurant',
                 element: <EditRestaurant />
             },
             {
