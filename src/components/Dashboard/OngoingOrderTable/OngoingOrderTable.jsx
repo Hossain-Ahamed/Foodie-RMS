@@ -14,7 +14,7 @@ const OngoingOrderTable = () => {
                 {
                     _id: "234783bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    customer_name: "Farhan Hasan Nilok",
+                    customer_name: "Farhan Hasan Nilok-admin",
                     branch: "19/7 chasara",
                     table: "4",
                     status: "Pending",
