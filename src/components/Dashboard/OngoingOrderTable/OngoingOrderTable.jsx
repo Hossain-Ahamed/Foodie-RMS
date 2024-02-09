@@ -12,9 +12,9 @@ const OngoingOrderTable = () => {
             const res = await axiosSecure.get(`/ongoing-orders`);
             return [
                 {
-                    id: "234783bfc",
+                    _id: "234783bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    customer_name: "Farhan Hasan Nilok",
+                    customer_name: "Farhan Hasan Nilok-admin",
                     branch: "19/7 chasara",
                     table: "4",
                     status: "Pending",
@@ -24,7 +24,7 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    id: "234763bfc",
+                    _id: "234763bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -36,7 +36,7 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    id: "234483bfc",
+                    _id: "234483bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -48,7 +48,7 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    id: "294783bfc",
+                    _id: "294783bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
@@ -60,11 +60,10 @@ const OngoingOrderTable = () => {
                     location: "Narayanganj"
                 },
                 {
-                    id: "834783bfc",
+                    _id: "834783bfc",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
-                    table: "4",
                     status: "Confirmed",
                     payment_status: "Not Refunded",
                     order_site: "Offsite",
@@ -123,7 +122,7 @@ const OngoingOrderTable = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>{OngoingOrders.map(order => <TableRow key={order.id} order={order}/>)}</tbody>
+                            <tbody>{OngoingOrders.map((order,_idx) => <TableRow key={_idx} order={order}/>)}</tbody>
                         </table>
                     </div>
                 </div>

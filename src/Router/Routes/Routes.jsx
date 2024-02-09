@@ -34,6 +34,7 @@ import AddExistingEmployee from "../../pages/Admin/Employee/AddEmployee/AddExist
 import EditEmployee from "../../pages/Admin/Employee/EditEmployee/EditEmployee";
 import MembershipContainer from "../../pages/Admin/ManageOffer/ManageMembership/MembershipContainer/MembershipContainer";
 import EditExpense from "../../pages/Admin/Expenses/EditExpense/EditExpense";
+import ProtectedByRole from "../ProtectedByRole/ProtectedByRole";
 import AllEmployeeList from "../../pages/Admin/Employee/AllEmployeeList/AllEmployeeList";
 
 
@@ -54,8 +55,8 @@ export const router = createBrowserRouter([
                 element: <ViewAsMyProfile />
             },
             {
-                path: '/edit-restaurant/:res_id',
-                element: <EditRestaurant />
+                path: '/edit-restaurant',
+                element: <ProtectedByRole allowedRoles={['Super-Admin']}><EditRestaurant /></ProtectedByRole>
             },
             {
                 path: '/edit-restaurant/:res_id/add-new-branch',
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/:res_id/branch/:branchID',
-                element: <Statistics />
+                element:<ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Statistics /></ProtectedByRole> 
             },
             {
                 path: '/manage-shifts',

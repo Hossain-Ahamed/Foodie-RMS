@@ -208,8 +208,7 @@ const SearchEmployeePage_ToAdd = () => {
         ]);
 
         
-
-   
+        setSearchedResult([])
         setLoadingonSearch(false)
         setSearchedValueReceived(true);
         // ---------------------------------
@@ -442,7 +441,7 @@ const SearchEmployeePage_ToAdd = () => {
                                                 <IoWarningOutline /> You can use fewer search filters to prevent duplicates
                                             </span>
                                         </p>
-                                        <Link to={`/restaurant/${res_id}/branch/${branchID}/add-new-employee`} className="w-48 ml-auto mt-5 relative flex flex-wrap justify-center   py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button  items-center">
+                                        <Link to={`/add-new-employee`} className="w-48 ml-auto mt-5 relative flex flex-wrap justify-center   py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button  items-center">
                                             Add New Employee <IoPersonAddSharp className='w-4 h-4 ml-4' />
 
                                         </Link>
