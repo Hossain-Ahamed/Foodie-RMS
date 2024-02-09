@@ -15,7 +15,7 @@ const AdminSite = () => {
 
     const location = useLocation()
     useEffect(() => {
-        console.log(location?.pathname);
+   
         if(location.pathname==='/'){
             localStorage.removeItem('_foodie_rms_bd_rd')
 
