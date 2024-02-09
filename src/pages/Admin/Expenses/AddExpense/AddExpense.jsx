@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import ScrollToTop from '../../../../components/ScrollToTop/ScrollToTop'
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle'
 import SetTitle from '../../../Shared/SetTtitle/SetTitle'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { Checkbox } from '@nextui-org/react'
-// import Dish_Add_Description from './Dish_Add_Description';
-import { MdOutlinePercent } from 'react-icons/md'
-import { getAllExpenseType, getEmployeeData, getVendor, validateSalesTax } from '../../../../assets/scripts/Utility'
-import { MdDelete } from "react-icons/md";
-import { CiSquarePlus } from "react-icons/ci";
+import { getAllExpenseType } from '../../../../assets/scripts/Utility'
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure'
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch'
 import { useQuery } from 'react-query';
@@ -24,8 +18,6 @@ const AddExpense = () => {
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
     const expenseType = getAllExpenseType();
-    const vendorData = getVendor();
-    const employeeData = getEmployeeData()
     const drowpdownCategory = ["Purchase","Salaries"]
     const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
@@ -109,7 +101,7 @@ const AddExpense = () => {
 
     const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({
         defaultValues: {
-            active: true,
+            
         },
     });
 

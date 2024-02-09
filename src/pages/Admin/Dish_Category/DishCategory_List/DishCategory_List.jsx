@@ -5,92 +5,38 @@ import DishCategoryRow from "./DishCategoryRow";
 import { Link } from "react-router-dom";
 import useRestauarantAndBranch from "../../../../Hooks/useRestauarantAndBranch";
 import CategoryPagination from "../../../../components/Pagination/CategoryPagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SectionTitle from "../../../../components/SectionTitle/SectionTitle";
+import TableLoading from "../../../Shared/LoadingPages/TableLoading/TableLoading";
 
 const DishCategory_List = () => {
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
     const [searchQuery, setSearchQuery] = useState('')
+    const [numberOfButtons, setNumberOfButtons] = useState([])
+    const [totalPage, setTotalPage] = useState(0)
     const [selectedRange, setSelectedRange] = useState(30);
     const [selectActive, setSelectActive] = useState("all")
     const [currentPage, setCurrentPage] = useState(0)
     const ranges = [10, 20, 30, 50, 100]
-    const { refetch, data: categories = [], isLoading, error } = useQuery({
+    const { refetch, data: data = {}, isLoading, error } = useQuery({
         queryKey: ['ongoing-orders', selectedRange, selectActive, searchQuery],
         queryFn: async () => {
             const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/ongoing-orders?search=${searchQuery}&currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
-            return [
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: false
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Rice Bowl",
-                    description: "Hello guys chai pee lo",
-                    status: false
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: false
-                },
-                {
-                    categoryID: "fa235f",
-                    categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    categoryTitle: "Meat Box",
-                    description: "Hello guys chai pee lo",
-                    status: true
-                },
-            ]
+            console.log(res?.data)
+            setTotalPage(Math.ceil(res.data.total / selectedRange))
+
+            return res.data
         }
     });
-    const itemsPerPage = 2;
-    const size = categories.length;
-    const totalPage = Math.ceil(size / itemsPerPage)
-    const numberOfButtons = [...Array(totalPage).keys()]
+
+    useEffect(() => {
+        setNumberOfButtons([...Array(totalPage).keys()])
+    }, [totalPage])
+    // const itemsPerPage = 2;
+    // const size = data.length;
+    // const totalPage = setTotalPage(Math.ceil(res.data.count / numberOfSizeInTableData))
+    // const numberOfButtons = [...Array(totalPage).keys()]
     // console.log(OngoingOrders)
     return (
         <div className="bg-gray-100 rounded-md">
@@ -169,7 +115,8 @@ const DishCategory_List = () => {
                 </div>
                 <div className='py-8'>
                     <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
-                        <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
+                        <div className='inline-block min-w-full shadow rounded-lg overflow-hidden relative'>
+                            { isLoading && <TableLoading /> }
                             <table className='min-w-full leading-normal'>
                                 <thead>
                                     <tr>
@@ -195,7 +142,7 @@ const DishCategory_List = () => {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>{categories.map((category, id) => <DishCategoryRow key={id} category={category} />)}</tbody>
+                                <tbody>{data?.data && Array.isArray(data?.data) && data?.data.map((category, _idx) => <DishCategoryRow key={_idx} category={category} />)}</tbody>
                             </table>
                         </div>
                     </div>
