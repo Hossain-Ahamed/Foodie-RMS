@@ -1,21 +1,23 @@
-import React from 'react';
-import TableComponent from '../../../../components/Table/Table';
+import React, { useState } from 'react';
+// import TableComponent from '../../../../components/Table/Table';
 import { useQuery } from 'react-query';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
-import EmployeeListRow from './EmployeeListRow';
+// import EmployeeListRow from './EmployeeListRow';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import { Link } from 'react-router-dom';
 import { IoAddOutline } from 'react-icons/io5';
+import AllEmployeeListRow from './AllEmployeeListRow';
 // "name", "role", "status", "actions", 'id'
-const EmployeeList = () => {
+const AllEmployeeList = () => {
     const axiosSecure = useAxiosSecure();
-    const { branchID, res_id }= useRestauarantAndBranch();
+    const [searchQuery, setSearchQuery] = useState('')
+    const { branchID, res_id } = useRestauarantAndBranch();
     const { refetch, data: data = [], isLoading, error } = useQuery({
-        queryKey: ['employee-list'],
+        queryKey: ['all-employee-list', searchQuery],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/employee-list`);
+            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/all-employee-list`);
             return [
                 {
                     _id: "1",
@@ -26,7 +28,7 @@ const EmployeeList = () => {
                     mobile: "018399473783",
                     gender: "Male",
                     nid: "8349490384893",
-                    uid : "4385884935",
+                    uid: "4385884935",
                     role: "Admin",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -45,7 +47,7 @@ const EmployeeList = () => {
                     mobile: "018399473783",
                     gender: "Female",
                     nid: "8349490384893",
-                    uid : "4385884935",
+                    uid: "4385884935",
                     role: "Customer Service",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -64,7 +66,7 @@ const EmployeeList = () => {
                     mobile: "018399473783",
                     gender: "Shemale",
                     nid: "8349490384893",
-                    uid : "4385884935",
+                    uid: "4385884935",
                     role: "Kitchen Staff",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -83,7 +85,7 @@ const EmployeeList = () => {
                     mobile: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
-                    uid : "4385884935",
+                    uid: "4385884935",
                     role: "Kitchen Staff",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -102,7 +104,7 @@ const EmployeeList = () => {
                     mobile: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
-                    uid : "4385884935",
+                    uid: "4385884935",
                     role: "Others",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -121,7 +123,7 @@ const EmployeeList = () => {
                     mobile: "018399473783",
                     gender: "Sodome",
                     nid: "8349490384893",
-                    uid : "4385884935",
+                    uid: "4385884935",
                     role: "Admin",
                     DOB: "27-01-2001",
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -136,17 +138,51 @@ const EmployeeList = () => {
     })
     return (
         <section className='max-w-[1600px] mx-auto mt-5'>
-            <SetTitle title="Employee List" />
+            <SetTitle title="All Employee List" />
 
             <div className='flex  gap-3 '>
                 <div className='w-full '>
-                    <SectionTitle h1="Employee List" />
+                    <SectionTitle h1="All Employee List" />
                 </div>
                 <div>
-                    <Link to={`/add-employee`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Employee<IoAddOutline className='text-white' /></Link>
+                    <Link to={`/add-employee`} className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap '>Add Employee <IoAddOutline className='text-white' /></Link>
 
                 </div>
 
+            </div>
+            <div>
+
+                <div className="relative max-w-md w-full mt-4">
+
+                    <input
+                        type="text"
+                        id="Search"
+                        placeholder="Search for..."
+                        className="w-full rounded-md border-gray-300 py-2.5 px-4 border-2 sm:text-sm"
+                        onChange={event => setSearchQuery(event.target.value)}
+                    />
+
+                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                        <button type="button" className="text-gray-600 hover:text-gray-700">
+                            <span className="sr-only">Search</span>
+
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-4 w-4"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                />
+                            </svg>
+                        </button>
+                    </span>
+                </div>
             </div>
             <div className='py-8'>
                 <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
@@ -188,7 +224,7 @@ const EmployeeList = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>{data && data.map((employee, _idx) => <EmployeeListRow key={_idx} employee={employee} />)}</tbody>
+                            <tbody>{data && data.map((employee, _idx) => <AllEmployeeListRow key={_idx} employee={employee} />)}</tbody>
                         </table>
                     </div>
                 </div>
@@ -198,4 +234,4 @@ const EmployeeList = () => {
     );
 };
 
-export default EmployeeList;
+export default AllEmployeeList;

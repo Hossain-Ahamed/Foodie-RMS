@@ -35,6 +35,7 @@ import EditEmployee from "../../pages/Admin/Employee/EditEmployee/EditEmployee";
 import MembershipContainer from "../../pages/Admin/ManageOffer/ManageMembership/MembershipContainer/MembershipContainer";
 import EditExpense from "../../pages/Admin/Expenses/EditExpense/EditExpense";
 import ProtectedByRole from "../ProtectedByRole/ProtectedByRole";
+import AllEmployeeList from "../../pages/Admin/Employee/AllEmployeeList/AllEmployeeList";
 
 
 
@@ -170,6 +171,11 @@ export const router = createBrowserRouter([
             {
                 path: '/employee-list',
                 element: <EmployeeList />
+                // '/restaurant/:res_id/branch/:branchID/employee-list',
+            },
+            {
+                path: '/all-employee-list',
+                element: <AllEmployeeList />
                 // '/restaurant/:res_id/branch/:branchID/employee-list',
             },
 

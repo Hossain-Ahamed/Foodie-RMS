@@ -1,14 +1,11 @@
 import React from 'react';
-import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { Link } from 'react-router-dom';
 import { BiEditAlt } from 'react-icons/bi';
 import Swal from 'sweetalert2';
-import { MdClear, MdOutlineCheckCircle } from 'react-icons/md';
-import { LuEye } from 'react-icons/lu';
+import { MdOutlineCheckCircle } from 'react-icons/md';
 import { FaTrashAlt } from 'react-icons/fa';
 
-const EmployeeListRow = ({ employee }) => {
-    const { branchName, restaurantName, res_id, branchID } = useRestauarantAndBranch();
+const AllEmployeeListRow = ({ employee }) => {
     let statusStyle, paymentStatus, icon;
     switch (employee.role) {
         case 'Admin':
@@ -114,4 +111,4 @@ const EmployeeListRow = ({ employee }) => {
     );
 };
 
-export default EmployeeListRow;
+export default AllEmployeeListRow;

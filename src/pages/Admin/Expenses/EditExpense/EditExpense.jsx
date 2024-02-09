@@ -101,6 +101,9 @@ const EditExpense = () => {
                         {/* category  */}
                         <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
                             <div className="w-full p-3">
+                            <label className="mb-1.5 font-medium text-base text-gray-800">
+                                Bill Category
+                            </label>
                                 <select
                                     label="Select Dish Category"
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
@@ -358,7 +361,7 @@ const EditExpense = () => {
                     <div className='flex flex-wrap justify-center items-end gap-3 p-1'>
                         {/* save button  */}
                         <button type='submit' className="flex flex-wrap justify-center w-full max-w-96  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                            <p data-config-id="auto-txt-22-3">Edit</p>
+                            <p data-config-id="auto-txt-22-3">Update</p>
                         </button>
                     </div>
                 </div>

@@ -64,7 +64,6 @@ const OngoingOrderTable = () => {
                     profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
                     customer_name: "Farhan Hasan Nilok",
                     branch: "19/7 chasara",
-                    table: "4",
                     status: "Confirmed",
                     payment_status: "Not Refunded",
                     order_site: "Offsite",
