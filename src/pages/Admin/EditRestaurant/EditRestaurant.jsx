@@ -44,7 +44,6 @@ const EditRestaurant = () => {
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['restaurantData', res_id],
         enabled: true,
-        cacheTime: 0,
         queryFn: async () => {
 
 
@@ -75,6 +74,15 @@ const EditRestaurant = () => {
                             "postalCode": "1440",
                             "country": "Bangladesh",
                             "branchID": "q-Naynabad-f-Bangladesh-1440-1705850705607"
+                        },
+                        {
+                            "branch_name": "Fouco chasara",
+                            "streetAddress": "jam",
+                            "city": "Mymensingh",
+                            "stateProvince": "Dhaka",
+                            "postalCode": "1440",
+                            "country": "Bangladesh",
+                            "branchID": "q-chasara-f-Bangladesh-1440-1705850705607"
                         }
                     ],
 
