@@ -38,7 +38,7 @@ const BillingHistory = () => {
                         "res_name": "Restaurant B",
                         "branch_name": "Downtown Branch",
                         "branchID": "B002",
-                        "subscriptionStart": "2024-02sssssssssss-15xxxxxxT12:00:00Z",
+                        "subscriptionStart": "2024-02-15T12:00:00Z",
                         "subscriptionEnd": "2025-02-15T12:00:00Z",
                         "amount": 6000,
                         "payment_time": "2024-02-15T16:45:00Z",

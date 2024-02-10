@@ -15,8 +15,8 @@ const PaymentType = () => {
     const axiosSecure = useAxiosSecure();
     const { res_id, branchID } = useRestauarantAndBranch();
 
+    const { register, handleSubmit, formState: { errors }, setValue, control, getValues } = useForm();
 
-    const { handleSubmit, register, setValue } = useForm();
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError, } = useQuery({
         queryKey: ['paymenttype', res_id, branchID],
@@ -27,10 +27,14 @@ const PaymentType = () => {
 
             res = {
                 data: {
-                    "paymentTypes": "PayLater"
+                    "paymentTypes": "PayLater",
+                    "takewayCharge": 0,
+                    "deliveryCharge": 50,
                 }
             }
             setValue('paymentType', res.data?.paymentTypes);
+            setValue('takewayCharge', res.data?.takewayCharge);
+            setValue('deliveryCharge', res.data?.deliveryCharge);
             return res?.data;
         },
     });
@@ -81,7 +85,7 @@ const PaymentType = () => {
     };
 
     if (dataLoading) {
-        return <ScaleLoader size={100} color='#36d7b7' style={{margin:'auto',"height": '50px'}} />;
+        return <ScaleLoader size={100} color='#36d7b7' style={{ margin: 'auto', "height": '50px' }} />;
     }
 
     if (dataError) {
@@ -91,7 +95,7 @@ const PaymentType = () => {
     return (
         <section>
             <SetTitle title="Payment" />
-            <form >
+            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center pt-12 select-none '>
                 <fieldset className="grid grid-cols-2 gap-4">
                     <legend className="sr-only">Payment type</legend>
 
@@ -112,7 +116,8 @@ const PaymentType = () => {
                                 <p className="text-gray-700">Pay First / Pre pay</p>
                             </div>
                             <p className="mt-1 text-xs text-gray-400">
-                                For business that charge customer while ordering meal <br />Create a new order in case of adding a new meal
+                                For business that charge customer while ordering meal and it will Create a new order in case of adding a new meal <br /> <br />
+                                Pay First will use Foodie&#39;s own gateway
                             </p>
                         </label>
                     </div>
@@ -134,16 +139,39 @@ const PaymentType = () => {
                                 <p className="text-gray-700">Pay Later / Post Pay </p>
                             </div>
                             <p className="mt-1 text-xs text-gray-400">
-                                For business that charge customer after meal <br /> Update previous order in case of adding extra meal
+                                For business that charge customer after meal and it will Update previous order in case of adding extra meal <br /> <br />
+                                Payment system will be controlled by owner&#39;s own payment system
                             </p>
                         </label>
                     </div>
                 </fieldset>
 
+                <div className="w-full flex flex-wrap">
+                    <div className="w-full md:w-1/2 p-3">
+                        <p className="mb-1.5 font-medium text-base text-coolGray-800" data-config-id="auto-txt-3-3">Takeway Charge</p>
+                        <input className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input" type="number" placeholder="50"
+                            {...register("takewayCharge", {
+                                required: "*takeway charge is Required",
+                            })}
+                            onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })} />
+                        {errors.takewayCharge?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.takewayCharge.message}</p>)}
 
+                    </div>
+                    <div className="w-full md:w-1/2 p-3">
+                        <p className="mb-1.5 font-medium text-base text-coolGray-800" data-config-id="auto-txt-3-3">Delivery Charge (offsite)</p>
+                        <input className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input" type="number" placeholder="50"
+                            {...register("deliveryCharge", {
+                                required: "*Delivery charge is Required",
+                            })}
+                            onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })} />
+                        {errors.deliveryCharge?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.deliveryCharge.message}</p>)}
+
+                    </div>
+                </div>
+                <button type='submit'>Save</button>
             </form>
 
-            <label htmlFor="Currency" className="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curency</label>
+            <label htmlFor="Currency" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curency</label>
             <select id="Currency" disabled className="disabled:cursor-not-allowed block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option >Bangaldeshi taka- BDT (৳)</option>
             </select>
