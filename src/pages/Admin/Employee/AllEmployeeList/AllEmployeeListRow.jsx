@@ -12,6 +12,10 @@ const AllEmployeeListRow = ({ employee }) => {
             statusStyle = 'bg-emerald-100 text-emerald-700'
             icon = <MdOutlineCheckCircle className="-ms-1 me-1.5 h-4 w-4" />
             break
+        case 'Super-Admin':
+            statusStyle = 'bg-emerald-100 text-emerald-700'
+            icon = <MdOutlineCheckCircle className="-ms-1 me-1.5 h-4 w-4" />
+            break
         case 'Kitchen Staff':
             statusStyle = 'bg-purple-100 text-purple-700'
             break

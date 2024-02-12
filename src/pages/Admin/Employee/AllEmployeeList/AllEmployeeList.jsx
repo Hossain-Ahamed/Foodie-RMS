@@ -31,7 +31,7 @@ const AllEmployeeList = () => {
         queryKey: ['employee-list', searchQuery],
         queryFn: async () => {
             const res = await axiosSecure(reqURLData.reqURL);
-            console.log(res.data)
+            // console.log(res.data)
             return res.data
         }
     })

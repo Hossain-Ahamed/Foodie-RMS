@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { disableScroll_Number_Input, getCountries } from '../../../../assets/scripts/Utility';
+import { SwalErrorShow, disableScroll_Number_Input, getCountries } from '../../../../assets/scripts/Utility';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { useQuery } from 'react-query';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import { RiRadioButtonLine } from "react-icons/ri";
 import { IoMdRadioButtonOff } from "react-icons/io";
+import { toast } from 'react-hot-toast';
 const AddExistingEmployee = () => {
     const { employeeID } = useParams();
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
@@ -19,7 +20,7 @@ const AddExistingEmployee = () => {
     const axiosSecure = useAxiosSecure();
     const [text, setText] = useState("Per Month Salary");
 
-    const { res_id } = useRestauarantAndBranch();
+    const { res_id, branchID } = useRestauarantAndBranch();
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['existing-employee-data', res_id],
         enabled: true,
@@ -27,71 +28,71 @@ const AddExistingEmployee = () => {
         queryFn: async () => {
 
 
-            let res = await axiosSecure.get(`/restaurant/${res_id}/existing-employee-data`);
-
-
-            res = {
-                data: {
-                    employeeData: {
-                        _id: "1",
-                        f_name: "Farhan Hasan",
-                        l_name: "Nilok",
-                        email: "nilok@gmail.com",
-
-                        mobile: "018399473783",
-                        gender: "Male",
-                        nid: "8349490384893",
-                        uid: "4385884935",
-
-                        DOB: "27-01-2001",
-                        profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                        streetAddress: "J A M T O L A",
-                        city: 'Narayanganj',
-                        stateProvince: 'Dhaka',
-                        postalCode: '435',
-                        country: "Bangladesh",
-
-                        emergencyName: "Md. Hossain Ahamed",
-                        emergencyRelation: "8",
-                        emergencyPhoneNumber: "01868726172",
-                        emergencyEmail: "hossainahamed6872@gmail.com",
-                        emergencyAddress: "J A M T O L A",
-
-                    },
-                    restaurantData: {
-
-
-                        "_id": "87342fdjskllf",
-                        "res_name": "Fuoco",
-                        "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                        "branches": [
-                            {
-                                "branch_name": "Fouco Update",
-
-                                "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
-                            },
-                            {
-                                "branch_name": "Fouco Chasara",
-
-                                "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
-                            },
-                            {
-                                "branch_name": "Fouco jamtola",
-
-                                "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
-                            },
-                            {
-                                "branch_name": "Fouco pagla",
-
-                                "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
-                            },
-                        ],
+            const res = await axiosSecure.get(`/restaurant/${res_id}/existing-employee-data/${employeeID}`);
 
 
 
-                    }
-                }
-            }
+            //     data: {
+            //         employeeData: {
+            //             _id: "1",
+            //             f_name: "Farhan Hasan",
+            //             l_name: "Nilok",
+            //             email: "nilok@gmail.com",
+
+            //             mobile: "018399473783",
+            //             gender: "Male",
+            //             nid: "8349490384893",
+            //             uid: "4385884935",
+
+            //             DOB: "27-01-2001",
+            //             profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //             streetAddress: "J A M T O L A",
+            //             city: 'Narayanganj',
+            //             stateProvince: 'Dhaka',
+            //             postalCode: '435',
+            //             country: "Bangladesh",
+
+            //             emergencyName: "Md. Hossain Ahamed",
+            //             emergencyRelation: "8",
+            //             emergencyPhoneNumber: "01868726172",
+            //             emergencyEmail: "hossainahamed6872@gmail.com",
+            //             emergencyAddress: "J A M T O L A",
+
+            //         },
+            //         restaurantData: {
+
+
+            //             "_id": "87342fdjskllf",
+            //             "res_name": "Fuoco",
+            //             "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //             "branches": [
+            //                 {
+            //                     "branch_name": "Fouco Update",
+
+            //                     "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //                 {
+            //                     "branch_name": "Fouco Chasara",
+
+            //                     "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //                 {
+            //                     "branch_name": "Fouco jamtola",
+
+            //                     "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //                 {
+            //                     "branch_name": "Fouco pagla",
+
+            //                     "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //             ],
+
+
+
+            //         }
+            //     }
+            // }
 
 
             // Set options array
@@ -112,10 +113,18 @@ const AddExistingEmployee = () => {
         },
 
     });
+    const navigate = useNavigate();
     const onSubmit = (formData) => {
         console.log(formData);
 
-   
+        axiosSecure.post(`/add-an-employee-to-my-restaurant/${res_id}/${branchID}/employee/${data?.employeeData?._id}`, formData)
+            .then(res => {
+                toast.success("Successfully enlisted");
+                navigate('/employee-list', { replace: true })
+            }).catch(e => {
+                console.error(e);
+                SwalErrorShow(e);
+            })
 
 
     };
@@ -535,7 +544,7 @@ const AddExistingEmployee = () => {
                                         },
                                     })}
                                     onFocus={(e) => disableScroll_Number_Input(e)}
-                                     />
+                                />
                                 {errors.salary_unit?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.salary_unit.message}</p>)}
                                 {errors.salary_unit?.type === "notNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*Not a number</p>)}
 
