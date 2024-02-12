@@ -18,7 +18,6 @@ import EditRestaurant from "../../pages/Admin/EditRestaurant/EditRestaurant";
 import AddBranch from "../../pages/Admin/EditRestaurant/AddBranch/AddBranch";
 import TimeTable from "../../pages/Admin/ManageRestaurant/TimeTable/TimeTable";
 import TableManagement from "../../pages/Admin/ManageRestaurant/TableManagement/TableManagement";
-import EmployeeList from "../../pages/Admin/Employee/EmployeeList/EmployeeList";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
 import AddCoupon from "../../pages/Admin/ManageOffer/ManageCoupon/AddCoupon/AddCoupon";
 import ManagePaymentSystem from "../../pages/Admin/ManageRestaurant/ManagePaymentSystem/ManagePaymentSystem";
@@ -170,7 +169,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/employee-list',
-                element: <EmployeeList />
+                element: <AllEmployeeList />
                 // '/restaurant/:res_id/branch/:branchID/employee-list',
             },
             {

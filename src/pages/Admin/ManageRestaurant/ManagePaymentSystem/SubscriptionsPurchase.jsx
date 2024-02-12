@@ -76,7 +76,15 @@ const SubscriptionsPurchase = () => {
 
     const getColor = (from, to) => {
         const currentTime = new Date().toISOString();
-        if (new Date(to).getMonth() + 1 === new Date().getMonth() + 1) {
+        const toDate = new Date(to); // Example date
+
+        const currentMonth = new Date().getMonth() + 1; // Get current month
+        const currentYear = new Date().getFullYear(); // Get current year
+
+        const toMonth = toDate.getMonth() + 1; // Get month of 'to'
+        const toYear = toDate.getFullYear(); // Get year of 'to'
+
+        if (currentMonth === toMonth && currentYear === toYear) {
             return { "text": "Extend", "color": 'warning', "status": 'Expire Soon' };
         } if (currentTime >= from && currentTime <= to) {
             return { "text": "Extend", "color": 'success', "status": 'Continuing' };

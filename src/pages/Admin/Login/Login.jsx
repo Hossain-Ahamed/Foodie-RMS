@@ -44,14 +44,14 @@ const Login = () => {
             })
             return;
         }
-
-        console.log({ email, password })
-
-        //  todo uncomment 
-        // provideSignInWithEmailAndPassword(email, password)
-        //     .then(result => {
-        //         navigate(from, { replace: true });
-        //     }).catch(e => { setLoading(false) })
+       
+        provideSignInWithEmailAndPassword(email, password)
+            .then(result => {
+                navigate(from, { replace: true });
+            }).catch(e => { 
+                setLoading(false);
+                console.log(e) 
+            })
     }
 
 
