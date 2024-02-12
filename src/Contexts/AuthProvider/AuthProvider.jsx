@@ -58,34 +58,32 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            // todo 
-            setUser({
-                name: "currentUser?.displayName",
-                email: "currentUser.email",
-                photoURL: "currentUser?.photoURL",
-                phone: "currentUser?.phoneNumber",
-                firebase_UID: "currentUser?.uid",
-            });
-            // setUser(currentUser);
-            console.log('current user cred : ', currentUser);
+       
+            setUser(currentUser);
+            console.log('current user cred : ', currentUser?.email);
 
             if (currentUser) {
 
                 const userData = {
-                    
+
                     email: currentUser.email,
                     firebase_UID: currentUser?.uid,
                 }
 
                 // const user
-                axios.post(`${import.meta.env.VITE_serverAddress}/jwt`, userData, { withCredentials: true })
+                axios.post(`${import.meta.env.VITE_serverAddress}/rms-employee-jwt`, userData, { withCredentials: true })
                     .then(data => {
-                        console.log("Token :  ", data.data.token);
+                        // console.log("Token :  ", data.data.token);
 
                         Cookies.set('access-token', data.data.token, { expires: 7 });
+
+                    })
+                    .catch(e => {
+                        console.error(e);
+                    })
+                    .finally(() => {
                         setLoading(false);
                     })
-                    .catch(e => { console.error(e); setLoading(false) })
 
 
             } else {

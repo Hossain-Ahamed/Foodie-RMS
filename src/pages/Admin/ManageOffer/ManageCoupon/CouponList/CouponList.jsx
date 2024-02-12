@@ -188,7 +188,15 @@ const CouponList = () => {
 
     const getColor = (from, to) => {
         const currentTime = new Date().toISOString();
-        if (currentTime >= from && currentTime <= to) {
+        const toDate = new Date(to); // Example date
+
+        const currentMonth = new Date().getMonth() + 1; // Get current month
+        const currentYear = new Date().getFullYear(); // Get current year
+
+        const toMonth = toDate.getMonth() + 1; // Get month of 'to'
+        const toYear = toDate.getFullYear(); // Get year of 'to'
+
+        if (currentMonth === toMonth && currentYear === toYear) {
             return { "text": "Active", "color": 'text-green-500' };
         } else if (currentTime > to) {
             return { "text": "Expired", "color": 'text-red-500' };

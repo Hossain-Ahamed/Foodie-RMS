@@ -30,7 +30,8 @@ const AllEmployeeList = () => {
     const { isLoading, error, data: data = [], refetch } = useQuery({
         queryKey: ['employee-list', searchQuery],
         queryFn: async () => {
-            const res = await axiosSecure(`/restaurant/${res_id}/all-employee-list`);
+            const res = await axiosSecure(reqURLData.reqURL);
+            console.log(res.data)
             return res.data
         }
     })
