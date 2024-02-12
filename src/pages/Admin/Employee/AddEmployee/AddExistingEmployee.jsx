@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getCountries } from '../../../../assets/scripts/Utility';
+import { disableScroll_Number_Input, getCountries } from '../../../../assets/scripts/Utility';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { useQuery } from 'react-query';
@@ -527,13 +527,15 @@ const AddExistingEmployee = () => {
                             {/* Salary Unit amount    */}
                             <div className="w-full  p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">{text}</p>
-                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="8000"
+                                <input className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="number" placeholder="8000"
                                     {...register("salary_unit", {
                                         required: "*Salary amount is Required",
                                         validate: {
                                             notNumber: (value) => !isNaN(value)
                                         },
-                                    })} />
+                                    })}
+                                    onFocus={(e) => disableScroll_Number_Input(e)}
+                                     />
                                 {errors.salary_unit?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.salary_unit.message}</p>)}
                                 {errors.salary_unit?.type === "notNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*Not a number</p>)}
 

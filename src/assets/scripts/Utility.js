@@ -257,6 +257,9 @@ function getMonthNumber(month) {
   return String(months.indexOf(month) + 1).padStart(2, "0");
 }
 
+const disableScroll_Number_Input = e=>{
+ e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })
+}
 
 const getVendor = () => {
   return vendorData;
@@ -289,5 +292,5 @@ export {
   getEmployeeData,
 
   getformatDate,
-
+ disableScroll_Number_Input
 };

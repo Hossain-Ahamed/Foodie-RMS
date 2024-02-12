@@ -58,6 +58,7 @@ const SearchEmployeePage_ToAdd = () => {
 
         const trimmedData = trimObjectFields(data);
 
+     
        
         if (isObjectEmpty(trimmedData)) {
             toast.error('No data inserted');
@@ -68,28 +69,26 @@ const SearchEmployeePage_ToAdd = () => {
         setSearchedResult(false);
 
         // search from server 
+        await axiosSecure.post('/search-employee-to-add', trimmedData)
+            .then(res => {
+                setSearchedResult(res.data);
+            })
+            .catch(error => {
+                console.error(error);
+                toast.error(error?.code + " " + error?.response?.data?.message)
+            })
+            .finally(() => {
 
-        // Todo: uncomment this to fetch
-        // await axiosSecure.post('/search-employee-to-add', trimmedData)
-        //     .then(res => {
-        //         setSearchedResult(res.data);
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //         toast.error(error?.code + " " + error?.response?.data?.message)
-        //     })
-        //     .finally(() => {
-
-        //         setLoadingonSearch(false);
-        //         setSearchedValueReceived(true);
-        //     })
+                setLoadingonSearch(false);
+                setSearchedValueReceived(true);
+            })
 
 
 
 
 
-        // --------------------------
-        // Todo: delete this to fetch
+        // // --------------------------
+     
         setSearchedResult([
             {
                 _id: "1",
@@ -208,10 +207,10 @@ const SearchEmployeePage_ToAdd = () => {
         ]);
 
         
-        setSearchedResult([])
-        setLoadingonSearch(false)
-        setSearchedValueReceived(true);
-        // ---------------------------------
+        // setSearchedResult([])
+        // setLoadingonSearch(false)
+        // setSearchedValueReceived(true);
+        // // ---------------------------------
 
     }
     /**
@@ -417,7 +416,7 @@ const SearchEmployeePage_ToAdd = () => {
                                                             <span
                                                                 className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
                                                             >
-                                                                <Link title="Add to your team" to={`/restaurant/${res_id}/branch/${branchID}/add-existing-employee/${employee?._id}`} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></Link>
+                                                                <Link title="Add to your team" to={`/add-existing-employee/${employee?._id}`} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></Link>
                                                             </span>
                                                         </td>
 

@@ -72,13 +72,9 @@ const AuthProvider = ({ children }) => {
             if (currentUser) {
 
                 const userData = {
-                    name: currentUser?.displayName,
+                    
                     email: currentUser.email,
-                    photoURL: currentUser?.photoURL,
-                    phone: currentUser?.phoneNumber,
                     firebase_UID: currentUser?.uid,
-
-
                 }
 
                 // const user

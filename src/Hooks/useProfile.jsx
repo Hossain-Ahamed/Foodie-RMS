@@ -12,7 +12,7 @@ const useProfile = () => {
         queryKey: ['profile', user?.email],
         enabled: (!loading && (!!user)),
         queryFn: async () => {
-            // const res = await axiosSecure.get(`/get-profile/${user?.email}`);
+            // const res = await axiosSecure.get(`/get-rms-employee-profile/${user?.email}`);
             // console.log("profile: ",res.data, '\n role : ',{ role : res.data?.role})
             // return res?.data;
 
