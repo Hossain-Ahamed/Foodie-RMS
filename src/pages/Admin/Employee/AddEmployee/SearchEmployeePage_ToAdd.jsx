@@ -9,6 +9,7 @@ import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { BiEditAlt } from 'react-icons/bi';
 import { IoPersonAddSharp, IoWarningOutline } from 'react-icons/io5';
 import { IoIosAddCircleOutline } from 'react-icons/io';
+import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 
 const SearchEmployeePage_ToAdd = () => {
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
@@ -58,8 +59,8 @@ const SearchEmployeePage_ToAdd = () => {
 
         const trimmedData = trimObjectFields(data);
 
-     
-       
+
+
         if (isObjectEmpty(trimmedData)) {
             toast.error('No data inserted');
             return;
@@ -88,125 +89,125 @@ const SearchEmployeePage_ToAdd = () => {
 
 
         // // --------------------------
-     
-        setSearchedResult([
-            {
-                _id: "1",
-                f_name: "Farhan Hasan",
-                l_name: "Nilok",
-                email: "nilok@gmail.com",
-                branchName: "Fouco",
-                mobile: "018399473783",
-                gender: "Male",
-                nid: "8349490384893",
-                uid: "4385884935",
-             
-                DOB: "27-01-2001",
-                profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                streetAddress: "J A M T O L A",
-                city: 'Narayanganj',
-                stateProvince: 'Dhaka',
-                postalCode: '435',
-                country: "Bangladesh",
-            },
-            {
-                _id: "2",
-                f_name: "Fattan Prodan",
-                l_name: "Pathul",
-                email: "nilok@gmail.com",
-                branchName: "Fouco",
-                mobile: "018399473783",
-                gender: "Female",
-                nid: "8349490384893",
-                uid: "4385884935",
-                
-                DOB: "27-01-2001",
-                profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                streetAddress: "J A M T O L A",
-                city: 'Narayanganj',
-                stateProvince: 'Dhaka',
-                postalCode: '435',
-                country: "Bangladesh",
-            },
-            {
-                _id: "3",
-                f_name: "Hossain Ahamed",
-                l_name: "Malu",
-                email: "malu@gmail.com",
-                branchName: "Fouco",
-                mobile: "018399473783",
-                gender: "Shemale",
-                nid: "8349490384893",
-                uid: "4385884935",
-                
-                DOB: "27-01-2001",
-                profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                streetAddress: "J A M T O L A",
-                city: 'Narayanganj',
-                stateProvince: 'Dhaka',
-                postalCode: '435',
-                country: "Bangladesh",
-            },
-            {
-                _id: "4",
-                f_name: "Gazi Fuad",
-                l_name: "Tahsin",
-                email: "sodome@gmail.com",
-                branchName: "Fouco",
-                mobile: "018399473783",
-                gender: "Sodome",
-                nid: "8349490384893",
-                uid: "4385884935",
-                
-                DOB: "27-01-2001",
-                profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                streetAddress: "J A M T O L A",
-                city: 'Narayanganj',
-                stateProvince: 'Dhaka',
-                postalCode: '435',
-                country: "Bangladesh",
-            },
-            {
-                _id: "5",
-                f_name: "Gazi Fuad",
-                l_name: "Tahsin",
-                email: "sodome@gmail.com",
-                branchName: "Fouco",
-                mobile: "018399473783",
-                gender: "Sodome",
-                nid: "8349490384893",
-                uid: "4385884935",
-                
-                DOB: "27-01-2001",
-                profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                streetAddress: "J A M T O L A",
-                city: 'Narayanganj',
-                stateProvince: 'Dhaka',
-                postalCode: '435',
-                country: "Bangladesh",
-            },
-            {
-                _id: "6",
-                f_name: "Gazi Fuad",
-                l_name: "Tahsin",
-                email: "sodome@gmail.com",
-                branchName: "Fouco",
-                mobile: "018399473783",
-                gender: "Sodome",
-                nid: "8349490384893",
-                uid: "4385884935",
-               
-                DOB: "27-01-2001",
-                profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                streetAddress: "J A M T O L A",
-                city: 'Narayanganj',
-                stateProvince: 'Dhaka',
-                postalCode: '435',
-                country: "Bangladesh",
-            },
-        ]);
 
-        
+        // setSearchedResult([
+        //     {
+        //         _id: "1",
+        //         f_name: "Farhan Hasan",
+        //         l_name: "Nilok",
+        //         email: "nilok@gmail.com",
+        //         branchName: "Fouco",
+        //         mobile: "018399473783",
+        //         gender: "Male",
+        //         nid: "8349490384893",
+        //         uid: "4385884935",
+
+        //         DOB: "27-01-2001",
+        //         profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+        //         streetAddress: "J A M T O L A",
+        //         city: 'Narayanganj',
+        //         stateProvince: 'Dhaka',
+        //         postalCode: '435',
+        //         country: "Bangladesh",
+        //     },
+        //     {
+        //         _id: "2",
+        //         f_name: "Fattan Prodan",
+        //         l_name: "Pathul",
+        //         email: "nilok@gmail.com",
+        //         branchName: "Fouco",
+        //         mobile: "018399473783",
+        //         gender: "Female",
+        //         nid: "8349490384893",
+        //         uid: "4385884935",
+
+        //         DOB: "27-01-2001",
+        //         profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+        //         streetAddress: "J A M T O L A",
+        //         city: 'Narayanganj',
+        //         stateProvince: 'Dhaka',
+        //         postalCode: '435',
+        //         country: "Bangladesh",
+        //     },
+        //     {
+        //         _id: "3",
+        //         f_name: "Hossain Ahamed",
+        //         l_name: "Malu",
+        //         email: "malu@gmail.com",
+        //         branchName: "Fouco",
+        //         mobile: "018399473783",
+        //         gender: "Shemale",
+        //         nid: "8349490384893",
+        //         uid: "4385884935",
+
+        //         DOB: "27-01-2001",
+        //         profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+        //         streetAddress: "J A M T O L A",
+        //         city: 'Narayanganj',
+        //         stateProvince: 'Dhaka',
+        //         postalCode: '435',
+        //         country: "Bangladesh",
+        //     },
+        //     {
+        //         _id: "4",
+        //         f_name: "Gazi Fuad",
+        //         l_name: "Tahsin",
+        //         email: "sodome@gmail.com",
+        //         branchName: "Fouco",
+        //         mobile: "018399473783",
+        //         gender: "Sodome",
+        //         nid: "8349490384893",
+        //         uid: "4385884935",
+
+        //         DOB: "27-01-2001",
+        //         profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+        //         streetAddress: "J A M T O L A",
+        //         city: 'Narayanganj',
+        //         stateProvince: 'Dhaka',
+        //         postalCode: '435',
+        //         country: "Bangladesh",
+        //     },
+        //     {
+        //         _id: "5",
+        //         f_name: "Gazi Fuad",
+        //         l_name: "Tahsin",
+        //         email: "sodome@gmail.com",
+        //         branchName: "Fouco",
+        //         mobile: "018399473783",
+        //         gender: "Sodome",
+        //         nid: "8349490384893",
+        //         uid: "4385884935",
+
+        //         DOB: "27-01-2001",
+        //         profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+        //         streetAddress: "J A M T O L A",
+        //         city: 'Narayanganj',
+        //         stateProvince: 'Dhaka',
+        //         postalCode: '435',
+        //         country: "Bangladesh",
+        //     },
+        //     {
+        //         _id: "6",
+        //         f_name: "Gazi Fuad",
+        //         l_name: "Tahsin",
+        //         email: "sodome@gmail.com",
+        //         branchName: "Fouco",
+        //         mobile: "018399473783",
+        //         gender: "Sodome",
+        //         nid: "8349490384893",
+        //         uid: "4385884935",
+
+        //         DOB: "27-01-2001",
+        //         profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+        //         streetAddress: "J A M T O L A",
+        //         city: 'Narayanganj',
+        //         stateProvince: 'Dhaka',
+        //         postalCode: '435',
+        //         country: "Bangladesh",
+        //     },
+        // ]);
+
+
         // setSearchedResult([])
         // setLoadingonSearch(false)
         // setSearchedValueReceived(true);
@@ -216,6 +217,9 @@ const SearchEmployeePage_ToAdd = () => {
     /**
      * --------------------------------------------------------------------------------
      */
+
+
+
 
     return (
         <section>
@@ -323,107 +327,107 @@ const SearchEmployeePage_ToAdd = () => {
                             <div className='-mx-4 py-2 overflow-x-auto'>
                                 <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
                                     {
-                                        SearchedResult &&
-                                        Array.isArray(SearchedResult) &&
-                                        SearchedResult.length > 0 && <>
-                                            <table className='min-w-full leading-normal'>
-                                                <thead>
-                                                    <tr>
-                                                        <th
-                                                            scope='col'
-                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
-                                                        >
-                                                            Employee
-                                                        </th>
-                                                        <th
-                                                            scope='col'
-                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
-                                                        >UID</th>
-                                                        <th
-                                                            scope='col'
-                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
-                                                        >NID</th>
-                                                        <th
-                                                            scope='col'
-                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
-                                                        >
-                                                            mobile
-                                                        </th>
-                                                        <th
-                                                            scope='col'
-                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
-                                                        >
-                                                            BirthDate
-                                                        </th>
+                                        loadingOnSearch ?
+                                            <LoadingPage />
+                                            :
+                                            <>
+                                                {
+                                                    SearchedResult &&
+                                                    Array.isArray(SearchedResult) &&
+                                                    SearchedResult.length > 0 && <>
+                                                        <table className='min-w-full leading-normal'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th
+                                                                        scope='col'
+                                                                        className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                                    >
+                                                                        Employee
+                                                                    </th>
+                                                                 
+                                                                    <th
+                                                                        scope='col'
+                                                                        className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                                                    >NID</th>
+                                                                    <th
+                                                                        scope='col'
+                                                                        className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                                    >
+                                                                        mobile
+                                                                    </th>
+                                                                    <th
+                                                                        scope='col'
+                                                                        className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                                    >
+                                                                        BirthDate
+                                                                    </th>
 
 
-                                                        <th
-                                                            scope='col'
-                                                            className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
-                                                        >
-                                                            Add
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>{
-                                                    SearchedResult.map((employee, _idx) => <tr key={_idx}>
-                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
-                                                            <div className='flex items-center '>
-                                                                <div className='flex items-center gap-5 flex-col md:flex-row'>
-                                                                    <div className=''>
-                                                                        <img
-                                                                            alt='profile'
-                                                                            src={employee?.profilePhoto}
-                                                                            className='mx-auto object-cover rounded h-10 w-15 '
-                                                                        />
-                                                                    </div>
-                                                                    <div>
-                                                                        <span className='text-gray-900 whitespace-no-wrap block'>{employee?.f_name} {employee?.l_name}</span>
-                                                                        <span className='text-gray-900 whitespace-no-wrap block'>{employee?.email}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div className='ml-3'>
-                                                                    {/* <p className='text-gray-900 whitespace-no-wrap'>{category?.categoryID}</p> */}
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
-                                                            <span
-                                                                className='text-gray-900 whitespace-no-wrap block'
-                                                            >
+                                                                    <th
+                                                                        scope='col'
+                                                                        className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                                                    >
+                                                                        Add
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>{
+                                                                SearchedResult.map((employee, _idx) => <tr key={_idx}>
+                                                                    <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
+                                                                        <div className='flex items-center '>
+                                                                            <div className='flex items-center gap-5 flex-col md:flex-row'>
+                                                                                <div className=''>
+                                                                                    <img
+                                                                                        alt='profile'
+                                                                                        src={employee?.profilePhoto}
+                                                                                        className='mx-auto object-cover rounded h-10 w-15 '
+                                                                                    />
+                                                                                </div>
+                                                                                <div>
+                                                                                    <span className='text-gray-900 whitespace-no-wrap block'>{employee?.f_name} {employee?.l_name}</span>
+                                                                                    <span className='text-gray-900 whitespace-no-wrap block'>{employee?.email}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className='ml-3'>
+                                                                                {/* <p className='text-gray-900 whitespace-no-wrap'>{category?.categoryID}</p> */}
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                
+                                                                    <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
+                                                                        <span
+                                                                            className='text-gray-900 whitespace-no-wrap block'
+                                                                        >
 
-                                                                {employee?.uid}
-                                                            </span>
-                                                        </td>
-                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
-                                                            <span
-                                                                className='text-gray-900 whitespace-no-wrap block'
-                                                            >
-
-                                                                {employee?.nid}
-                                                            </span>
-                                                        </td>
-                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
-                                                            {employee?.mobile}
-                                                        </td>
-                                                        <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
-                                                            {employee?.DOB}
-                                                        </td>
+                                                                            {employee?.nid}
+                                                                        </span>
+                                                                    </td>
+                                                                    <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
+                                                                        {employee?.mobile}
+                                                                    </td>
+                                                                    <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm'>
+                                                                        {employee?.DOB}
+                                                                    </td>
 
 
 
-                                                        <td className='py-5 border-b border-gray-200 bg-white text-sm'>
-                                                            <span
-                                                                className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
-                                                            >
-                                                                <Link title="Add to your team" to={`/add-existing-employee/${employee?._id}`} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></Link>
-                                                            </span>
-                                                        </td>
+                                                                    <td className='py-5 border-b border-gray-200 bg-white text-sm'>
+                                                                        <span
+                                                                            className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
+                                                                        >
+                                                                            <Link title="Add to your team" to={`/add-existing-employee/${employee?._id}`} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></Link>
+                                                                        </span>
+                                                                    </td>
 
-                                                    </tr>)}
-                                                </tbody>
-                                            </table>
-                                        </>
+                                                                </tr>)}
+                                                            </tbody>
+                                                        </table>
+                                                    </>
+                                                }
+                                            </>
+
+
+
                                     }
 
 

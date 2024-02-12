@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import vendorData from "../data/vendor.json"
 import employeeData from "../data/employee.json"
+import Swal  from 'sweetalert2';
 
 const getCountries = () => {
   return countries;
@@ -269,6 +270,14 @@ const getEmployeeData = () => {
   return employeeData;
 }
 
+const SwalErrorShow = (e) => {
+  Swal.fire({
+    icon: "error",
+    text: e?.code + " " + e?.message,
+    title: e?.response?.data?.message,
+  });
+};
+
 export {
   validateMobileNumber,
   validateSalesTax,
@@ -292,5 +301,6 @@ export {
   getEmployeeData,
 
   getformatDate,
- disableScroll_Number_Input
+ disableScroll_Number_Input,
+ SwalErrorShow
 };
