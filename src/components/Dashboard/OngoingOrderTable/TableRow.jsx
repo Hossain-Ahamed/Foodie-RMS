@@ -118,7 +118,7 @@ const TableRow = ({ order }) => {
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
-                    className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${statusStyle}`}
+                    className={`inline-flex items-center justify-center rounded-full px-2.5 py-0.5 ${statusStyle}`}
                 >
                     {
                         icon
