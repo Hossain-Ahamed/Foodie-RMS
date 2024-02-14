@@ -41,6 +41,7 @@ const AuthProvider = ({ children }) => {
 
     // logout 
     const provideSignOut = () => {
+        console.log("Log out command received")
         setUser(null)
         return signOut(auth);
     }
@@ -80,6 +81,7 @@ const AuthProvider = ({ children }) => {
                     })
                     .catch(e => {
                         console.error(e);
+                        provideSignOut();
                     })
                     .finally(() => {
                         setLoading(false);

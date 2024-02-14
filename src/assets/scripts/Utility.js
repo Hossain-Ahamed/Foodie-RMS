@@ -8,9 +8,9 @@ import categories from "../data/categroy.json";
 import expenseType from "../data/expenseType.json";
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
-import vendorData from "../data/vendor.json"
-import employeeData from "../data/employee.json"
-import Swal  from 'sweetalert2';
+import vendorData from "../data/vendor.json";
+import employeeData from "../data/employee.json";
+import Swal from "sweetalert2";
 
 const getCountries = () => {
   return countries;
@@ -202,6 +202,9 @@ function getformatDate(inputDate) {
     /(\d{1,2})[ ]?(\d{1,2})[ ]?(\d{4})/,
     /(\d{2})(\d{2})(\d{4})/,
   ];
+  if (!inputDate) {
+    return null;
+  }
 
   // Loop through patterns and check for a match
   for (const pattern of patterns) {
@@ -217,8 +220,7 @@ function getformatDate(inputDate) {
       return `${year}-${month}-${day}`;
     }
   }
-
-  return "Invalid date format";
+  return null;
 }
 
 function getMonthNumber(month) {
@@ -258,17 +260,23 @@ function getMonthNumber(month) {
   return String(months.indexOf(month) + 1).padStart(2, "0");
 }
 
-const disableScroll_Number_Input = e=>{
- e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })
-}
+const disableScroll_Number_Input = (e) => {
+  e.target.addEventListener(
+    "wheel",
+    function (e) {
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+};
 
 const getVendor = () => {
   return vendorData;
-}
+};
 
 const getEmployeeData = () => {
   return employeeData;
-}
+};
 
 const SwalErrorShow = (e) => {
   Swal.fire({
@@ -296,11 +304,9 @@ export {
   getProvinceOfSelectedCity,
   getAllCategories,
   getAllExpenseType,
-
   getVendor,
   getEmployeeData,
-
   getformatDate,
- disableScroll_Number_Input,
- SwalErrorShow
+  disableScroll_Number_Input,
+  SwalErrorShow,
 };
