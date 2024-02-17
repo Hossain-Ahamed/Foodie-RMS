@@ -13,8 +13,6 @@ const SubscriptionsPurchase = () => {
     const { res_id, branchID } = useRestauarantAndBranch();
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['historyBill', res_id],
-        enabled: true,
-        cacheTime: 0,
         queryFn: async () => {
 
 

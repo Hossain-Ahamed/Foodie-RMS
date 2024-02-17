@@ -22,7 +22,7 @@ const DishCategory_Edit = () => {
   const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
     queryKey: ['categoryData', categoryID],
     enabled: true,
-    cacheTime: 0,
+
     queryFn: async () => {
       const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/edit-category/${categoryID}`);
 

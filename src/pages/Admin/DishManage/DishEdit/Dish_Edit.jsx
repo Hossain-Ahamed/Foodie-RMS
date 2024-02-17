@@ -38,8 +38,6 @@ const Dish_Edit = () => {
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['DishData', id],
-        enabled: true,
-        cacheTime: 0,
         queryFn: async () => {
 
 

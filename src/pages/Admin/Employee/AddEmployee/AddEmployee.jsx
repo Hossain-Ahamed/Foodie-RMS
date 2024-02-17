@@ -21,15 +21,13 @@ const AddEmployee = () => {
     const { res_id } = useRestauarantAndBranch();
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['branches', res_id],
-        enabled: true,
-        cacheTime: 0,
         queryFn: async () => {
 
 
-            let res = await axiosSecure.get(`/restaurant/${res_id}/get-restaurant-name-and-all-branches`);
+            // let res = await axiosSecure.get(`/restaurant/${res_id}/get-restaurant-name-and-all-branches`);
 
 
-            res = {
+            const res = {
                 data: {
 
 

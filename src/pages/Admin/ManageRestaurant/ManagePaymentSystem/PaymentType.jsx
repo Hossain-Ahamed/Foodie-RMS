@@ -20,8 +20,7 @@ const PaymentType = () => {
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError, } = useQuery({
         queryKey: ['paymenttype', res_id, branchID],
-        enabled: true,
-        cacheTime: 0,
+       
         queryFn: async () => {
             let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payments-type`);
 

@@ -15,8 +15,6 @@ const ViewAsAdmin = () => {
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['employeeData', employeeID],
-        enabled: true,
-        cacheTime: 0,
         queryFn: async () => {
         const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-employee-data/${employeeID}`);
 

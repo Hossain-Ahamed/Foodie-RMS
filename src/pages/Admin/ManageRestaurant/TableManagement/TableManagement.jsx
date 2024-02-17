@@ -22,11 +22,8 @@ const TableManagement = () => {
     const { res_id, branchID, res_name } = useRestauarantAndBranch();
 
     // Fetch existing table data
-    const { data: existingTableData = [], isLoading: existingTableLoading, error: existingTableError, refetch: tableRefetch } = useQuery(
-        ['tabledata', res_id, branchID],
-        {
-            enabled: true,
-            cacheTime: 0,
+    const { data: existingTableData = [], isLoading: existingTableLoading, error: existingTableError, refetch: tableRefetch } = useQuery({
+            queryKey : ['tabledata', res_id, branchID],
             queryFn: async () => {
                 // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/tables`);
                 return [

@@ -16,8 +16,6 @@ const CouponList = () => {
     const { res_id, branchID } = useRestauarantAndBranch();
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['coupon'],
-        enabled: true,
-        cacheTime: 0,
         queryFn: async () => {
 
 
