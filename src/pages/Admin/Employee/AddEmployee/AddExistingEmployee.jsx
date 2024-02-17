@@ -115,8 +115,7 @@ const AddExistingEmployee = () => {
     });
     const navigate = useNavigate();
     const onSubmit = (formData) => {
-        console.log(formData);
-
+        // console.log(formData);
         axiosSecure.post(`/add-an-employee-to-my-restaurant/${res_id}/${branchID}/employee/${data?.employeeData?._id}`, formData)
             .then(res => {
                 toast.success("Successfully enlisted");

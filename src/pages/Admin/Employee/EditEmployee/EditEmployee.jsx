@@ -21,105 +21,99 @@ const EditEmployee = () => {
     const axiosSecure = useAxiosSecure();
     const [text, setText] = useState("Per Month Salary");
 
-
-
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { res_id } = useRestauarantAndBranch();
 
 
-    const { res_id, branchID } = useRestauarantAndBranch();
-
-
-    const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
-        queryKey: ['existing-employee-data', res_id, branchID, employeeID],
-        enabled: true,
-        cacheTime: 0,
+    const { refetch: dataRefetch, data, isLoading: dataLoading, error: dataError } = useQuery({
+        queryKey: ['existing-employee-data', res_id, employeeID],
         queryFn: async () => {
 
 
-            let res = await axiosSecure.get(`/restaurant/${res_id}/edit-employee-data`);
+            const res = await axiosSecure.get(`/restaurant/${res_id}/edit-employee-data/${employeeID}`);
+            console.log(res.data)
+
+            // res = {  
+            //     data: {
+            //         employeeData: {
+            //             _id: "1",
+            //             f_name: "Farhan Hasan",
+            //             l_name: "Nilok",
+            //             email: "nilok@gmail.com",
+
+            //             mobile: "01839947378",
+            //             gender: "Male",
+            //             nid: "8349490384893",
+            //             uid: "4385884935",
+
+            //             DOB: "27-01-2001",
+            //             profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //             streetAddress: "J A M T O L A",
+            //             city: 'Narayanganj',
+            //             stateProvince: 'Dhaka',
+            //             postalCode: '435',
+            //             country: "Bangladesh",
+
+            //             emergencyName: "Md. Hossain Ahamed",
+            //             emergencyRelation: "8",
+            //             emergencyPhoneNumber: "01868726172",
+            //             emergencyEmail: "hossainahamed6872@gmail.com",
+            //             emergencyAddress: "J A M T O L A",
+
+            //             res_id: "87342fdjskllf",
+            //             res_img: "http://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //             res_name: "Fuoco",
+            //             branch_name: "Fouco pagla",
+            //             branchID: "q-pagla-f-Bangladesh-1440-1705850705607",
+            //             role: "Kitchen Stuff",
+            //             salary_type: "Monthly",
+            //             salary_unit: "2",
+
+            //         },
+            //         restaurantData: {
 
 
-            res = {
-                data: {
-                    employeeData: {
-                        _id: "1",
-                        f_name: "Farhan Hasan",
-                        l_name: "Nilok",
-                        email: "nilok@gmail.com",
+            //             "_id": "87342fdjskllf",
+            //             "res_name": "Fuoco",
+            //             "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //             "branches": [
+            //                 {
+            //                     "branch_name": "Fouco Update",
 
-                        mobile: "01839947378",
-                        gender: "Male",
-                        nid: "8349490384893",
-                        uid: "4385884935",
+            //                     "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //                 {
+            //                     "branch_name": "Fouco Chasara",
 
-                        DOB: "27-01-2001",
-                        profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                        streetAddress: "J A M T O L A",
-                        city: 'Narayanganj',
-                        stateProvince: 'Dhaka',
-                        postalCode: '435',
-                        country: "Bangladesh",
+            //                     "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //                 {
+            //                     "branch_name": "Fouco jamtola",
 
-                        emergencyName: "Md. Hossain Ahamed",
-                        emergencyRelation: "8",
-                        emergencyPhoneNumber: "01868726172",
-                        emergencyEmail: "hossainahamed6872@gmail.com",
-                        emergencyAddress: "J A M T O L A",
+            //                     "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //                 {
+            //                     "branch_name": "Fouco pagla",
 
-                        res_id: "87342fdjskllf",
-                        res_img: "http://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                        res_name: "Fuoco",
-                        branch_name: "Fouco pagla",
-                        branchID: "q-pagla-f-Bangladesh-1440-1705850705607",
-                        role: "Kitchen Stuff",
-                        salary_type: "Monthly",
-                        salary_unit: "2",
-
-                    },
-                    restaurantData: {
-
-
-                        "_id": "87342fdjskllf",
-                        "res_name": "Fuoco",
-                        "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                        "branches": [
-                            {
-                                "branch_name": "Fouco Update",
-
-                                "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
-                            },
-                            {
-                                "branch_name": "Fouco Chasara",
-
-                                "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
-                            },
-                            {
-                                "branch_name": "Fouco jamtola",
-
-                                "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
-                            },
-                            {
-                                "branch_name": "Fouco pagla",
-
-                                "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
-                            },
-                        ],
+            //                     "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
+            //                 },
+            //             ],
 
 
 
-                    }
-                }
-            }
+            //         }
+            //     }
+            // }
 
 
-            // Set options array
+            // // Set options array
             setValue('res_id', res?.data?.restaurantData?._id);
             setValue('res_img', res?.data?.restaurantData?.img);
             setValue('res_name', res?.data?.restaurantData?.res_name);
 
 
 
-            // employee data
+            // // employee data
             setValue('f_name', res?.data?.employeeData?.f_name);
             setValue('l_name', res?.data?.employeeData?.l_name);
             setValue('email', res?.data?.employeeData?.email);
@@ -127,7 +121,7 @@ const EditEmployee = () => {
             setValue('gender', res?.data?.employeeData?.gender);
             setValue('nid', res?.data?.employeeData?.nid);
             setValue('uid', res?.data?.employeeData?.uid);
-            setValue('DOB', getformatDate(res?.data?.employeeData?.DOB));
+            setValue('DOB', getformatDate(res?.data?.employeeData?.DOB)); console.log(getformatDate(res?.data?.employeeData?.DOB))
 
             setValue('profilePhoto', res?.data?.employeeData?.profilePhoto); setSelectedImage0(res?.data?.employeeData?.profilePhoto);
             setValue('streetAddress', res?.data?.employeeData?.streetAddress);
@@ -141,7 +135,7 @@ const EditEmployee = () => {
             setValue('emergencyEmail', res?.data?.employeeData?.emergencyEmail);
             setValue('emergencyAddress', res?.data?.employeeData?.emergencyAddress);
 
-            // salary 
+            // // salary 
             setValue('res_id', res?.data?.employeeData?.res_id);
             setValue('res_name', res?.data?.employeeData?.res_name);
             setValue('res_img', res?.data?.employeeData?.res_img);
@@ -154,7 +148,7 @@ const EditEmployee = () => {
 
             //----------------------------------------------------
 
-            return res?.data;
+            return res.data;
         },
 
     });
@@ -676,7 +670,7 @@ const EditEmployee = () => {
                                             data?.restaurantData?.branches && Array.isArray(data?.restaurantData?.branches) && data?.restaurantData?.branches.map((index, _idx) => <option key={_idx} value={index?.branchID}>{index?.branchID}</option>)
 
                                         }
-                                    </select> 
+                                    </select>
                                 </div>
                                 {errors.branch_name && (
                                     <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
