@@ -13,10 +13,14 @@ import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import { useParams } from 'react-router-dom';
 import { Checkbox } from '@nextui-org/react';
+import { useNavigate } from 'react-router-dom';
 
 
 const EditEmployee = () => {
+    // handle image
+    const [selectedImage0, setSelectedImage0] = useState(null);
     const { employeeID } = useParams();
+    const navigate = useNavigate();
     const countries = getCountries();
     const axiosSecure = useAxiosSecure();
     const [text, setText] = useState("Per Month Salary");
@@ -25,88 +29,15 @@ const EditEmployee = () => {
     const { res_id } = useRestauarantAndBranch();
 
 
-    const { refetch: dataRefetch, data, isLoading: dataLoading, error: dataError } = useQuery({
-        queryKey: ['existing-employee-data', res_id, employeeID],
+    const { data, isLoading: dataLoading, error: dataError } = useQuery({
+        queryKey: ['existing-employee-data', employeeID],
+     
         queryFn: async () => {
 
-
+            console.log('again')
             const res = await axiosSecure.get(`/restaurant/${res_id}/edit-employee-data/${employeeID}`);
             console.log(res.data)
 
-            // res = {  
-            //     data: {
-            //         employeeData: {
-            //             _id: "1",
-            //             f_name: "Farhan Hasan",
-            //             l_name: "Nilok",
-            //             email: "nilok@gmail.com",
-
-            //             mobile: "01839947378",
-            //             gender: "Male",
-            //             nid: "8349490384893",
-            //             uid: "4385884935",
-
-            //             DOB: "27-01-2001",
-            //             profilePhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-            //             streetAddress: "J A M T O L A",
-            //             city: 'Narayanganj',
-            //             stateProvince: 'Dhaka',
-            //             postalCode: '435',
-            //             country: "Bangladesh",
-
-            //             emergencyName: "Md. Hossain Ahamed",
-            //             emergencyRelation: "8",
-            //             emergencyPhoneNumber: "01868726172",
-            //             emergencyEmail: "hossainahamed6872@gmail.com",
-            //             emergencyAddress: "J A M T O L A",
-
-            //             res_id: "87342fdjskllf",
-            //             res_img: "http://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-            //             res_name: "Fuoco",
-            //             branch_name: "Fouco pagla",
-            //             branchID: "q-pagla-f-Bangladesh-1440-1705850705607",
-            //             role: "Kitchen Stuff",
-            //             salary_type: "Monthly",
-            //             salary_unit: "2",
-
-            //         },
-            //         restaurantData: {
-
-
-            //             "_id": "87342fdjskllf",
-            //             "res_name": "Fuoco",
-            //             "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-            //             "branches": [
-            //                 {
-            //                     "branch_name": "Fouco Update",
-
-            //                     "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
-            //                 },
-            //                 {
-            //                     "branch_name": "Fouco Chasara",
-
-            //                     "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
-            //                 },
-            //                 {
-            //                     "branch_name": "Fouco jamtola",
-
-            //                     "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
-            //                 },
-            //                 {
-            //                     "branch_name": "Fouco pagla",
-
-            //                     "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
-            //                 },
-            //             ],
-
-
-
-            //         }
-            //     }
-            // }
-
-
-            // // Set options array
             setValue('res_id', res?.data?.restaurantData?._id);
             setValue('res_img', res?.data?.restaurantData?.img);
             setValue('res_name', res?.data?.restaurantData?.res_name);
@@ -121,9 +52,9 @@ const EditEmployee = () => {
             setValue('gender', res?.data?.employeeData?.gender);
             setValue('nid', res?.data?.employeeData?.nid);
             setValue('uid', res?.data?.employeeData?.uid);
-            setValue('DOB', getformatDate(res?.data?.employeeData?.DOB)); console.log(getformatDate(res?.data?.employeeData?.DOB))
+            setValue('DOB', getformatDate(res?.data?.employeeData?.DOB));
 
-            setValue('profilePhoto', res?.data?.employeeData?.profilePhoto); setSelectedImage0(res?.data?.employeeData?.profilePhoto);
+            setValue('profilePhoto', res?.data?.employeeData?.profilePhoto);
             setValue('streetAddress', res?.data?.employeeData?.streetAddress);
             setValue('city', res?.data?.employeeData?.city);
             setValue('stateProvince', res?.data?.employeeData?.stateProvince);
@@ -147,19 +78,18 @@ const EditEmployee = () => {
 
 
             //----------------------------------------------------
-
+            setSelectedImage0(res?.data?.employeeData?.profilePhoto);
             return res.data;
         },
-
+        
     });
 
-    // handle image
-    const [selectedImage0, setSelectedImage0] = useState(null);
+
 
     const handleImageUpload0 = (event) => {
         const file = event.target.files[0];
         setSelectedImage0(URL.createObjectURL(file));
-
+        console.log(event.target.files[0])
         setValue("profilePhoto", file);
 
     };
@@ -771,10 +701,16 @@ const EditEmployee = () => {
 
 
 
+                            <div className='w-full flex flex-wrap gap-10 justify-end'>
+                                <button type='submit' className="w-fit flex flex-wrap justify-center px-7 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button ">
+                                    <p data-config-id="auto-txt-22-3">Save</p>
+                                </button>
+                                <button onClick={() => navigate(-1)} className="w-fit flex flex-wrap justify-center px-7 py-2 bg-blue-500 hover:bg-blue-600 font-medium text-sm text-white border border-blue-500 rounded-md shadow-button">
+                                    <p data-config-id="auto-txt-22-3">Go Back</p>
+                                </button>
+                            </div>
 
-                            <button type='submit' className="flex flex-wrap justify-center w-full md:w-auto md:ml-auto px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                                <p data-config-id="auto-txt-22-3">Save</p>
-                            </button>
+
 
                         </div>
 

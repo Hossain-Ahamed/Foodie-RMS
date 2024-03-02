@@ -19,9 +19,9 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <NextUIProvider>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <NextUIProvider>
           <HelmetProvider>
             <AuthProvider>
               <ToasterProvider />
@@ -30,8 +30,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             </AuthProvider>
 
           </HelmetProvider>
-        </QueryClientProvider>
-      </NextUIProvider>
-    </ThemeProvider>
+        </NextUIProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
 )

@@ -43,11 +43,10 @@ const EditRestaurant = () => {
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['restaurantData', res_id],
-        enabled: true,
         queryFn: async () => {
 
 
-            const res = await axiosSecure.get(`/edit-restaurant/${res_id}`);
+            // const res = await axiosSecure.get(`/edit-restaurant/${res_id}`);
 
 
             const res1 = {

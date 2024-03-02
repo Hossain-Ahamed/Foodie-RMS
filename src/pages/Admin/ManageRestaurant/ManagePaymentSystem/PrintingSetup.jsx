@@ -25,8 +25,7 @@ const PrintingSetup = () => {
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['data', res_id, branchID],
-        enabled: true,
-        cacheTime: 0,
+     
         queryFn: async () => {
 
 
