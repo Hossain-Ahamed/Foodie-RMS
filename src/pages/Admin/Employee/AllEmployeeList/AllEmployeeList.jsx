@@ -8,6 +8,7 @@ import AllEmployeeListRow from './AllEmployeeListRow';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import { useQuery } from 'react-query';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 const AllEmployeeList = () => {
     const axiosSecure = useAxiosSecure();
     const [searchQuery, setSearchQuery] = useState('')
@@ -35,6 +36,10 @@ const AllEmployeeList = () => {
             return res.data
         }
     })
+
+    if (error) {
+        return <ErrorPage />
+    }
 
 
     return (
@@ -108,7 +113,7 @@ const AllEmployeeList = () => {
                                                 <th
                                                     scope='col'
                                                     className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
-                                                >Employee ID</th>
+                                                >NID</th>
                                                 <th
                                                     scope='col'
                                                     className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
@@ -129,7 +134,13 @@ const AllEmployeeList = () => {
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>{data && Array.isArray(data) && data.map((employee, _idx) => <AllEmployeeListRow key={_idx} employee={employee} />)}</tbody>
+                                        <tbody>{data && Array.isArray(data) && data.map((employee, _idx) =>
+                                            <AllEmployeeListRow
+                                                key={_idx}
+                                                employee={employee}
+                                                axiosSecure={axiosSecure}
+                                                refetch={refetch}
+                                            />)}</tbody>
                                     </table>
                                 </>
                         }

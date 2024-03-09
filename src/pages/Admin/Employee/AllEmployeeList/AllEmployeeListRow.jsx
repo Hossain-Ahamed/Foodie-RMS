@@ -4,8 +4,12 @@ import { BiEditAlt } from 'react-icons/bi';
 import Swal from 'sweetalert2';
 import { MdOutlineCheckCircle } from 'react-icons/md';
 import { FaTrashAlt } from 'react-icons/fa';
+import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
+import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 
-const AllEmployeeListRow = ({ employee }) => {
+const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
+
+    const { branchID, res_id } = useRestauarantAndBranch();
     let statusStyle, paymentStatus, icon;
     switch (employee.role) {
         case 'Admin':
@@ -26,11 +30,19 @@ const AllEmployeeListRow = ({ employee }) => {
             statusStyle = 'bg-blue-100 text-blue-700'
             break
     }
-    const handleDeletecategory = id => {
+    const handleDeleteEmployee = id => {
+        if (employee?.role === "Super-Admin") {
+            Swal.fire({
+                title: "Deleted!",
+                text: "Super Admin can not be deleted",
+                icon: "error"
+            });
+            return;
+        }
         console.log(id)
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: `You want to remove ${employee?.f_name} ${employee?.l_name} from your employee`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -38,11 +50,21 @@ const AllEmployeeListRow = ({ employee }) => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+
+                axiosSecure.delete(`/admin/restaurant/${res_id}/branch/${branchID}/delete/employee/${employee?._id}`)
+                    .then(res => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                        refetch();
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        SwalErrorShow(e);
+                    })
+
             }
         });
     }
@@ -107,7 +129,10 @@ const AllEmployeeListRow = ({ employee }) => {
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
                 >
                     <Link title="Edit category" to={`/update-employee-profile/${employee?._id}`} className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
-                    <span title="Delete category" onClick={() => handleDeletecategory(employee._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
+                    {
+                        employee?.role === "Super-Admin" || <span title="Delete category" onClick={() => handleDeleteEmployee(employee._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
+                    }
+
                 </span>
             </td>
         </tr>

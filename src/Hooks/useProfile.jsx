@@ -15,16 +15,9 @@ const useProfile = () => {
             const res = await axiosSecure.get(`/get-rms-employee-profile/${user?.email}`);
             console.log("profile: ",res.data)
             return res?.data;
-
-         
-            
-            
-
         },
     });
     return { profile, profileLoading, profileRefetch, permitted: profile?.permitted, profileError }
-   
-
 };
 
 export default useProfile;

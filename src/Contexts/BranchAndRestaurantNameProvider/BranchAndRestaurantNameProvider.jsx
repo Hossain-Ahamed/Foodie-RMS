@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MyRestaurants from '../../pages/Admin/MyRestaurant/MyRestaurant';
 export const BranchAndRestaurantNameContext = createContext({});
 const BranchAndRestaurantNameProvider = ({ children }) => {
-    const navigate = useNavigate();
+ 
 
     const ParsingData = () => {
         try {
@@ -37,6 +37,7 @@ const BranchAndRestaurantNameProvider = ({ children }) => {
         setBranchAndRestaurantName
     }
 
+    console.log('object1')
     if (selectedData) {
 
         return (
@@ -46,7 +47,7 @@ const BranchAndRestaurantNameProvider = ({ children }) => {
         );
     }
 
-    
+    console.log('object2')
     return (
         <BranchAndRestaurantNameContext.Provider value={value}>
            <MyRestaurants/>
