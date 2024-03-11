@@ -3,8 +3,9 @@ import { BiEditAlt } from 'react-icons/bi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-const ExpenseRow = ({expense}) => {
+import trash from "../../../../assets/images/Home/delete.svg"
+import edit from "../../../../assets/images/Home/edit.svg"
+const ExpenseRow = ({ expense }) => {
     const handleDeleteOrder = id => {
         console.log(id)
         Swal.fire({
@@ -28,19 +29,16 @@ const ExpenseRow = ({expense}) => {
     return (
         <tr>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <span className='text-gray-900 whitespace-no-wrap block'><p className="whitespace-nowrap text-sm text-center">{expense?.title}</p></span>
-            </td>
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <span className='text-gray-900 whitespace-no-wrap block'><p className="whitespace-nowrap text-sm text-center">{expense?.expenseType}</p></span>
+                <span className='text-gray-900 whitespace-no-wrap block'><p className="whitespace-nowrap text-sm text-center">{expense?.category}</p></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span className='text-gray-900 whitespace-no-wrap block'><p className="whitespace-nowrap text-sm text-center">{expense?.billDate}</p></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
-                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.paidDate}</span></span>
+                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.transactions[0]?.paymentDate}</span></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
-                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.vendor}</span></span>
+                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.payTo}</span></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
@@ -51,7 +49,7 @@ const ExpenseRow = ({expense}) => {
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
-                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.billAmount}</span></span>
+                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.expense}</span></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
                 <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.dueBill}</span></span>
@@ -60,8 +58,8 @@ const ExpenseRow = ({expense}) => {
                 <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{order?.payment_status}</p></span>
             </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <Link to={`/edit-expenses/${expense._id}`} title="Edit Order" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
-                <span title="Delete category" onClick={() => handleDeleteOrder(expense.id)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
+                <Link to={`/edit-expenses/${expense._id}`} title="Edit Order" className="inline-flex ml-3 cursor-pointer"><img src={edit} /></Link>
+                <span title="Delete category" onClick={() => handleDeleteOrder(expense.id)} className="inline-flex ml-3 cursor-pointer"><img src={trash} /></span>
             </td>
         </tr>
     )

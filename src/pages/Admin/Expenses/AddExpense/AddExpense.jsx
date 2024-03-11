@@ -22,7 +22,7 @@ const AddExpense = () => {
     const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/add-expenses`)
+            // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/add-expenses`)
 
             // return res.data.categories;
             return {
@@ -85,7 +85,7 @@ const AddExpense = () => {
     })
 
     useEffect(() => {
-        setOptionList([])
+        // setOptionList([])
         if(expenseCategory === "Purchase"){
             if(data?.vendors && Array.isArray(data?.vendors)){
 
@@ -99,7 +99,7 @@ const AddExpense = () => {
         }
     }, [expenseCategory, setOptionList, data])
 
-    const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({
+    const { register, handleSubmit, formState: { errors }, setValue, getValues, resetField, control } = useForm({
         defaultValues: {
             
         },
@@ -117,29 +117,44 @@ const AddExpense = () => {
 
     const [descriptionContent, setDescriptionContent] = useState("");
 
-    const [selectedImage0, setSelectedImage0] = useState(null);
+    // const [selectedImage0, setSelectedImage0] = useState(null);
 
-    const handleImageUpload0 = (event) => {
-        const file = event.target.files[0];
-        setSelectedImage0(URL.createObjectURL(file));
-        setValue("img", file);
+    // const handleImageUpload0 = (event) => {
+    //     const file = event.target.files[0];
+    //     setSelectedImage0(URL.createObjectURL(file));
+    //     setValue("img", file);
 
-    };
+    // };
 
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
+        data.branchID = branchID;
+        data.res_id = res_id
         console.log(data);
-        const expenseAmount = parseFloat(data.expense);
-        const paymentAmount = parseFloat(data.paymentAmount);
-        let due = expenseAmount - paymentAmount
-        console.log(data, due, expenseAmount, paymentAmount)
+        // axiosSecure.post('/admin/create/expense', data)
+        // .then(data => {
+        //     toast.success("Expense added successfully!")
+        //     resetField("billDate");
+        //     resetField("category");
+        //     resetField("description");
+        //     resetField("expense");
+        //     resetField("payTo");
+        //     resetField("payeeID");
+        //     resetField("paymentAmount");
+        //     resetField("paymentDate");
+        //     resetField("reference");
+        //     resetField("vendorDescription");
+        // })
+        // .catch(err => {
+        //     toast.error("Something went wrong")
+        // })
 
-        if (!selectedImage0) {
+        // if (!selectedImage0) {
 
-            toast.error('Cover Photo needed');
-            return;
-        }
+        //     toast.error('Cover Photo needed');
+        //     return;
+        // }
 
 
     };
