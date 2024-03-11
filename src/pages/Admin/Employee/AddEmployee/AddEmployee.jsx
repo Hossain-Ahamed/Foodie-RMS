@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { disableScroll_Number_Input, getCountries, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
+import { SwalErrorShow, disableScroll_Number_Input, getCountries, imageUpload, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
 import toast from 'react-hot-toast';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
@@ -11,9 +11,11 @@ import { useQuery } from 'react-query';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddEmployee = () => {
+    const [loading,setLoading] = useState(false)
     const countries = getCountries();
     const axiosSecure = useAxiosSecure();
     const [text, setText] = useState("Per Month Salary");
@@ -87,17 +89,45 @@ const AddEmployee = () => {
 
     };
 
+    const navigate = useNavigate();
     const onSubmit = (data) => {
         console.log(data);
+        setLoading(true)
         if (!selectedImage0) {
             toast.error('Profile Photo needed');
             return;
         }
 
+        imageUpload(data?.profilePhoto)
+            .then(image => {
+
+                data.profilePhoto = image?.data?.display_url
+
+                axiosSecure.post(`/admin/add-an-employee-to-the-system`, data)
+                    .then(res => {
+                        toast.success("Successfully Updated");
+                        navigate('/employee-list', { replace: true })
+                    }).catch(e => {
+                        console.error(e);
+                        SwalErrorShow(e);
+                    })
+                    .finally(()=>{
+                        setLoading(false)
+                    })
+
+            })
+            .catch(err => {
+                console.log(err);
+                setLoading(false)
+            })
+            .finally(()=>{
+                setLoading(false)
+            })
+
 
     };
 
-    if (dataLoading) {
+    if (dataLoading ||loading) {
         return <LoadingPage />
     }
 
