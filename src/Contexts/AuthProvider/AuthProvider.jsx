@@ -91,6 +91,7 @@ const AuthProvider = ({ children }) => {
             } else {
                 localStorage.removeItem('access-token');
                 Cookies.remove('access-token');
+                Cookies.remove('_foodie_rms_bd_rd')
                 setLoading(false)
             }
 

@@ -24,43 +24,43 @@ const AddEmployee = () => {
         queryFn: async () => {
 
 
-            // let res = await axiosSecure.get(`/restaurant/${res_id}/get-restaurant-name-and-all-branches`);
+            let res = await axiosSecure.get(`/restaurant/${res_id}/get-restaurant-name-and-all-branches`);
 
 
-            const res = {
-                data: {
+            // const res = {
+            //     data: {
 
 
-                    "_id": "87342fdjskllf",
-                    "res_name": "Fuoco",
-                    "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    "branches": [
-                        {
-                            "branch_name": "Fouco Update",
+            //         "_id": "87342fdjskllf",
+            //         "res_name": "Fuoco",
+            //         "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //         "branches": [
+            //             {
+            //                 "branch_name": "Fouco Update",
 
-                            "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
-                        },
-                        {
-                            "branch_name": "Fouco Chasara",
+            //                 "branchID": "q-Update-f-Bangladesh-1440-1705850705607"
+            //             },
+            //             {
+            //                 "branch_name": "Fouco Chasara",
 
-                            "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
-                        },
-                        {
-                            "branch_name": "Fouco jamtola",
+            //                 "branchID": "q-Chasara-f-Bangladesh-1440-1705850705607"
+            //             },
+            //             {
+            //                 "branch_name": "Fouco jamtola",
 
-                            "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
-                        },
-                        {
-                            "branch_name": "Fouco pagla",
+            //                 "branchID": "q-jamtola-f-Bangladesh-1440-1705850705607"
+            //             },
+            //             {
+            //                 "branch_name": "Fouco pagla",
 
-                            "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
-                        },
-                    ],
+            //                 "branchID": "q-pagla-f-Bangladesh-1440-1705850705607"
+            //             },
+            //         ],
 
 
 
-                }
-            }
+            //     }
+            // }
 
 
             // Set options array
@@ -630,7 +630,7 @@ const AddEmployee = () => {
                                     >
                                         <option value="" disabled>Select Role</option>
                                         <option value="Admin">Admin</option>
-                                        <option value="Kitchen Stuff">Kitchen Stuff</option>
+                                        <option value="Kitchen Staff">Kitchen Staff</option>
                                         <option value="Customer Service">Customer Service</option>
                                         <option value="Others">Others</option>
                                     </select>

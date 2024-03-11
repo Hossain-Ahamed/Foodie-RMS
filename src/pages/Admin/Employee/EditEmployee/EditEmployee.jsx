@@ -34,10 +34,9 @@ const EditEmployee = () => {
     const { refetch, data, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['existing-employee-data', employeeID],
        
-        staleTime: Infinity,
+        // staleTime: Infinity,
+        enabled : Fetching,
         queryFn: async () => {
-
-            console.log('again')
             const res = await axiosSecure.get(`/restaurant/${res_id}/edit-employee-data/${employeeID}`);
             console.log(res.data)
 

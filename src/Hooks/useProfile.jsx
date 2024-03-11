@@ -13,7 +13,7 @@ const useProfile = () => {
         enabled: (!loading && (!!user)),
         queryFn: async () => {
             const res = await axiosSecure.get(`/get-rms-employee-profile/${user?.email}`);
-            console.log("profile: ",res.data)
+            // console.log("profile: ",res.data)
             return res?.data;
         },
     });

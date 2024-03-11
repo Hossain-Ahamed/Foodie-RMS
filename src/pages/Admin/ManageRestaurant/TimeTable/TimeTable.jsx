@@ -18,7 +18,7 @@ const RestaurantTimes = () => {
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['shiftdata', res_id, branchID],
         queryFn: async () => {
-            const { data1 } = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/manage-shift`);
+            // const { data1 } = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/manage-shift`);
             const data =// Default data format for each day of the week
             {
                 "Sunday": {

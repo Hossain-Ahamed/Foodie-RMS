@@ -488,7 +488,7 @@ const AddExistingEmployee = () => {
                                     >
                                         <option value="" disabled>Select Role</option>
                                         <option value="Admin">Admin</option>
-                                        <option value="Kitchen Stuff">Kitchen Stuff</option>
+                                        <option value="Kitchen Staff">Kitchen Staff</option>
                                         <option value="Customer Service">Customer Service</option>
                                         <option value="Others">Others</option>
                                     </select>

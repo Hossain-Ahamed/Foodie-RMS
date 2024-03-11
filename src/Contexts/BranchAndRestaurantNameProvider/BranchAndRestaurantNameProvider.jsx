@@ -1,31 +1,23 @@
-import React, { createContext, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import React, { createContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import MyRestaurants from '../../pages/Admin/MyRestaurant/MyRestaurant';
+
 export const BranchAndRestaurantNameContext = createContext({});
+
 const BranchAndRestaurantNameProvider = ({ children }) => {
- 
-
-    const ParsingData = () => {
-        try {
-
-            return JSON.parse(localStorage.getItem('_foodie_rms_bd_rd'))
-        } catch (error) {
-            localStorage.removeItem('_foodie_rms_bd_rd');
-            return null;
-        }
-    }
-
-    const [selectedData, setSelectedData] = useState(localStorage.getItem('_foodie_rms_bd_rd') ? ParsingData() : null);
-
-
+    const [selectedData, setSelectedData] = useState(() => {
+        const cookieData = Cookies.get('_foodie_rms_bd_rd');
+        return cookieData ? JSON.parse(cookieData) : null;
+    });
 
     const setBranchAndRestaurantName = (data) => {
-
-        localStorage.setItem('_foodie_rms_bd_rd', JSON.stringify(data));
+        Cookies.set('_foodie_rms_bd_rd', JSON.stringify(data), { expires: 7, path: '/' });
         setSelectedData(data);
-    }
+    };
 
-
+    useEffect(() => {
+        console.log('changed')
+    }, [selectedData]);
 
     const value = {
         res_id: selectedData?.res_id,
@@ -35,11 +27,11 @@ const BranchAndRestaurantNameProvider = ({ children }) => {
         branch_name: selectedData?.branch_name,
         role: selectedData?.role,
         setBranchAndRestaurantName
-    }
+    };
 
-    console.log('object1')
+    
+
     if (selectedData) {
-
         return (
             <BranchAndRestaurantNameContext.Provider value={value}>
                 {children}
@@ -47,7 +39,6 @@ const BranchAndRestaurantNameProvider = ({ children }) => {
         );
     }
 
-    console.log('object2')
     return (
         <BranchAndRestaurantNameContext.Provider value={value}>
            <MyRestaurants/>

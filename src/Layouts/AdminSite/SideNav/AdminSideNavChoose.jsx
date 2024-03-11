@@ -10,7 +10,7 @@ const AdminSideNavChoose = ({ role }) => {
         return <AdminNav />
     } else if (role === "Customer Service") {
         return <CustomerService />
-    } else if (role === "Kitchen Stuff") {
+    } else if (role === "Kitchen Staff") {
         return <KitchenStuff />
     } else if (role === "Super-Admin") {
         return <SuperAdminNav />

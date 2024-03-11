@@ -2,15 +2,17 @@ import React from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import useAuthProvider from '../../Hooks/useAuthProvider';
 import LoadingPage from '../../pages/Shared/LoadingPages/LoadingPage/LoadingPage';
+import useProfile from '../../Hooks/useProfile';
 
 
 const PrivateRoute = ({children}) => {
     const location = useLocation();
     const { user, loading } = useAuthProvider();
+    const {profileLoading}= useProfile();
 
     const navigate = useNavigate()
 
-    if (loading) {
+    if (loading || profileLoading) {
         return <LoadingPage/>
     }
 

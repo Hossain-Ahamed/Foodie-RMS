@@ -22,9 +22,9 @@ const PaymentType = () => {
         queryKey: ['paymenttype', res_id, branchID],
        
         queryFn: async () => {
-            let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payments-type`);
+            // let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payments-type`);
 
-            res = {
+            let res = {
                 data: {
                     "paymentTypes": "PayLater",
                     "takewayCharge": 0,

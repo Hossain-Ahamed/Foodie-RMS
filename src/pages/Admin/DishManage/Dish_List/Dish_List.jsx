@@ -14,7 +14,7 @@ const Dish_List = () => {
   const { refetch, data: dishes = [], isLoading, error } = useQuery({
     queryKey: ['employee-list'],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/dish-list`);
+      // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/dish-list`);
       return [
         {
           _id: 1,
