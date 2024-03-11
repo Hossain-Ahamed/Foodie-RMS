@@ -12,64 +12,8 @@ const ExpenseAndSalary = () => {
     const { refetch, data: expenses = [], isLoading, error } = useQuery({
         queryKey: ['expenses'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/expenses`);
-            return [
-                {
-                    _id: "3020fdk",
-                    title: "Electricity",
-                    expenseType: "Utility / Service bill",
-                    billDate: "24-01-2024",
-                    paidDate: "26-01-2024",
-                    vendor: "Ma er Doa",
-                    status: true,
-                    billAmount: 1000,
-                    dueBill: 100,
-                },
-                {
-                    _id: "3020fdk",
-                    title: "Staff Wage",
-                    expenseType: "Utility / Service bill",
-                    billDate: "24-01-2024",
-                    paidDate: "26-01-2024",
-                    vendor: "Ma er Doa",
-                    status: true,
-                    billAmount: 1000,
-                    dueBill: 0,
-                },
-                {
-                    _id: "3020fdk",
-                    title: "Electricity",
-                    expenseType: "Utility / Service bill",
-                    billDate: "24-01-2024",
-                    paidDate: "26-01-2024",
-                    vendor: "Ma er Doa",
-                    status: false,
-                    billAmount: 1000,
-                    dueBill: 100,
-                },
-                {
-                    _id: "3020fdk",
-                    title: "Electricity",
-                    expenseType: "Utility / Service bill",
-                    billDate: "24-01-2024",
-                    paidDate: "26-01-2024",
-                    vendor: "Ma er Doa",
-                    status: true,
-                    billAmount: 1000,
-                    dueBill: 0,
-                },
-                {
-                    _id: "3020fdk",
-                    title: "Electricity",
-                    expenseType: "Utility / Service bill",
-                    billDate: "24-01-2024",
-                    paidDate: "26-01-2024",
-                    vendor: "Ma er Doa",
-                    status: false,
-                    billAmount: 1000,
-                    dueBill: 100,
-                },
-            ]
+            const res = await axiosSecure.get(`/admin/all-expenses`);
+            return res.data
         }
     });
     return (
@@ -93,15 +37,9 @@ const ExpenseAndSalary = () => {
                                 <tr>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-center text-sm uppercase font-normal'
-                                    >
-                                        Title
-                                    </th>
-                                    <th
-                                        scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
                                     >
-                                        Type
+                                        Expense Type
                                     </th>
                                     <th
                                         scope='col'
