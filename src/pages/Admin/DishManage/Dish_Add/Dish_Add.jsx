@@ -24,7 +24,7 @@ const Dish_Add = () => {
   const { refetch: categoryRefetch, data: categories = [], isLoading, error } = useQuery({
     queryKey: ['categories', res_id, branchID],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-all-categories`)
+      // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-all-categories`)
 
       // return res.data.categories;
       return [

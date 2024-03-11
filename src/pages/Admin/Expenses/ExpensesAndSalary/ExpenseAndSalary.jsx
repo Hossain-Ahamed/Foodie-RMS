@@ -27,7 +27,7 @@ const ExpenseAndSalary = () => {
                 },
                 {
                     _id: "3020fdk",
-                    title: "Stuff Wage",
+                    title: "Staff Wage",
                     expenseType: "Utility / Service bill",
                     billDate: "24-01-2024",
                     paidDate: "26-01-2024",

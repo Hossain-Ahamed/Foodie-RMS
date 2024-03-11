@@ -48,9 +48,16 @@ const Login = () => {
         provideSignInWithEmailAndPassword(email, password)
             .then(result => {
                 navigate(from, { replace: true });
-            }).catch(e => { 
+            })
+            .catch(e => { 
                 setLoading(false);
-                console.log(e) 
+                console.log(e)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Credential',
+                    text: 'Insert Correct Information',
+    
+                })
             })
     }
 
@@ -71,7 +78,7 @@ const Login = () => {
 
 
                     {/* login form  */}
-                    <form onSubmit={handleSubmit(onSubmit)} className="mb-0 mt-6 space-y-4 h-[50vh] rounded-lg p-4 shadow-lg  sm:p-6 lg:p-8">
+                    <form onSubmit={handleSubmit(onSubmit)} className="mb-0 mt-6 space-y-4 h-[50vh] rounded-lg p-4 shadow-lg  sm:p-6 lg:p-8" autoComplete='off'>
                         <p className="text-center text-lg font-medium">Sign in to your account</p>
 
 

@@ -154,7 +154,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/update-employee-profile/:employeeID',
-                element: <EditEmployee/>
+                element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><EditEmployee/></ProtectedByRole>
                 // '/restaurant/:res_id/branch/:branchID/update-employee-profile/:employeeID',
             },
             {

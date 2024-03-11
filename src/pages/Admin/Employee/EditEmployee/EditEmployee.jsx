@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { getCountries, getformatDate, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
+import { SwalErrorShow, getCountries, getformatDate, imageUpload, validateEmail, validateMobileNumber } from '../../../../assets/scripts/Utility';
 import toast from 'react-hot-toast';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
@@ -17,6 +17,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 const EditEmployee = () => {
+    const [Fetching, setFetch] = useState(true);
+    const [loading, setLoading] = useState(false);
     // handle image
     const [selectedImage0, setSelectedImage0] = useState(null);
     const { employeeID } = useParams();
@@ -29,12 +31,12 @@ const EditEmployee = () => {
     const { res_id } = useRestauarantAndBranch();
 
 
-    const { data, isLoading: dataLoading, error: dataError } = useQuery({
+    const { refetch, data, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['existing-employee-data', employeeID],
-     
+       
+        // staleTime: Infinity,
+        enabled : Fetching,
         queryFn: async () => {
-
-            console.log('again')
             const res = await axiosSecure.get(`/restaurant/${res_id}/edit-employee-data/${employeeID}`);
             console.log(res.data)
 
@@ -52,7 +54,7 @@ const EditEmployee = () => {
             setValue('gender', res?.data?.employeeData?.gender);
             setValue('nid', res?.data?.employeeData?.nid);
             setValue('uid', res?.data?.employeeData?.uid);
-            setValue('DOB', getformatDate(res?.data?.employeeData?.DOB));
+            setValue('DOB', res?.data?.employeeData?.DOB);
 
             setValue('profilePhoto', res?.data?.employeeData?.profilePhoto);
             setValue('streetAddress', res?.data?.employeeData?.streetAddress);
@@ -79,9 +81,10 @@ const EditEmployee = () => {
 
             //----------------------------------------------------
             setSelectedImage0(res?.data?.employeeData?.profilePhoto);
+            setFetch(false)
             return res.data;
         },
-        
+
     });
 
 
@@ -89,22 +92,47 @@ const EditEmployee = () => {
     const handleImageUpload0 = (event) => {
         const file = event.target.files[0];
         setSelectedImage0(URL.createObjectURL(file));
-        console.log(event.target.files[0])
         setValue("profilePhoto", file);
-
     };
 
     const onSubmit = (data) => {
         console.log(data);
+        setLoading(true)
         if (!selectedImage0) {
             toast.error('Profile Photo needed');
             return;
         }
 
+        imageUpload(data?.profilePhoto)
+            .then(image => {
+
+                data.profilePhoto = image?.data?.display_url
+
+                axiosSecure.patch(`/admin/update/employee/${employeeID}`, data)
+                    .then(res => {
+                        toast.success("Successfully Updated");
+                        navigate('/employee-list', { replace: true })
+                    }).catch(e => {
+                        console.error(e);
+                        SwalErrorShow(e);
+                    })
+                    .finally(()=>{
+                        setLoading(false)
+                    })
+
+            })
+            .catch(err => {
+                console.log(err);
+                setLoading(false)
+            })
+            .finally(()=>{
+                setLoading(false)
+            })
+
 
     };
 
-    if (dataLoading) {
+    if (dataLoading || loading) {
         return <LoadingPage />
     }
 
@@ -629,8 +657,11 @@ const EditEmployee = () => {
                                         {...register('role', { required: '*Select Role is required' })}
                                     >
                                         <option value="" disabled>Select Role</option>
+                                        {
+                                           data?.employeeData?.role === "Super-Admin" && <option value="Super-Admin"> Super Admin</option>
+                                        }
                                         <option value="Admin">Admin</option>
-                                        <option value="Kitchen Stuff">Kitchen Stuff</option>
+                                        <option value="Kitchen Staff">Kitchen Staff</option>
                                         <option value="Customer Service">Customer Service</option>
                                         <option value="Others">Others</option>
                                     </select>

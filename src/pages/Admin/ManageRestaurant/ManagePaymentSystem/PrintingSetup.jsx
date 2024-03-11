@@ -29,10 +29,10 @@ const PrintingSetup = () => {
         queryFn: async () => {
 
 
-            let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payment-slip-format`);
+            // let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payment-slip-format`);
 
 
-            res = {
+           let res = {
                 data: {
                     "res_name": "Fuoco",
 

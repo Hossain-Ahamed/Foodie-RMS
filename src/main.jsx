@@ -15,6 +15,8 @@ import 'react-tooltip/dist/react-tooltip.css'
 
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+
+const helmetContext = {};
 // Create a client
 const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -22,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <NextUIProvider>
-          <HelmetProvider>
+        <HelmetProvider context={helmetContext}>
             <AuthProvider>
               <ToasterProvider />
               <RouterProvider router={router} />
