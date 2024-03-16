@@ -28,27 +28,27 @@ const AddExpense = () => {
             return {
                 vendors: [
                     {
-                        "name": "Ma er Doa",
+                        "name": "Kortoa Services",
                         "_id": "1"
                     },
                     {
-                        "name": "Bap er Doa",
+                        "name": "Vai vai catering",
                         "_id": "2"
                     },
                     {
-                        "name": "Vai vai store",
+                        "name": "Mozid Meats",
                         "_id": "3"
                     },
                     {
-                        "name": "Tong",
+                        "name": "Mr. Chicken",
                         "_id": "4"
                     },
                     {
-                        "name": "Mama Vigina Store",
+                        "name": "Grocery point",
                         "_id": "5"
                     },
                     {
-                        "name": "Khalur Dan",
+                        "name": "Nayan Masala stall",
                         "_id": "6"
                     }
                 ],

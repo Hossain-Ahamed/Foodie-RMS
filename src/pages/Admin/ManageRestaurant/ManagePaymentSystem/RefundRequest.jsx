@@ -20,12 +20,12 @@ const RefundRequest = () => {
 
                 <h2 className="text-xl font-semibold mb-2">Returns</h2>
                 <p className="text-gray-700 mb-4">
-                    To be eligible for a return, your item must be unused and in the same condition that you received it. Your item must be in the original packaging.
+                Should you wish to return a purchased subscription, we offer a 30-day window for eligibility, contingent upon compliance with our return policy guidelines.
                 </p>
 
                 <h2 className="text-xl font-semibold mb-2">Refunds</h2>
                 <p className="text-gray-700 mb-4">
-                    Once we receive your item, we will inspect it and notify you that we have received your returned item. We will immediately notify you of the status of your refund after inspecting the item.
+                Refunds for purchased subscriptions are subject to a 30-day money-back guarantee. Requests must adhere to our refund policy terms and conditions.
                 </p>
 
                 <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
@@ -36,7 +36,7 @@ const RefundRequest = () => {
                     Jamtola<br />
                     Narayanganj,Dhaka,Bangladesh<br />
                     Email: support@foodie.com<br />
-                    Phone: +1 (123) 456-7890
+                    Phone: +880186872-6172
                 </p>
 
                 <p className="text-gray-700">

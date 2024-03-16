@@ -21,7 +21,7 @@ const AllMembers = () => {
         queryFn: async () => {
 
 
-            const res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
+            // const res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
 
 
             const res1 = {

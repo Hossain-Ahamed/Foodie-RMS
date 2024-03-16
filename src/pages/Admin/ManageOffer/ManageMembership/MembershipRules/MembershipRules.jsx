@@ -18,10 +18,10 @@ const MembershipRules = () => {
         queryFn: async () => {
 
 
-            let res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
+            // let res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
 
 
-            res = {
+           let res = {
                 data: {
                     res_id: "uuw4woi5",
                     singleTimeMinimumOrderAmount: 50,
