@@ -20,7 +20,7 @@ const PaymentType = () => {
 
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError, } = useQuery({
-        queryKey: ['paymenttype', res_id, branchID],
+        queryKey: ['paymenttypes', res_id, branchID],
        
         queryFn: async () => {
             let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payments-type`);
@@ -32,7 +32,7 @@ const PaymentType = () => {
             //         "deliveryCharge": 50,
             //     }
             // }
-            setValue('paymentType', res.data?.paymentTypes);
+            setValue('paymentTypes', res.data?.paymentTypes);
             setValue('takewayCharge', res.data?.takewayCharge);
             setValue('deliveryCharge', res.data?.deliveryCharge);
             return res?.data;
@@ -72,7 +72,7 @@ const PaymentType = () => {
 
 
                 //     })
-                setValue('paymentType', Changedata);
+                setValue('paymentTypes', Changedata);
             }
         });
 
@@ -110,7 +110,7 @@ const PaymentType = () => {
                     <div>
                         <input
                             type="radio"
-                            {...register("paymentType")}
+                            {...register("paymentTypes")}
                             id="PayFirst"
                             value="PayFirst"
                             className="peer hidden [&:checked_+_label_svg]:block"
@@ -133,7 +133,7 @@ const PaymentType = () => {
                     <div>
                         <input
                             type="radio"
-                            {...register("paymentType")}
+                            {...register("paymentTypes")}
                             id="PayLater"
                             value="PayLater"
                             className="peer hidden [&:checked_+_label_svg]:block"
