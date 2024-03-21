@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import { ScaleLoader } from 'react-spinners';
+import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 
 const PaymentType = () => {
     const axiosSecure = useAxiosSecure();
@@ -22,15 +23,15 @@ const PaymentType = () => {
         queryKey: ['paymenttype', res_id, branchID],
        
         queryFn: async () => {
-            // let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payments-type`);
+            let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/payments-type`);
 
-            let res = {
-                data: {
-                    "paymentTypes": "PayLater",
-                    "takewayCharge": 0,
-                    "deliveryCharge": 50,
-                }
-            }
+            // let res = {
+            //     data: {
+            //         "paymentTypes": "PayLater",
+            //         "takewayCharge": 0,
+            //         "deliveryCharge": 50,
+            //     }
+            // }
             setValue('paymentType', res.data?.paymentTypes);
             setValue('takewayCharge', res.data?.takewayCharge);
             setValue('deliveryCharge', res.data?.deliveryCharge);
@@ -40,11 +41,9 @@ const PaymentType = () => {
 
     const handleChange = (Changedata) => {
 
-        setValue('paymentType', Changedata);
+        
 
-        const reqData = {
-            "paymentTypes": Changedata
-        }
+        
 
         Swal.fire({
             title: "Are you sure?",
@@ -56,23 +55,24 @@ const PaymentType = () => {
             confirmButtonText: "Yes, Change"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/payments-type`, reqData)
-                    .then(data => {
-                        toast.success("Successfully Changed");
-                        dataRefetch();
-                    })
-                    .catch((error) => {
-                        setValue('paymentType', data?.paymentTypes);
-                        Swal.fire({
-                            icon: 'error',
-                            title: error?.code + " " + error?.message,
-                            text: error.response.data?.message
-                        })
+                // axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/payments-type`, reqData)
+                //     .then(data => {
+                //         toast.success("Successfully Changed");
+                //         dataRefetch();
+                //     })
+                //     .catch((error) => {
+                //         setValue('paymentType', data?.paymentTypes);
+                //         Swal.fire({
+                //             icon: 'error',
+                //             title: error?.code + " " + error?.message,
+                //             text: error.response.data?.message
+                //         })
 
 
 
 
-                    })
+                //     })
+                setValue('paymentType', Changedata);
             }
         });
 
@@ -81,6 +81,15 @@ const PaymentType = () => {
     const onSubmit = (formData) => {
         // Handle submission logic here, e.g., send data to the server
         console.log('Submitted Data:', formData);
+        axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/payments-type`,formData)
+        .then(() => {
+            toast.success('Data updated successfully!');
+            dataRefetch();
+        })
+        .catch(err => { 
+            SwalErrorShow(err);
+            console.log(err);
+        });
     };
 
     if (dataLoading) {
@@ -116,7 +125,7 @@ const PaymentType = () => {
                             </div>
                             <p className="mt-1 text-xs text-gray-400">
                                 For business that charge customer while ordering meal and it will Create a new order in case of adding a new meal <br /> <br />
-                                Pay First will use Foodie&#39;s own gateway
+                                {/* Pay First will use Foodie&#39;s own gateway */}
                             </p>
                         </label>
                     </div>
@@ -139,7 +148,7 @@ const PaymentType = () => {
                             </div>
                             <p className="mt-1 text-xs text-gray-400">
                                 For business that charge customer after meal and it will Update previous order in case of adding extra meal <br /> <br />
-                                Payment system will be controlled by owner&#39;s own payment system
+                                {/* Payment system will be controlled by owner&#39;s own payment system */}
                             </p>
                         </label>
                     </div>
@@ -167,7 +176,7 @@ const PaymentType = () => {
 
                     </div>
                 </div>
-                <button type='submit'>Save</button>
+                <button type='submit' className="inline-block rounded bg-green-400 px-8 py-3 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-green-500">Update</button>
             </form>
 
             <label htmlFor="Currency" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curency</label>

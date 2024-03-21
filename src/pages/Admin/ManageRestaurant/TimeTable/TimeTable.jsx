@@ -8,6 +8,8 @@ import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
+import toast from 'react-hot-toast';
+import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 
 const RestaurantTimes = () => {
     const { handleSubmit, control, setValue } = useForm();
@@ -18,38 +20,38 @@ const RestaurantTimes = () => {
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['shiftdata', res_id, branchID],
         queryFn: async () => {
-            // const { data1 } = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/manage-shift`);
-            const data =// Default data format for each day of the week
-            {
-                "Sunday": {
-                    "openingTime": "10:00",
-                    "closingTime": "18:00"
-                },
-                "Monday": {
-                    "openingTime": "09:00",
-                    "closingTime": "20:00"
-                },
-                "Tuesday": {
-                    "openingTime": "08:30",
-                    "closingTime": "19:30"
-                },
-                "Wednesday": {
-                    "openingTime": "09:30",
-                    "closingTime": "21:00"
-                },
-                "Thursday": {
-                    "openingTime": "11:00",
-                    "closingTime": "17:30"
-                },
-                "Friday": {
-                    "openingTime": "07:00",
-                    "closingTime": "22:00"
-                },
-                "Saturday": {
-                    "openingTime": "10:30",
-                    "closingTime": "19:00"
-                }
-            }
+            const { data } = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/manage-shift`);
+            // const data =// Default data format for each day of the week
+            // {
+            //     "Sunday": {
+            //         "openingTime": "10:00",
+            //         "closingTime": "18:00"
+            //     },
+            //     "Monday": {
+            //         "openingTime": "09:00",
+            //         "closingTime": "20:00"
+            //     },
+            //     "Tuesday": {
+            //         "openingTime": "08:30",
+            //         "closingTime": "19:30"
+            //     },
+            //     "Wednesday": {
+            //         "openingTime": "09:30",
+            //         "closingTime": "21:00"
+            //     },
+            //     "Thursday": {
+            //         "openingTime": "11:00",
+            //         "closingTime": "17:30"
+            //     },
+            //     "Friday": {
+            //         "openingTime": "07:00",
+            //         "closingTime": "22:00"
+            //     },
+            //     "Saturday": {
+            //         "openingTime": "10:30",
+            //         "closingTime": "19:00"
+            //     }
+            // }
             Object.keys(data).forEach((day) => {
                 setValue(`${day}.openingTime`, data[day].openingTime);
                 setValue(`${day}.closingTime`, data[day].closingTime);
@@ -62,20 +64,29 @@ const RestaurantTimes = () => {
 
     const onSubmit = async (data) => {
         console.log(data)
-        try {
-            // Perform API call to update restaurant times (replace with your API endpoint)
-            await fetch('https://your-api-endpoint.com/restaurant/times', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+        // try {
+        //     // Perform API call to update restaurant times (replace with your API endpoint)
+        //     await fetch('https://your-api-endpoint.com/restaurant/times', {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(data),
+        //     });
 
-            Swal.fire('Success', 'Restaurant times updated successfully!', 'success');
-        } catch (error) {
-            Swal.fire('Error', 'An error occurred. Please try again.', 'error');
-        }
+        //     Swal.fire('Success', 'Restaurant times updated successfully!', 'success');
+        // } catch (error) {
+        //     Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+        // }
+        axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/manage-shift`, data)
+            .then(() => {
+                toast.success('Restaurant times updated successfully!');
+                dataRefetch();
+            })
+            .catch(err => { 
+                SwalErrorShow(err);
+                console.log(err);
+            });
     };
 
     if (dataError) {
