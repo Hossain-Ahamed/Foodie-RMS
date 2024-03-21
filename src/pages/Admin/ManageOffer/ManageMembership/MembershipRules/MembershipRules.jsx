@@ -21,7 +21,7 @@ const MembershipRules = () => {
             // let res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
 
 
-             let res = {
+           let res = {
                 data: {
                     res_id: "uuw4woi5",
                     singleTimeMinimumOrderAmount: 50,
