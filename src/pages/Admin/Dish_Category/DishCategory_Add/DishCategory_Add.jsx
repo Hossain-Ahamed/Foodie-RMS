@@ -5,11 +5,12 @@ import toast from 'react-hot-toast';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import { Checkbox } from '@nextui-org/react';
-import { getAllCategories } from '../../../../assets/scripts/Utility';
+import { SwalErrorShow, getAllCategories } from '../../../../assets/scripts/Utility';
+import Swal from 'sweetalert2';
 
 const DishCategory_Add = () => {
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
-
+  const [isCustomChoosen, setIsCustomChoosen] = useState(false);
 
   const categories = getAllCategories();
   // handle image
@@ -52,6 +53,24 @@ const DishCategory_Add = () => {
 
   };
 
+
+  const handleSelectionCategory = (title) => {
+
+    if (!categories.find(i => i.title === title)) {
+      Swal.fire({
+        icon: "error",
+        text: "Error occured",
+      });
+    } else {
+
+      if (title === "Custom") {
+        setIsCustomChoosen(true);
+      } else {
+
+        setValue('title', title);
+      }
+    }
+  }
 
   return (
     <>
@@ -114,32 +133,66 @@ const DishCategory_Add = () => {
             </div>
             <div className="flex flex-wrap pb-3 -m-3">
 
-            {/* title  */}
-              <div className="w-full  p-3">
-                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3"> Title of Category </p>
-                <select
-                  label="Select Category"
-                  className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+              {
+                isCustomChoosen ?
+                  <>
 
-                  defaultValue=""
-                  {...register("title", {
-                    required: "*title category  is Required",
-                  })}
-                >
-                  <option value="" disabled>
-                    Select  Category
-                  </option>
+                    {/* custom title  */}
+                    <div className="w-full  p-3">
+                      <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3"> Title of Category </p>
+                      <input
+                        type='text'
+                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
 
-                  {categories.map((item, _idx) => (
-                    <option key={item?.title} value={item?.title}>
-                      {item?.title}
-                    </option>
-                  ))}
-                </select>
+                        defaultValue=""
+                        placeholder='Category name'
+                        {...register("title", {
+                          required: "*title category  is Required",
+                        })}
 
-                {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
 
-              </div>
+                      >
+
+                      </input>
+
+                      {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
+
+                    </div>
+                  </>
+                  :
+                  <>
+                    {/* title  */}
+                    <div className="w-full  p-3">
+                      <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3"> Title of Category </p>
+                      <select
+                        label="Select Category"
+                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
+                        defaultValue=""
+                        {...register("title", {
+                          required: "*title category  is Required",
+                        })}
+                        required
+                        onChange={(e) => handleSelectionCategory(e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Select  Category
+                        </option>
+
+                        {categories.map((item, _idx) => (
+                          <option key={item?.title} value={item?.title}>
+                            {item?.title}
+                          </option>
+                        ))}
+                      </select>
+
+                      {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
+
+                    </div>
+                  </>
+              }
+
+
 
 
               {/* description  */}

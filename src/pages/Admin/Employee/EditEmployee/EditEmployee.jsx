@@ -140,7 +140,7 @@ const EditEmployee = () => {
         return <ErrorPage />
     }
 
-
+console.log(data)
     return (
         <>
 
@@ -178,11 +178,13 @@ const EditEmployee = () => {
                                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="email" placeholder="alex@example.com"
                                     {...register("email", {
                                         required: "*E-mail is Required",
+                                  
 
                                         validate: {
                                             notEmail: (value) => validateEmail(value)
                                         },
-                                    })} />
+                                    })} 
+                                    readOnly/>
                                 {errors.email?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors.email.message}</p>)}
                                 {errors.email?.type === "notEmail" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*Not an Email</p>)}
 

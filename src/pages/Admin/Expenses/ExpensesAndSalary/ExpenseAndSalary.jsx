@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
@@ -8,11 +8,19 @@ import { Link } from 'react-router-dom';
 import { IoAddOutline } from 'react-icons/io5';
 
 const ExpenseAndSalary = () => {
+    const [branch,setBranch] = useState('ALL')
     const axiosSecure = useAxiosSecure();
     const { refetch, data: expenses = [], isLoading, error } = useQuery({
         queryKey: ['expenses'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/admin/all-expenses`);
+            const res = await axiosSecure.get(`/admin/all-expenses?branch=${branch}`);  // token : res_id  branchID , role 
+
+            /**
+             * if role === super-admin 
+             *       res_id  *  => ?branch="branch_ID "
+             * else 
+             *   
+             */
             return res.data
         }
     });
