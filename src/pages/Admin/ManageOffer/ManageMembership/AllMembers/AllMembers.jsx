@@ -16,12 +16,12 @@ const AllMembers = () => {
     const axiosSecure = useAxiosSecure();
     const { res_id, branchID } = useRestauarantAndBranch();
 
-    const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
+    const { refetch: dataRefetch, data: data = [], isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['membersData', res_id],
         queryFn: async () => {
 
 
-            const res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
+            // const res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
 
 
             const res1 = {

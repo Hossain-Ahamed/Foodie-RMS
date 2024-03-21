@@ -18,17 +18,17 @@ const MembershipRules = () => {
         queryFn: async () => {
 
 
-            let res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
+            // let res = await axiosSecure.get(`/restaurant/${res_id}/all-member-list`);
 
 
-            res = {
+             let res = {
                 data: {
                     res_id: "uuw4woi5",
                     singleTimeMinimumOrderAmount: 50,
                     MinimumOrderAmountTillNow: 5000,
                     percentageOffer: 5,
                     MaximumLimit_in_TK: 4750,
-                    rules: "No One can do that\nhello\nno one ",
+                    rules: "Only change by Admin",
 
                 }
             }
