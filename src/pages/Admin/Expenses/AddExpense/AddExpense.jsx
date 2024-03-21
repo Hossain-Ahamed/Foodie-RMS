@@ -132,23 +132,23 @@ const AddExpense = () => {
         data.branchID = branchID;
         data.res_id = res_id
         console.log(data);
-        // axiosSecure.post('/admin/create/expense', data)
-        // .then(data => {
-        //     toast.success("Expense added successfully!")
-        //     resetField("billDate");
-        //     resetField("category");
-        //     resetField("description");
-        //     resetField("expense");
-        //     resetField("payTo");
-        //     resetField("payeeID");
-        //     resetField("paymentAmount");
-        //     resetField("paymentDate");
-        //     resetField("reference");
-        //     resetField("vendorDescription");
-        // })
-        // .catch(err => {
-        //     toast.error("Something went wrong")
-        // })
+        axiosSecure.post('/admin/create/expense', data)
+        .then(data => {
+            toast.success("Expense added successfully!")
+            resetField("billDate");
+            resetField("category");
+            resetField("description");
+            resetField("expense");
+            resetField("payTo");
+            resetField("payeeID");
+            resetField("paymentAmount");
+            resetField("paymentDate");
+            resetField("reference");
+            resetField("vendorDescription");
+        })
+        .catch(err => {
+            toast.error("Something went wrong")
+        })
 
         // if (!selectedImage0) {
 

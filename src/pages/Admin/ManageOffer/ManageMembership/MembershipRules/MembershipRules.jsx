@@ -28,7 +28,7 @@ const MembershipRules = () => {
                     MinimumOrderAmountTillNow: 5000,
                     percentageOffer: 5,
                     MaximumLimit_in_TK: 4750,
-                    rules: "No One can do that\nhello\nno one ",
+                    rules: "Only change by Admin",
 
                 }
             }
