@@ -24,23 +24,23 @@ const DishCategory_Edit = () => {
     enabled: true,
 
     queryFn: async () => {
-      const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/edit-category/${categoryID}`);
+      const res = await axiosSecure.get(`/admin/get-categories/${categoryID}`);
 
       //   to do uncomment 
-      // return res?.data;
-
-      const prev = {
-        id: 1,
-        title: 'Italian',
-        description: "tui moros na k",
-        img: 'https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no',
-        active: false,
-
-      }
-
-      setSelectedImage0(prev?.img);
-      setActive(prev?.active);
-      return prev;
+      
+      // const prev = {
+        //   id: 1,
+        //   title: 'Italian',
+        //   description: "tui moros na k",
+        //   img: 'https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no',
+        //   active: false,
+        
+        // }
+        
+        setSelectedImage0(res?.data?.img);
+        setActive(res?.data?.active);
+        console.log(res.data);
+        return res?.data;
     },
 
   });
@@ -72,12 +72,12 @@ const DishCategory_Edit = () => {
 
     console.log('Create action', data);
 
-    axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/edit-category/${categoryID}`, data)
+    axiosSecure.patch(`/admin/edit-categories/${categoryID}`, data)
       .then(data => {
         setSelectedImage0(null);
         setActive(true);
-        reset();
-        navigate(`/restaurant/${res_id}/branch/${branchID}/category`, { replace: true });
+        toast.success('Category Modified Successfully')
+        navigate(`/category`, { replace: true });
       }).catch(e => {
         console.error(e);
         return <ErrorPage />

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { Checkbox } from '@nextui-org/react'
 import Dish_Add_Description from './Dish_Add_Description';
 import { MdOutlinePercent } from 'react-icons/md'
-import { validateSalesTax } from '../../../../assets/scripts/Utility'
+import { SwalErrorShow, imageUpload, validateSalesTax } from '../../../../assets/scripts/Utility'
 import { MdDelete } from "react-icons/md";
 import { CiSquarePlus } from "react-icons/ci";
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure'
@@ -21,88 +21,89 @@ const Dish_Add = () => {
   const axiosSecure = useAxiosSecure();
   const { branchID, res_id } = useRestauarantAndBranch();
 
-  const { refetch: categoryRefetch, data: categories = [], isLoading, error } = useQuery({
+  const { refetch: categoryRefetch, data: data = [], isLoading, error } = useQuery({
     queryKey: ['categories', res_id, branchID],
     queryFn: async () => {
-      // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-all-categories`)
+      const res = await axiosSecure.get(`/admin/get-all-categories-name/${branchID}`)
 
       // return res.data.categories;
-      return [
-        {
-          "_id": "1",
-          "title": "Italian Cuisine",
-          "description": "Delicious Italian dishes",
-          "active": true,
-          "img": "italian_cuisine.jpg"
-        },
-        {
-          "_id": "2",
-          "title": "Mexican Flavors",
-          "description": "Spicy and savory Mexican dishes",
-          "active": true,
-          "img": "mexican_flavors.jpg"
-        },
-        {
-          "_id": "3",
-          "title": "Asian Fusion",
-          "description": "A fusion of flavors from various Asian cuisines",
-          "active": true,
-          "img": "asian_fusion.jpg"
-        },
-        {
-          "_id": "4",
-          "title": "Vegetarian Delights",
-          "description": "Healthy and tasty vegetarian options",
-          "active": true,
-          "img": "vegetarian_delights.jpg"
-        },
-        {
-          "_id": "5",
-          "title": "Seafood Specialties",
-          "description": "Fresh and succulent seafood dishes",
-          "active": true,
-          "img": "seafood_specialties.jpg"
-        },
-        {
-          "_id": "6",
-          "title": "Sweet Treats",
-          "description": "Indulge in delightful desserts",
-          "active": true,
-          "img": "sweet_treats.jpg"
-        },
-        {
-          "_id": "7",
-          "title": "Grill Master",
-          "description": "Sizzling grills and BBQ delights",
-          "active": true,
-          "img": "grill_master.jpg"
-        },
-        {
-          "_id": "8",
-          "title": "Healthy Bites",
-          "description": "Nutrient-packed and wholesome options",
-          "active": true,
-          "img": "healthy_bites.jpg"
-        },
-        {
-          "_id": "9",
-          "title": "Cozy Cafés",
-          "description": "Relax and unwind in charming cafés",
-          "active": true,
-          "img": "cozy_cafes.jpg"
-        },
-        {
-          "_id": "10",
-          "title": "Exotic Eats",
-          "description": "Explore exotic flavors from around the world",
-          "active": true,
-          "img": "exotic_eats.jpg"
-        }
-      ]
+      return res?.data;
+      // return [
+      //   {
+      //     "_id": "1",
+      //     "title": "Italian Cuisine",
+      //     "description": "Delicious Italian dishes",
+      //     "active": true,
+      //     "img": "italian_cuisine.jpg"
+      //   },
+      //   {
+      //     "_id": "2",
+      //     "title": "Mexican Flavors",
+      //     "description": "Spicy and savory Mexican dishes",
+      //     "active": true,
+      //     "img": "mexican_flavors.jpg"
+      //   },
+      //   {
+      //     "_id": "3",
+      //     "title": "Asian Fusion",
+      //     "description": "A fusion of flavors from various Asian cuisines",
+      //     "active": true,
+      //     "img": "asian_fusion.jpg"
+      //   },
+      //   {
+      //     "_id": "4",
+      //     "title": "Vegetarian Delights",
+      //     "description": "Healthy and tasty vegetarian options",
+      //     "active": true,
+      //     "img": "vegetarian_delights.jpg"
+      //   },
+      //   {
+      //     "_id": "5",
+      //     "title": "Seafood Specialties",
+      //     "description": "Fresh and succulent seafood dishes",
+      //     "active": true,
+      //     "img": "seafood_specialties.jpg"
+      //   },
+      //   {
+      //     "_id": "6",
+      //     "title": "Sweet Treats",
+      //     "description": "Indulge in delightful desserts",
+      //     "active": true,
+      //     "img": "sweet_treats.jpg"
+      //   },
+      //   {
+      //     "_id": "7",
+      //     "title": "Grill Master",
+      //     "description": "Sizzling grills and BBQ delights",
+      //     "active": true,
+      //     "img": "grill_master.jpg"
+      //   },
+      //   {
+      //     "_id": "8",
+      //     "title": "Healthy Bites",
+      //     "description": "Nutrient-packed and wholesome options",
+      //     "active": true,
+      //     "img": "healthy_bites.jpg"
+      //   },
+      //   {
+      //     "_id": "9",
+      //     "title": "Cozy Cafés",
+      //     "description": "Relax and unwind in charming cafés",
+      //     "active": true,
+      //     "img": "cozy_cafes.jpg"
+      //   },
+      //   {
+      //     "_id": "10",
+      //     "title": "Exotic Eats",
+      //     "description": "Explore exotic flavors from around the world",
+      //     "active": true,
+      //     "img": "exotic_eats.jpg"
+      //   }
+      // ]
 
     }
   })
-  const { register, handleSubmit, formState: { errors }, setValue, getValues, reset, control } = useForm({
+  const { register, handleSubmit, formState: { errors }, setValue, getValues, resetField, control } = useForm({
     defaultValues: {
       active: true,
     },
@@ -138,6 +139,29 @@ const Dish_Add = () => {
       toast.error('Cover Photo needed');
       return;
     }
+
+    imageUpload(data?.img)
+      .then(res => {
+        data.img = res?.data?.display_url
+        axiosSecure.post(`/admin/${res_id}/add-new-dishes/${branchID}`, data)
+          .then(res => {
+            toast.success('Dish Added Successfully')
+            resetField("active")
+            resetField("options")
+            resetField("addOn")
+            resetField("category")
+            resetField("title")
+            resetField("price")
+            resetField("offerPrice")
+            resetField("preparation_cost")
+            resetField("sales_tax")
+            resetField("supplementary_duty")
+            resetField("img")
+            resetField("description")
+          })
+          .catch(err => SwalErrorShow(err))
+      })
+      .catch(err => SwalErrorShow(err))
 
 
   };
@@ -228,9 +252,9 @@ const Dish_Add = () => {
                     Select Dish Category
                   </option>
 
-                  {categories.map((item, _idx) => (
-                    <option key={item?.title} value={item?.title}>
-                      {item?.title}
+                  {data?.titles && Array.isArray(data?.titles) && data?.titles.map((item, _idx) => (
+                    <option key={_idx} value={item}>
+                      {item}
                     </option>
                   ))}
                 </select>
