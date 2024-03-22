@@ -47,7 +47,8 @@ const DishCategory_Add = () => {
         data.img = res?.data?.display_url
         axiosSecure.post(`/admin/restaurant/${res_id}/branch/${branchID}/add-category`, data)
           .then(res => {
-            toast.success("Category Successfully Added");
+            toast.success("Category Added Successfully");
+            navigate('/category')
           }).catch(e => {
             console.error(e);
             SwalErrorShow(e);

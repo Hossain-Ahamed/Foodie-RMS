@@ -1,46 +1,20 @@
 import { MdOutlineCheckCircle, MdClear, } from "react-icons/md";
-import { BiEditAlt } from "react-icons/bi";
+// import { BiEditAlt } from "react-icons/bi";
+// import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useRestauarantAndBranch from "../../../../Hooks/useRestauarantAndBranch";
-import { FaTrashAlt } from "react-icons/fa";
-const statusColorMap = {
-    active: "success",
+import edit from "../../../../assets/images/Home/edit.svg"
+import trash from "../../../../assets/images/Home/delete.svg"
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import { SwalErrorShow } from "../../../../assets/scripts/Utility";
 
-
-    vacation: "secondary",
-    leave: 'secondary',
-    probation: 'secondary',
-    training: 'secondary',
-
-    trial: 'primary',
-    upgrading: 'primary',
-
-
-
-    suspension: 'danger',
-    terminated: 'danger',
-    renewalPending: 'danger',
-    paymentExpired: 'danger',
-
-
-
-
-    hold: "warning",
-    paused: "warning",
-    downgrading: 'warning',
-    paymentIssue: 'warning',
-    paymentPending: 'warning',
-    gracePeriod: 'warning',
-
-
-};
-
-const DishCategoryRow = ({ category }) => {
-
+const DishCategoryRow = ({ category, refetch, isLoading }) => {
+    // console.log(category);
+    const axiosSecure = useAxiosSecure()
     const { branchName, restaurantName } = useRestauarantAndBranch();
     let statusStyle, paymentStatus, icon;
-    switch (category.status) {
+    switch (category.active) {
         case true:
             statusStyle = 'bg-emerald-100 text-emerald-700'
             icon = <MdOutlineCheckCircle className="-ms-1 me-1.5 h-4 w-4" />
@@ -63,11 +37,17 @@ const DishCategoryRow = ({ category }) => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                axiosSecure.delete(`/admin/delete-categories/${id}`)
+                .then(res => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your category has been deleted.",
+                        icon: "success"
+                    });
+                    isLoading = false
+                    refetch()
+                })
+                .catch(err => SwalErrorShow(err))
             }
         });
     }
@@ -79,13 +59,13 @@ const DishCategoryRow = ({ category }) => {
                         <div className=''>
                             <img
                                 alt='profile'
-                                src={category?.categoryPhoto}
+                                src={category?.img}
                                 className='mx-auto object-cover rounded h-10 w-15 '
                             />
                         </div>
                         <div>
-                            <span className='text-gray-900 whitespace-no-wrap block'>{category?.categoryTitle}</span>
-                            <span className='text-gray-900 whitespace-no-wrap block'>Dish: </span>
+                            <span className='text-gray-900 whitespace-no-wrap block'>{category?.title}</span>
+                            {/* <span className='text-gray-900 whitespace-no-wrap block'>Dish: </span> */}
                         </div>
                     </div>
                     <div className='ml-3'>
@@ -101,7 +81,7 @@ const DishCategoryRow = ({ category }) => {
                         icon
                     }
 
-                    <p className="whitespace-nowrap text-sm text-center">{category?.status ? "Active" : "Inactive"}</p>
+                    <p className="whitespace-nowrap text-sm text-center">{category?.active ? "Active" : "Inactive"}</p>
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
@@ -113,9 +93,9 @@ const DishCategoryRow = ({ category }) => {
                 <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{category?.payment_status}</p></span>
             </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <Link to={`/edit-category/${category?.categoryID}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
+                <Link to={`/edit-category/${category?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
                 {/* <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span> */}
-                <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
+                <span title="Delete category" onClick={() => handleDeletecategory(category?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
             </td>
         </tr>
     )

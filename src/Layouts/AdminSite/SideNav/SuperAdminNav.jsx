@@ -470,9 +470,9 @@ const SuperAdminNav = () => {
                          <NavLink to={`/category`}
                              className={({ isActive }) =>
                                  isActive
-                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+                                     ? "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
 
-                                     : "flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                                     : "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
                              }
                          >
                              Category
@@ -482,9 +482,9 @@ const SuperAdminNav = () => {
                          <NavLink to={`/dish-list`}
                              className={({ isActive }) =>
                                  isActive
-                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+                                     ? "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
 
-                                     : "flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                                     : "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
                              }
                          >
                              Dishes
@@ -530,9 +530,9 @@ const SuperAdminNav = () => {
                          <NavLink to={`/membership`}
                              className={({ isActive }) =>
                                  isActive
-                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+                                     ? "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
 
-                                     : "flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                                     : "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
                              }
                          >
                              Membership
@@ -542,9 +542,9 @@ const SuperAdminNav = () => {
                          <NavLink to={`/coupon-list`}
                              className={({ isActive }) =>
                                  isActive
-                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+                                     ? "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
 
-                                     : "flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                                     : "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
                              }
                          >
                              Coupons
