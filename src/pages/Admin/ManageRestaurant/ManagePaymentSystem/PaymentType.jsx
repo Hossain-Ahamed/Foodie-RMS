@@ -80,7 +80,7 @@ const PaymentType = () => {
 
     const onSubmit = (formData) => {
         // Handle submission logic here, e.g., send data to the server
-        console.log('Submitted Data:', formData);
+        // console.log('Submitted Data:', formData);
         axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/payments-type`,formData)
         .then(() => {
             toast.success('Data updated successfully!');

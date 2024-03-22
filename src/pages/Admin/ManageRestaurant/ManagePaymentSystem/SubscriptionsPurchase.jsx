@@ -13,10 +13,13 @@ const SubscriptionsPurchase = () => {
     const { res_id, branchID } = useRestauarantAndBranch();
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['historyBill', res_id],
+        cacheTime : 0,
         queryFn: async () => {
 
 
-            // const res = await axiosSecure.get(`/restaurant/${res_id}/bill-history-list`);
+          const res1 = await axiosSecure.get(`/restaurant/${res_id}/bill-history-list`);
+
+          console.log(res1.data,`/restaurant/${res_id}/bill-history-list` )
 
 
             const res = {
