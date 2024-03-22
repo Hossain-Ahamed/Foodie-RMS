@@ -5,14 +5,18 @@ import toast from 'react-hot-toast';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 import { Checkbox } from '@nextui-org/react';
-import { SwalErrorShow, getAllCategories } from '../../../../assets/scripts/Utility';
+import { SwalErrorShow, getAllCategories, imageUpload } from '../../../../assets/scripts/Utility';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 
 const DishCategory_Add = () => {
+  const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
   const [isCustomChoosen, setIsCustomChoosen] = useState(false);
-
+  const axiosSecure = useAxiosSecure()
   const categories = getAllCategories();
+  const { res_id, branchID } = useRestauarantAndBranch()
   // handle image
   const [active, setActive] = useState(true);
   useEffect(() => {
@@ -30,26 +34,32 @@ const DishCategory_Add = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log(data)
+    console.log(data);
+    setLoading(true)
     if (!selectedImage0) {
 
       toast.error('Cover Photo needed');
       return;
     }
-
-    if (event.target.name === 'create') {
-      // Handle create action
-      console.log('Create action', data);
-    } else if (event.target.name === 'saveAndCreateAnother') {
-      // Handle save and create another action
-      console.log('Save and create another action', data);
-
-      // Reset the form fields
-      setSelectedImage0(null);
-      setActive(true);
-      reset();
-
-    }
+    imageUpload(data?.img)
+      .then(res => {
+        console.log(res);
+        data.img = res?.data?.display_url
+        axiosSecure.post(`/admin/restaurant/${res_id}/branch/${branchID}/add-category`, data)
+          .then(res => {
+            toast.success("Category Successfully Added");
+          }).catch(e => {
+            console.error(e);
+            SwalErrorShow(e);
+          })
+          .finally(() => {
+            setLoading(false)
+          })
+      })
+      .catch(e => SwalErrorShow(e))
+      .finally(() => {
+        setLoading(false)
+      })
 
   };
 

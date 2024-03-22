@@ -24,9 +24,9 @@ const DishCategory_List = () => {
     const { refetch, data: data = {}, isLoading, error } = useQuery({
         queryKey: ['ongoing-orders', selectedRange, selectActive, searchQuery],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/ongoing-orders?search=${searchQuery}&currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
+            // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/ongoing-orders?search=${searchQuery}&currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
             // console.log(res?.data)
-            setTotalPage(Math.ceil(res.data.total / selectedRange))
+            // setTotalPage(Math.ceil(res.data.total / selectedRange))
             // {
             //     categoryID: "fa235f",
             //     categoryPhoto: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
@@ -34,6 +34,7 @@ const DishCategory_List = () => {
             //     description: "Hello guys chai pee lo",
             //     status: true
             // },
+            let res = '';
             return res.data
         }
     });
