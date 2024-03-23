@@ -29,18 +29,18 @@ const RefundRequest = () => {
                 </p>
 
                 <h2 className="text-xl font-semibold mb-2">Contact Us</h2>
-                <p className="text-gray-700 mb-4">
+                <address className="text-gray-700 mb-4">
                     If you have any questions on how to return your item to us, contact us at:
                     <br />
                     Foodie<br />
                     Jamtola<br />
                     Narayanganj,Dhaka,Bangladesh<br />
                     Email: support@foodie.com<br />
-                    Phone: +880186872-6172
-                </p>
+                    Phone: 01868726172
+                </address>
 
                 <p className="text-gray-700">
-                    This Return Policy was last updated on 20/01/2004.
+                    This Return Policy was last updated on 20/01/2024.
                 </p>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 border p-5 rounded-lg mt-4">
 
