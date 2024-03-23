@@ -14,75 +14,76 @@ const BillingHistory = () => {
         queryFn: async () => {
 
 
-            // const res = await axiosSecure.get(`/restaurant/${res_id}/bill-history-list`);
+            const res = await axiosSecure.get(`/restaurant/${res_id}/bill-history-list`);
 
+            //  console.log(res1.data)
 
-            const res = {
-                data: [
-                    {
-                        "res_id": 1,
-                        "res_name": "Restaurant A",
-                        "branch_name": "Main Branch",
-                        "branchID": "B001",
-                        "subscriptionStart": "2024-01-28T12:00:00Z",
-                        "subscriptionEnd": "2025-01-28T12:00:00Z",
-                        "amount": 5000,
-                        "payment_time": "2024-01-28T14:30:00Z",
-                        "transaction_id": "T001",
-                        "payment_method": "card"
-                    },
-                    {
-                        "res_id": 2,
-                        "res_name": "Restaurant B",
-                        "branch_name": "Downtown Branch",
-                        "branchID": "B002",
-                        "subscriptionStart": "2024-02-15T12:00:00Z",
-                        "subscriptionEnd": "2025-02-15T12:00:00Z",
-                        "amount": 6000,
-                        "payment_time": "2024-02-15T16:45:00Z",
-                        "transaction_id": "T002",
-                        "payment_method": "card"
-                    },
-                    {
-                        "res_id": 3,
-                        "res_name": "Restaurant C",
-                        "branch_name": "East Side Branch",
-                        "branchID": "B003",
-                        "subscriptionStart": "2024-03-10T12:00:00Z",
-                        "subscriptionEnd": "2025-03-10T12:00:00Z",
-                        "amount": 7500,
-                        "payment_time": "2024-03-10T11:15:00Z",
-                        "transaction_id": "T003",
-                        "payment_method": "card"
-                    },
-                    // Add 12 more entries as needed
-                    {
-                        "res_id": 4,
-                        "res_name": "Restaurant D",
-                        "branch_name": "West Side Branch",
-                        "branchID": "B004",
-                        "subscriptionStart": "2024-04-05T12:00:00Z",
-                        "subscriptionEnd": "2025-04-05T12:00:00Z",
-                        "amount": 7000,
-                        "payment_time": "2024-04-05T14:20:00Z",
-                        "transaction_id": "T004",
-                        "payment_method": "card"
-                    },
-                    {
-                        "res_id": 5,
-                        "res_name": "Restaurant E",
-                        "branch_name": "Uptown Branch",
-                        "branchID": "B005",
-                        "subscriptionStart": "2024-05-20T12:00:00Z",
-                        "subscriptionEnd": "2025-05-20T12:00:00Z",
-                        "amount": 8000,
-                        "payment_time": "2024-05-20T13:45:00Z",
-                        "transaction_id": "T005",
-                        "payment_method": "card"
-                    },
-                    // Continue adding entries...
-                ]
-            }
+            // const res = {
+            //     data: [
+            //         {
+            //             "res_id": 1,
+            //             "res_name": "Restaurant A",
+            //             "branch_name": "Main Branch",
+            //             "branchID": "B001",
+            //             "subscriptionStart": "2024-01-28T12:00:00Z",
+            //             "subscriptionEnd": "2025-01-28T12:00:00Z",
+            //             "amount": 5000,
+            //             "payment_time": "2024-01-28T14:30:00Z",
+            //             "transaction_id": "T001",
+            //             "payment_method": "card"
+            //         },
+            //         {
+            //             "res_id": 2,
+            //             "res_name": "Restaurant B",
+            //             "branch_name": "Downtown Branch",
+            //             "branchID": "B002",
+            //             "subscriptionStart": "2024-02-15T12:00:00Z",
+            //             "subscriptionEnd": "2025-02-15T12:00:00Z",
+            //             "amount": 6000,
+            //             "payment_time": "2024-02-15T16:45:00Z",
+            //             "transaction_id": "T002",
+            //             "payment_method": "card"
+            //         },
+            //         {
+            //             "res_id": 3,
+            //             "res_name": "Restaurant C",
+            //             "branch_name": "East Side Branch",
+            //             "branchID": "B003",
+            //             "subscriptionStart": "2024-03-10T12:00:00Z",
+            //             "subscriptionEnd": "2025-03-10T12:00:00Z",
+            //             "amount": 7500,
+            //             "payment_time": "2024-03-10T11:15:00Z",
+            //             "transaction_id": "T003",
+            //             "payment_method": "card"
+            //         },
+            //         // Add 12 more entries as needed
+            //         {
+            //             "res_id": 4,
+            //             "res_name": "Restaurant D",
+            //             "branch_name": "West Side Branch",
+            //             "branchID": "B004",
+            //             "subscriptionStart": "2024-04-05T12:00:00Z",
+            //             "subscriptionEnd": "2025-04-05T12:00:00Z",
+            //             "amount": 7000,
+            //             "payment_time": "2024-04-05T14:20:00Z",
+            //             "transaction_id": "T004",
+            //             "payment_method": "card"
+            //         },
+            //         {
+            //             "res_id": 5,
+            //             "res_name": "Restaurant E",
+            //             "branch_name": "Uptown Branch",
+            //             "branchID": "B005",
+            //             "subscriptionStart": "2024-05-20T12:00:00Z",
+            //             "subscriptionEnd": "2025-05-20T12:00:00Z",
+            //             "amount": 8000,
+            //             "payment_time": "2024-05-20T13:45:00Z",
+            //             "transaction_id": "T005",
+            //             "payment_method": "card"
+            //         },
+            //         // Continue adding entries...
+            //     ]
+            // }
 
 
             return res.data;
@@ -139,7 +140,9 @@ const BillingHistory = () => {
                                         className={`bg-white border-b text-gray-600 hover:bg-gray-50 cursor-pointer`}>
 
                                         <th scope="row" className="px-3 py-4 font-medium whitespace-nowrap ">
-                                            {item?.branch_name}({item?.branchID}) <br />
+                                            {item?.branch_name}
+                                            <span className='text-gray-400 text-[10px] font-normal'>({item?.branchID}) </span> 
+                                            <br />
                                             <span className='text-gray-400 text-[10px] font-normal'> {item?.res_name}</span>
                                         </th>
 
@@ -177,7 +180,8 @@ const BillingHistory = () => {
 
                                         </td>
                                         <th scope="row" className="px-1 py-4 font-medium whitespace-nowrap text-center  ">
-                                            {item?.transaction_id} <span className='text-gray-400 text-[10px] font-normal'>({item?.payment_method})</span>
+                                            {item?.transaction_id} 
+                                            {/* <span className='text-gray-400 text-[10px] font-normal'>({item?.payment_method})</span> */}
 
                                         </th>
                                         <td className="px-1 py-4 text-center text-xs" >
