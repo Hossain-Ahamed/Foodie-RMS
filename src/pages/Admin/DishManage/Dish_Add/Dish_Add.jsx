@@ -25,81 +25,7 @@ const Dish_Add = () => {
     queryKey: ['categories', res_id, branchID],
     queryFn: async () => {
       const res = await axiosSecure.get(`/admin/get-all-categories-name/${branchID}`)
-
-      // return res.data.categories;
       return res?.data;
-      // return [
-      //   {
-      //     "_id": "1",
-      //     "title": "Italian Cuisine",
-      //     "description": "Delicious Italian dishes",
-      //     "active": true,
-      //     "img": "italian_cuisine.jpg"
-      //   },
-      //   {
-      //     "_id": "2",
-      //     "title": "Mexican Flavors",
-      //     "description": "Spicy and savory Mexican dishes",
-      //     "active": true,
-      //     "img": "mexican_flavors.jpg"
-      //   },
-      //   {
-      //     "_id": "3",
-      //     "title": "Asian Fusion",
-      //     "description": "A fusion of flavors from various Asian cuisines",
-      //     "active": true,
-      //     "img": "asian_fusion.jpg"
-      //   },
-      //   {
-      //     "_id": "4",
-      //     "title": "Vegetarian Delights",
-      //     "description": "Healthy and tasty vegetarian options",
-      //     "active": true,
-      //     "img": "vegetarian_delights.jpg"
-      //   },
-      //   {
-      //     "_id": "5",
-      //     "title": "Seafood Specialties",
-      //     "description": "Fresh and succulent seafood dishes",
-      //     "active": true,
-      //     "img": "seafood_specialties.jpg"
-      //   },
-      //   {
-      //     "_id": "6",
-      //     "title": "Sweet Treats",
-      //     "description": "Indulge in delightful desserts",
-      //     "active": true,
-      //     "img": "sweet_treats.jpg"
-      //   },
-      //   {
-      //     "_id": "7",
-      //     "title": "Grill Master",
-      //     "description": "Sizzling grills and BBQ delights",
-      //     "active": true,
-      //     "img": "grill_master.jpg"
-      //   },
-      //   {
-      //     "_id": "8",
-      //     "title": "Healthy Bites",
-      //     "description": "Nutrient-packed and wholesome options",
-      //     "active": true,
-      //     "img": "healthy_bites.jpg"
-      //   },
-      //   {
-      //     "_id": "9",
-      //     "title": "Cozy Cafés",
-      //     "description": "Relax and unwind in charming cafés",
-      //     "active": true,
-      //     "img": "cozy_cafes.jpg"
-      //   },
-      //   {
-      //     "_id": "10",
-      //     "title": "Exotic Eats",
-      //     "description": "Explore exotic flavors from around the world",
-      //     "active": true,
-      //     "img": "exotic_eats.jpg"
-      //   }
-      // ]
 
     }
   })
@@ -157,7 +83,7 @@ const Dish_Add = () => {
             resetField("sales_tax")
             resetField("supplementary_duty")
             resetField("img")
-            resetField("description")
+            setDescriptionContent("")
           })
           .catch(err => SwalErrorShow(err))
       })

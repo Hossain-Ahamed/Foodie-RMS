@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Checkbox } from '@nextui-org/react'
 import { MdOutlinePercent } from 'react-icons/md'
-import { validateSalesTax } from '../../../../assets/scripts/Utility'
+import { SwalErrorShow, validateSalesTax } from '../../../../assets/scripts/Utility'
 import { MdDelete } from "react-icons/md";
 import { CiSquarePlus } from "react-icons/ci";
 import Dish_Add_Description from '../Dish_Add/Dish_Add_Description'
@@ -18,7 +18,7 @@ import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage'
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage'
 
 const Dish_Edit = () => {
-    const { id } = useParams(); // Assuming you have a parameter for the dish ID in the route
+    const { dishID } = useParams(); // Assuming you have a parameter for the dish ID in the route
 
     const { register, handleSubmit, formState: { errors }, setValue, reset, control } = useForm();
 
@@ -35,142 +35,140 @@ const Dish_Edit = () => {
 
     const axiosSecure = useAxiosSecure();
     const { res_id, branchID } = useRestauarantAndBranch();
-
+    const [descriptionContent, setDescriptionContent] = useState('');
+    const [selectedImage0, setSelectedImage0] = useState(null);
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
-        queryKey: ['DishData', id],
+        queryKey: ['DishData', dishID],
         queryFn: async () => {
 
 
-            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/edit-dish/${id}`);
+            const res = await axiosSecure.get(`/admin/${branchID}/get-previous-dish/${dishID}`);
 
 
-            const res1 = {
-                data: {
-                    dishData: {
+            // const res1 = {
+            //     data: {
+            //         dishData: {
 
-                        "category": "Healthy Bites",
-                        "title": "3243",
-                        "price": "100",
-                        "offerPrice": "80",
-                        "preparation_cost": "34243242",
-                        "sales_tax": "03",
-                        "supplementary_duty": "03",
-                        "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                        "options": [
-                            {
-                                "name": "34232",
-                                "priority": "4342",
-                                "price": "342",
-                                "preparation_cost": "324"
-                            },
-                            {
-                                "name": "34232",
-                                "priority": "4342",
-                                "price": "342",
-                                "preparation_cost": "324"
-                            }
-                        ],
-                        "addOn": [],
-                        "active": true,
-                        "description": "<ol><li>dsfj</li><li>fdsaklf</li><li>adshf</li></ol>"
-                    },
-                    categories: [
-                        {
-                            "_id": "1",
-                            "title": "Italian Cuisine",
-                            "description": "Delicious Italian dishes",
-                            "active": true,
-                            "img": "italian_cuisine.jpg"
-                        },
-                        {
-                            "_id": "2",
-                            "title": "Mexican Flavors",
-                            "description": "Spicy and savory Mexican dishes",
-                            "active": true,
-                            "img": "mexican_flavors.jpg"
-                        },
-                        {
-                            "_id": "3",
-                            "title": "Asian Fusion",
-                            "description": "A fusion of flavors from various Asian cuisines",
-                            "active": true,
-                            "img": "asian_fusion.jpg"
-                        },
-                        {
-                            "_id": "4",
-                            "title": "Vegetarian Delights",
-                            "description": "Healthy and tasty vegetarian options",
-                            "active": true,
-                            "img": "vegetarian_delights.jpg"
-                        },
-                        {
-                            "_id": "5",
-                            "title": "Seafood Specialties",
-                            "description": "Fresh and succulent seafood dishes",
-                            "active": true,
-                            "img": "seafood_specialties.jpg"
-                        },
-                        {
-                            "_id": "6",
-                            "title": "Sweet Treats",
-                            "description": "Indulge in delightful desserts",
-                            "active": true,
-                            "img": "sweet_treats.jpg"
-                        },
-                        {
-                            "_id": "7",
-                            "title": "Grill Master",
-                            "description": "Sizzling grills and BBQ delights",
-                            "active": true,
-                            "img": "grill_master.jpg"
-                        },
-                        {
-                            "_id": "8",
-                            "title": "Healthy Bites",
-                            "description": "Nutrient-packed and wholesome options",
-                            "active": true,
-                            "img": "healthy_bites.jpg"
-                        },
-                        {
-                            "_id": "9",
-                            "title": "Cozy Cafés",
-                            "description": "Relax and unwind in charming cafés",
-                            "active": true,
-                            "img": "cozy_cafes.jpg"
-                        },
-                        {
-                            "_id": "10",
-                            "title": "Exotic Eats",
-                            "description": "Explore exotic flavors from around the world",
-                            "active": true,
-                            "img": "exotic_eats.jpg"
-                        }
-                    ]
-                }
-            }
-            const data = res1.data?.dishData;
-
-            setValue('title', data.title);
-            setValue('active', data.active);
-            setValue('price', data.price);
-            setValue('category',)
-            setValue('offerPrice', data?.offerPrice)
-            setValue('preparation_cost', data.preparation_cost);
-            setValue('sales_tax', data.sales_tax);
-            setValue('supplementary_duty', data.supplementary_duty);
-            setDescriptionContent(data.description); // Set description content
+            //             "category": "Healthy Bites",
+            //             "title": "3243",
+            //             "price": "100",
+            //             "offerPrice": "80",
+            //             "preparation_cost": "34243242",
+            //             "sales_tax": "03",
+            //             "supplementary_duty": "03",
+            //             "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //             "options": [
+            //                 {
+            //                     "name": "34232",
+            //                     "priority": "4342",
+            //                     "price": "342",
+            //                     "preparation_cost": "324"
+            //                 },
+            //                 {
+            //                     "name": "34232",
+            //                     "priority": "4342",
+            //                     "price": "342",
+            //                     "preparation_cost": "324"
+            //                 }
+            //             ],
+            //             "addOn": [],
+            //             "active": true,
+            //             "description": "<ol><li>dsfj</li><li>fdsaklf</li><li>adshf</li></ol>"
+            //         },
+            //         categories: [
+            //             {
+            //                 "_id": "1",
+            //                 "title": "Italian Cuisine",
+            //                 "description": "Delicious Italian dishes",
+            //                 "active": true,
+            //                 "img": "italian_cuisine.jpg"
+            //             },
+            //             {
+            //                 "_id": "2",
+            //                 "title": "Mexican Flavors",
+            //                 "description": "Spicy and savory Mexican dishes",
+            //                 "active": true,
+            //                 "img": "mexican_flavors.jpg"
+            //             },
+            //             {
+            //                 "_id": "3",
+            //                 "title": "Asian Fusion",
+            //                 "description": "A fusion of flavors from various Asian cuisines",
+            //                 "active": true,
+            //                 "img": "asian_fusion.jpg"
+            //             },
+            //             {
+            //                 "_id": "4",
+            //                 "title": "Vegetarian Delights",
+            //                 "description": "Healthy and tasty vegetarian options",
+            //                 "active": true,
+            //                 "img": "vegetarian_delights.jpg"
+            //             },
+            //             {
+            //                 "_id": "5",
+            //                 "title": "Seafood Specialties",
+            //                 "description": "Fresh and succulent seafood dishes",
+            //                 "active": true,
+            //                 "img": "seafood_specialties.jpg"
+            //             },
+            //             {
+            //                 "_id": "6",
+            //                 "title": "Sweet Treats",
+            //                 "description": "Indulge in delightful desserts",
+            //                 "active": true,
+            //                 "img": "sweet_treats.jpg"
+            //             },
+            //             {
+            //                 "_id": "7",
+            //                 "title": "Grill Master",
+            //                 "description": "Sizzling grills and BBQ delights",
+            //                 "active": true,
+            //                 "img": "grill_master.jpg"
+            //             },
+            //             {
+            //                 "_id": "8",
+            //                 "title": "Healthy Bites",
+            //                 "description": "Nutrient-packed and wholesome options",
+            //                 "active": true,
+            //                 "img": "healthy_bites.jpg"
+            //             },
+            //             {
+            //                 "_id": "9",
+            //                 "title": "Cozy Cafés",
+            //                 "description": "Relax and unwind in charming cafés",
+            //                 "active": true,
+            //                 "img": "cozy_cafes.jpg"
+            //             },
+            //             {
+            //                 "_id": "10",
+            //                 "title": "Exotic Eats",
+            //                 "description": "Explore exotic flavors from around the world",
+            //                 "active": true,
+            //                 "img": "exotic_eats.jpg"
+            //             }
+            //         ]
+            //     }
+            // }
+            // const data = res1.data?.dishData;
+            // setValue('title', res?.data?.title);
+            // setValue('active', res?.data?.isActive);
+            // setValue('price', res?.data?.price);
+            // setValue('category',)
+            // setValue('offerPrice', res?.data?.offerPrice)
+            // setValue('preparation_cost', res?.data?.preparation_cost);
+            // setValue('sales_tax', res?.data?.sales_tax);
+            // setValue('supplementary_duty', res?.data?.supplementary_duty);
+            setDescriptionContent(res?.data?.dish?.description); // Set description content
 
             // Set options array
-            setValue('options', data.options);
-            setSelectedImage0(data?.img);
-
-            return res1?.data;
+            setValue('options', res?.data?.options);
+            setSelectedImage0(res?.data?.dish?.img);
+            return res?.data;
         },
 
     });
 
-    const [descriptionContent, setDescriptionContent] = useState('');
-    const [selectedImage0, setSelectedImage0] = useState(null);
+    
 
 
 
@@ -193,8 +191,13 @@ const Dish_Edit = () => {
             toast.error('Cover Photo needed');
             return;
         }
-
-
+        // request for edit dish
+        axiosSecure.patch(`/admin/edit-dishes/${dishID}`, data)
+            .then(res => {
+                toast.success('Dish Edited Successfully')
+                navigate('/dish-list')
+            })
+            .catch(err => SwalErrorShow(err))
 
     };
 
@@ -273,7 +276,7 @@ const Dish_Edit = () => {
                                     label="Select Dish Category"
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
 
-                                    defaultValue={data?.dishData?.category}
+                                    defaultValue={data?.dish?.category}
                                     {...register("category", {
                                         required: "*category  is Required",
                                     })}
@@ -282,9 +285,9 @@ const Dish_Edit = () => {
                                         Select Dish Category
                                     </option>
 
-                                    {data?.categories.map((item, _idx) => (
-                                        <option key={item?.title} value={item?.title}>
-                                            {item?.title}
+                                    {Array.isArray(data?.titles) && data?.titles.map((item, _idx) => (
+                                        <option key={_idx} value={item}>
+                                            {item}
                                         </option>
                                     ))}
                                 </select>
@@ -297,7 +300,8 @@ const Dish_Edit = () => {
                                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: Rice Bowl"
                                     {...register("title", {
                                         required: "*title  is Required",
-                                    })} />
+                                    })}
+                                    defaultValue={data?.dish?.title} />
                                 {errors.title?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.title?.message}</p>)}
 
                             </div>
@@ -307,7 +311,7 @@ const Dish_Edit = () => {
                                     <div className="flex items-start gap-4">
                                         <span className="text-green-600">
 
-                                            <Checkbox className='p-4' defaultSelected={data?.active} onValueChange={(e) => setValue('active', e)} ></Checkbox>
+                                            <Checkbox className='p-4' defaultSelected={data?.dish?.isActive} onValueChange={(e) => setValue('active', e)} ></Checkbox>
                                         </span>
 
                                         <div className="flex-1">
@@ -331,7 +335,8 @@ const Dish_Edit = () => {
                                         validate: {
                                             isNumber: (value) => !isNaN(value)
                                         },
-                                    })} />
+                                    })}
+                                    defaultValue={data?.dish?.price} />
                                 {errors.price?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.price?.message}</p>)}
                                 {errors.price?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
 
@@ -344,7 +349,8 @@ const Dish_Edit = () => {
                                         validate: {
                                             isNumber: (value) => !isNaN(value)
                                         },
-                                    })} />
+                                    })}
+                                    defaultValue={data?.dish?.offerPrice} />
                                 {errors.offerPrice?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.offerPrice?.message}</p>)}
                                 {errors.offerPrice?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
                             </div>
@@ -362,7 +368,8 @@ const Dish_Edit = () => {
                                         validate: {
                                             isNumber: (value) => !isNaN(value)
                                         },
-                                    })} />
+                                    })} 
+                                    defaultValue={data?.dish?.preparation_cost}/>
                                 {errors.preparation_cost?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.preparation_cost?.message}</p>)}
                                 {errors.preparation_cost?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.preparation_cost?.message}</p>)}
 
@@ -375,7 +382,7 @@ const Dish_Edit = () => {
                             <div className="w-1/2  p-3 relative">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Sales Tax</p>
                                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="30"
-                                    defaultValue={0}
+                                    defaultValue={data?.dish?.sales_tax}
                                     {...register("sales_tax", {
                                         required: "*sales_tax  is Required",
                                         min: 0,
@@ -392,7 +399,7 @@ const Dish_Edit = () => {
                             <div className="w-1/2  p-3 relative">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Suppelementary Duty  </p>
                                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="30"
-                                    defaultValue={0}
+                                    defaultValue={data?.dish?.supplementary_duty}
                                     {...register("supplementary_duty", {
                                         required: "*supplementary_duty  is Required",
                                         min: 0,
