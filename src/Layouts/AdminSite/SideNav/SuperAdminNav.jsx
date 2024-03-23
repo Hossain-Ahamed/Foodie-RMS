@@ -64,6 +64,21 @@ const SuperAdminNav = () => {
                      </li>
                      <li>
                          <NavLink
+                             to={`/all-branches`}
+                             className={({ isActive }) =>
+                                 isActive
+                                     ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+
+                                     : "flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                             }
+                         >
+
+
+                             <span className="text-sm font-medium">All Branches</span>
+                         </NavLink>
+                     </li>
+                     <li>
+                         <NavLink
                              to={`/manage-shifts`}
                              className={({ isActive }) =>
                                  isActive

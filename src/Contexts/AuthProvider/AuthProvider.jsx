@@ -60,7 +60,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
        
-            setUser(currentUser);
+          
             console.log('current user cred : ', currentUser?.email);
 
             if (currentUser) {
@@ -70,6 +70,7 @@ const AuthProvider = ({ children }) => {
                     email: currentUser.email,
                     firebase_UID: currentUser?.uid,
                 }
+                setUser(userData);
 
                 // const user
                 axios.post(`${import.meta.env.VITE_serverAddress}/rms-employee-jwt`, userData, { withCredentials: true })

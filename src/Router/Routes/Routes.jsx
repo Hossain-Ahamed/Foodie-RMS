@@ -15,7 +15,6 @@ import AddEmployee from "../../pages/Admin/Employee/AddEmployee/AddEmployee";
 import Dish_Add from "../../pages/Admin/DishManage/Dish_Add/Dish_Add";
 import Dish_Edit from "../../pages/Admin/DishManage/DishEdit/Dish_Edit";
 import EditRestaurant from "../../pages/Admin/EditRestaurant/EditRestaurant";
-import AddBranch from "../../pages/Admin/EditRestaurant/AddBranch/AddBranch";
 import TimeTable from "../../pages/Admin/ManageRestaurant/TimeTable/TimeTable";
 import TableManagement from "../../pages/Admin/ManageRestaurant/TableManagement/TableManagement";
 import CouponList from "../../pages/Admin/ManageOffer/ManageCoupon/CouponList/CouponList";
@@ -35,6 +34,7 @@ import MembershipContainer from "../../pages/Admin/ManageOffer/ManageMembership/
 import EditExpense from "../../pages/Admin/Expenses/EditExpense/EditExpense";
 import ProtectedByRole from "../ProtectedByRole/ProtectedByRole";
 import AllEmployeeList from "../../pages/Admin/Employee/AllEmployeeList/AllEmployeeList";
+import AllBranches from "../../pages/Admin/AllBranches/AllBranches";
 
 
 
@@ -54,12 +54,12 @@ export const router = createBrowserRouter([
                 element: <ViewAsMyProfile />
             },
             {
-                path: '/edit-restaurant',
-                element: <ProtectedByRole allowedRoles={['Super-Admin']}><EditRestaurant /></ProtectedByRole>
+                path: '/all-branches',
+                element: <ProtectedByRole allowedRoles={['Super-Admin']}><AllBranches /></ProtectedByRole>
             },
             {
-                path: '/edit-restaurant/:res_id/add-new-branch',
-                element: <AddBranch />
+                path: '/edit-restaurant',
+                element: <ProtectedByRole allowedRoles={['Super-Admin']}><EditRestaurant /></ProtectedByRole>
             },
             {
                 path: '/:res_id/branch/:branchID',

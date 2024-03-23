@@ -6,6 +6,7 @@ import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 
 
 const MyRestaurants = () => {
+    console.log('my restaurant')
     const { profile, permitted } = useProfile();
 
     const {setBranchAndRestaurantName} = useRestauarantAndBranch();

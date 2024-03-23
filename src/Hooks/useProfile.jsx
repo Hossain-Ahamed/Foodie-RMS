@@ -8,7 +8,7 @@ const useProfile = () => {
 
     const { user, loading } = useAuthProvider();
     const axiosSecure = useAxiosSecure();
-    const { refetch : profileRefetch, data: profile = {}, isLoading: profileLoading, error :profileError} = useQuery({
+    const { refetch , data, isLoading, error} = useQuery({
         queryKey: ['profile', user?.email],
         enabled: (!loading && (!!user)),
         queryFn: async () => {
@@ -17,7 +17,7 @@ const useProfile = () => {
             return res?.data;
         },
     });
-    return { profile, profileLoading, profileRefetch, permitted: profile?.permitted, profileError }
+    return { profile :data, profileLoading : loading, profileRefetch : refetch, permitted: data?.permitted, profileError : error }
 };
 
 export default useProfile;
