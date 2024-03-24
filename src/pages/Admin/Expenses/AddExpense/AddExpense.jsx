@@ -145,6 +145,7 @@ const AddExpense = () => {
             resetField("paymentDate");
             resetField("reference");
             resetField("vendorDescription");
+            // navigate('/expenses')
         })
         .catch(err => {
             toast.error("Something went wrong")

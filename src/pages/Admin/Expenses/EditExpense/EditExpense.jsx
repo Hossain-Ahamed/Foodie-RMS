@@ -3,12 +3,13 @@ import SectionTitle from '../../../../components/SectionTitle/SectionTitle'
 import SetTitle from '../../../Shared/SetTtitle/SetTitle'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { getAllExpenseType } from '../../../../assets/scripts/Utility'
+import { SwalErrorShow, getAllExpenseType } from '../../../../assets/scripts/Utility'
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure'
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch'
 import { useQuery } from 'react-query';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage'
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
+import { useNavigate, useParams } from 'react-router-dom'
 
 const EditExpense = () => {
     // state to catch the purchase if user select option other than purchase vendor will be disabled
@@ -17,56 +18,57 @@ const EditExpense = () => {
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
     const expenseType = getAllExpenseType();
+    const { expenseID } = useParams();
+    const navigate = useNavigate()
     const drowpdownCategory = ["Purchase", "Salaries"]
     const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
-            let res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/add-expenses`)
+            let res = await axiosSecure.get(`/admin/${res_id}/branch/${branchID}/get-expenses/${expenseID}`)
 
             // return res.data.categories;
-            res = {
-                data: {
+            // let res = {
+            //     data: {
 
-                    active: true,
-                    category: "Rent",
-                    billDate: "2024-02-04",
-                    expense: "1000",
-                    payTo: "Mokles",
-                    payeeID: "939efx3",
-                    vendorDescription: "Hello Vai",
-                    img: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                    transactions: [
-                        {
-                            paymentDate: "2024-02-03",
-                            paymentAmount: "1000",
-                            reference: "19ds32038sd82",
-                            description: "Baki nai",
-                        },
-                        {
-                            paymentDate: "2024-02-03",
-                            paymentAmount: "1000",
-                            reference: "19ds32038sd82",
-                            description: "Baki nai",
-                        }
-                    ]
+            //         active: true,
+            //         category: "Rent",
+            //         billDate: "2024-02-04",
+            //         expense: "1000",
+            //         payTo: "Mokles",
+            //         payeeID: "939efx3",
+            //         vendorDescription: "Hello Vai",
+            //         img: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
+            //         transactions: [
+            //             {
+            //                 paymentDate: "2024-02-03",
+            //                 paymentAmount: "1000",
+            //                 reference: "19ds32038sd82",
+            //                 description: "Baki nai",
+            //             },
+            //             {
+            //                 paymentDate: "2024-02-03",
+            //                 paymentAmount: "1000",
+            //                 reference: "19ds32038sd82",
+            //                 description: "Baki nai",
+            //             }
+            //         ]
 
-                }
-            }
+            //     }
+            // }
 
-            setValue("category", res?.data?.category)
-            setValue("billDate", res?.data?.billDate)
-            setValue("expense", res?.data?.expense)
-            setValue("payTo", res?.data?.payTo)
+            setValue("category", res?.data[0]?.category)
+            setValue("billDate", res?.data[0]?.billDate)
+            setValue("expense", res?.data[0]?.expense)
+            setValue("payTo", res?.data[0]?.payTo)
 
-            setValue("payeeID", res?.data?.payeeID)
-            setValue("vendorDescription", res?.data?.vendorDescription)
-            setValue("paymentDate", res?.data?.paymentDate)
-            setValue("paymentAmount", res?.data?.paymentAmount)
-            setValue("reference", res?.data?.reference)
-            setValue("description", res?.data?.description)
-            setValue("img", res?.data?.img)
-
-            return res?.data
+            setValue("payeeID", res?.data[0]?.payeeID)
+            setValue("vendorDescription", res?.data[0]?.vendorDescription)
+            setValue("paymentDate", res?.data[0]?.paymentDate)
+            setValue("paymentAmount", res?.data[0]?.paymentAmount)
+            setValue("reference", res?.data[0]?.reference)
+            setValue("description", res?.data[0]?.description)
+            setValue("img", res?.data[0]?.img)
+            return res?.data[0]
         }
     })
 
@@ -78,6 +80,13 @@ const EditExpense = () => {
 
     const onSubmit = async (data) => {
         console.log(data);
+
+        axiosSecure.patch(`/admin/${res_id}/branch/${branchID}/edit-expenses/${expenseID}`)
+        .then(res => {
+            toast.success('Expense Edited Successfully')
+            navigate('/expenses')
+        })
+        .catch(err => SwalErrorShow(err))
 
     };
 

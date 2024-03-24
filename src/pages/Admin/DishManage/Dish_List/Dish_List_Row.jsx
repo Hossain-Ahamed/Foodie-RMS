@@ -1,15 +1,16 @@
 import React from 'react';
-import { BiEditAlt } from 'react-icons/bi';
 import { MdClear, MdOutlineCheckCircle } from 'react-icons/md';
-import { FaTrashAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
-
-const Dish_List_Row = ({dish}) => {
+import edit from "../../../../assets/images/Home/edit.svg"
+import trash from "../../../../assets/images/Home/delete.svg"
+import { SwalErrorShow } from '../../../../assets/scripts/Utility';
+const Dish_List_Row = ({ dish, axiosSecure, refetch }) => {
     const { branchID, res_id } = useRestauarantAndBranch();
-    let statusStyle, paymentStatus, icon; 
-    switch (dish.status) {
+    let statusStyle, icon;
+    // setting color and icon for dish status
+    switch (dish?.isActive) {
         case true:
             statusStyle = 'bg-emerald-100 text-emerald-700'
             icon = <MdOutlineCheckCircle className="-ms-1 me-1.5 h-4 w-4" />
@@ -32,11 +33,17 @@ const Dish_List_Row = ({dish}) => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                // deleting dish request
+                axiosSecure.delete(`/admin/delete-dishes/${id}`)
+                    .then(res => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Dish has been deleted.",
+                            icon: "success"
+                        });
+                        refetch()
+                    })
+                    .catch(err => SwalErrorShow(err))
             }
         });
     }
@@ -48,7 +55,7 @@ const Dish_List_Row = ({dish}) => {
                         <div className=''>
                             <img
                                 alt='profile'
-                                src={dish?.photo}
+                                src={dish?.img}
                                 className='mx-auto object-cover rounded h-10 w-15'
                             />
                         </div>
@@ -58,7 +65,7 @@ const Dish_List_Row = ({dish}) => {
                     </div>
                 </div>
             </td>
-            
+
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <span
                     className='text-gray-900 whitespace-no-wrap block text-center'
@@ -75,7 +82,7 @@ const Dish_List_Row = ({dish}) => {
                         icon
                     }
 
-                    <p className="whitespace-nowrap text-sm">{dish?.status ? "Active" : "Inactive"}</p>
+                    <p className="whitespace-nowrap text-sm">{dish?.isActive ? "Active" : "Inactive"}</p>
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
@@ -111,17 +118,10 @@ const Dish_List_Row = ({dish}) => {
                 <span
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-center'
                 >
-                    <Link to={`/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
-                    <span title="Delete category" onClick={() => handleDeletecategory(dish._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
+                    <Link to={`/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
+                    <span title="Delete category" onClick={() => handleDeletecategory(dish?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
                 </span>
             </td>
-            {/* <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{category?.payment_status}</p></span>
-            </td> */}
-            {/* <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                    <Link to={`/restaurant/${restaurantName}/branch/${branchName}/edit-category/:${category?.categoryID}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><BiEditAlt size={25} /></Link>
-                    <span title="Delete category" onClick={() => handleDeletecategory(employee.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span>
-                </td> */}
         </tr>
 
     );
