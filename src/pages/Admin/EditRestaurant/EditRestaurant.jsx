@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
-import { getAllDistricts, getCountries, getDivisions, getProvinceOfSelectedCity, validateEmail, validateMobileNumber } from '../../../assets/scripts/Utility';
+import { getAllDistricts, getCountries, getDivisions, getProvinceOfSelectedCity, imageUpload, validateEmail, validateMobileNumber } from '../../../assets/scripts/Utility';
 import SetTitle from '../../Shared/SetTtitle/SetTitle';
 import { toast } from 'react-hot-toast';
+import CryptoJS from 'crypto-js';
 import Cookies from 'js-cookie';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -12,18 +13,22 @@ import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 import { useQuery } from 'react-query'
 import LoadingPage from '../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../Shared/ErrorPage/ErrorPage';
+import useProfile from '../../../Hooks/useProfile';
 const EditRestaurant = () => {
+    //  edit page 
+    const [loading, setLoading] = useState(false);
+    const [fetchEnabled, setFetchEnabled] = useState(true);
+    // -----------------------------------------------------------
+
+
     const AllDistricts = getAllDistricts();
     const AllDivisions = getDivisions();
-
     const countries = getCountries();
 
-    const { register, handleSubmit, formState: { errors }, setValue, control, getValues } = useForm();
 
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: 'branches',
-    });
+
+    const { profileRefetch } = useProfile();
+    const { register, handleSubmit, formState: { errors }, setValue, control, getValues } = useForm();
 
     // handle image
     const [selectedImage0, setSelectedImage0] = useState(null);
@@ -39,59 +44,15 @@ const EditRestaurant = () => {
 
     // fetch data 
     const axiosSecure = useAxiosSecure();
-    const { res_id } = useRestauarantAndBranch();
+    const { res_id, setBranchAndRestaurantName } = useRestauarantAndBranch();
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['restaurantData', res_id],
+        enabled: fetchEnabled,
         queryFn: async () => {
-
-
-            const res = await axiosSecure.get(`/edit-restaurant/${res_id}`);
-
-
-            // const res1 = {
-            //     data: {
-
-            //         "_id": "87342fdjskllf",
-            //         "res_name": "Fuoco",
-            //         "res_email": "hossainahamed6872@gmail.com",
-            //         "res_mobile": "01868726172",
-            //         "res_Owner_Name": "Hossain",
-            //         "res_Owner_email": "hossainahamed6872@gmail.com",
-            //         "res_Owner_mobile": "01868726172",
-            //         "res_Owner_streetAddress": "J A M T O L A",
-            //         "res_Owner_city": "Narayanganj",
-            //         "res_Owner_stateProvince": "Dhaka",
-            //         "res_Owner_postalCode": "1400",
-            //         "res_Owner_country": "Bangladesh",
-            //         "branches": [
-            //             {
-            //                 "branch_name": "Fouco Update",
-            //                 "streetAddress": "Jamtola",
-            //                 "city": "Mymensingh",
-            //                 "stateProvince": "Dhaka",
-            //                 "postalCode": "1440",
-            //                 "country": "Bangladesh",
-            //                 "branchID": "q-Naynabad-f-Bangladesh-1440-1705850705607"
-            //             },
-            //             {
-            //                 "branch_name": "Fouco chasara",
-            //                 "streetAddress": "jam",
-            //                 "city": "Mymensingh",
-            //                 "stateProvince": "Dhaka",
-            //                 "postalCode": "1440",
-            //                 "country": "Bangladesh",
-            //                 "branchID": "q-chasara-f-Bangladesh-1440-1705850705607"
-            //             }
-            //         ],
-
-
-            //         "img": "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-
-            //     }
-            // }
+            const res = await axiosSecure.get(`/edit-restaurant/${res_id}`)
             const data = res?.data;
-
+            // console.log(res.data)
 
             setValue('res_name', data?.res_name);
             setValue('res_email', data?.res_email);
@@ -104,47 +65,107 @@ const EditRestaurant = () => {
             setValue('res_Owner_stateProvince', data?.res_Owner_stateProvince);
             setValue('res_Owner_postalCode', data?.res_Owner_postalCode);
             setValue('res_Owner_country', data?.res_Owner_country);
-            setValue('img', data?.img);
+            // setValue('img', data?.img);
 
 
             setValue('branches', data?.branches);
             setSelectedImage0(data?.img);
 
+            setFetchEnabled(false)
             return res?.data;
         },
 
     });
+    const ParsingData = () => {
+        try {
+            return JSON.parse(CryptoJS.AES.decrypt(Cookies.get('_foodie_rms_bd_rd'), import.meta.env.VITE_ENC).toString(CryptoJS.enc.Utf8))
+        } catch (error) {
+            Cookies.remove('_foodie_rms_bd_rd');
+            return null;
+        }
+    }
+
+    const updateCookieData = (data) => {
+
+
+        dataRefetch();
+        profileRefetch();
+
+
+        let cookieData = ParsingData();
+
+
+
+
+        if (data?.res_name) {
+            cookieData.res_name = data?.res_name;
+        }
+        if (data?.img) {
+            cookieData.res_img = data?.img;
+        }
+        setBranchAndRestaurantName(cookieData)
+
+        // console.log(cookieData)
+
+
+        setLoading(false);
+        toast.success("Updated Successfully")
+    }
 
 
     const onSubmit = (data) => {
-
-        // first image upload check  --main image
-        if (!selectedImage0) {
-            Swal.fire({
-                icon: "error",
-                title: "No Photo is selected",
-                text: "Upload a photo"
+        setLoading(true)
+        // console.log(data)
 
 
-            });
 
-            return;
+        // // first image upload check  --main image
+        if (!data.img) {
+
+            axiosSecure.patch(`/edit-restaurant/${res_id}`, data,)
+                .then(res => {
+                    updateCookieData(data);
+                }).catch(e => {
+                    setLoading(false)
+                    console.error(e)
+                    Swal.fire({
+                        icon: "error",
+                        text: e?.code + " " + e?.message,
+                        title: e?.response?.data?.message
+
+                    });
+                })
+
+        } else {
+            // image upload
+            imageUpload(data.img)
+                .then(image => {
+
+                    data.img = image?.data?.display_url
+                    axiosSecure.patch(`/edit-restaurant/${res_id}`, data,)
+                        .then(res => {
+                            updateCookieData(data);
+                        }).catch(e => {
+                            setLoading(false)
+                            console.error(e)
+                            Swal.fire({
+                                icon: "error",
+                                text: e?.code + " " + e?.message,
+                                title: e?.response?.data?.message
+
+                            });
+                        })
+
+
+                })
+                .catch(err => {
+                    console.log(err);
+                    setLoading(false)
+                })
         }
 
 
-        if (data?.branches.length <= 0) {
-            Swal.fire({
-                icon: "error",
-                title: "No branch is created",
-                text: "Create a branch",
 
-            });
-
-            return;
-        }
-
-        console.log(data)
-        // navigate('/payment?id=43875734', { replace: true })
 
     };
 
@@ -152,7 +173,7 @@ const EditRestaurant = () => {
 
 
 
-    if (dataLoading) {
+    if (dataLoading || loading) {
         return <LoadingPage />
     }
     if (dataError) {
@@ -359,14 +380,14 @@ const EditRestaurant = () => {
                             </div>
                             {/* City/Town */}
                             <div className="w-full md:w-1/2 p-3">
-                               
+
                                 <select
-                                 
+
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
 
                                     {...register('res_Owner_city', { required: 'City/Town is required' })}
-                                    onChange={(e)=>{setValue(`res_Owner_stateProvince`,getProvinceOfSelectedCity(e.target.value))}}
-                       
+                                    onChange={(e) => { setValue(`res_Owner_stateProvince`, getProvinceOfSelectedCity(e.target.value)) }}
+
                                 >
                                     <option value="" disabled>
                                         Select City / Town
@@ -378,7 +399,7 @@ const EditRestaurant = () => {
                                         </option>
                                     ))}
                                 </select>
-                               
+
                                 {errors.res_Owner_city && (
                                     <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                                         {errors.res_Owner_city.message}
@@ -388,25 +409,25 @@ const EditRestaurant = () => {
 
                             {/* State / Province */}
                             <div className="w-full md:w-1/2 p-3">
-                            <select
-                                 
-                                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+                                <select
 
-                                 {...register('res_Owner_stateProvince', { required: 'State / Province is required' })}
-                                 onChange={(e)=>{setValue(`res_Owner_stateProvince`,getProvinceOfSelectedCity(e.target.value))}}
-                    
-                             >
-                                 <option value="" disabled>
-                                     Select State / Province
-                                 </option>
+                                    className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
 
-                                 {AllDivisions.map((item, _idx) => (
-                                     <option key={item?.name} value={item?.name}>
-                                         {item?.name}
-                                     </option>
-                                 ))}
-                             </select>
-                              
+                                    {...register('res_Owner_stateProvince', { required: 'State / Province is required' })}
+                                    onChange={(e) => { setValue(`res_Owner_stateProvince`, getProvinceOfSelectedCity(e.target.value)) }}
+
+                                >
+                                    <option value="" disabled>
+                                        Select State / Province
+                                    </option>
+
+                                    {AllDivisions.map((item, _idx) => (
+                                        <option key={item?.name} value={item?.name}>
+                                            {item?.name}
+                                        </option>
+                                    ))}
+                                </select>
+
                                 {errors.res_Owner_stateProvince && (
                                     <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                                         {errors.res_Owner_stateProvince.message}
@@ -468,249 +489,22 @@ const EditRestaurant = () => {
 
 
 
-                {/* address of restaurant */}
-                <div className="w-full p-3">
-                    <div className="p-6 h-full border border-coolGray-100 overflow-hidden bg-white rounded-md shadow-dashboard">
-                        <div className='w-full flex flex-wrap justify-between items-center'>
-                            <div>
-
-                                <p className="mb-1.5 text-[18px] font-semibold  text-gray-800" data-config-id="auto-txt-21-3">Branch Addresses</p>
-                            </div>
-                            {/* add branch  */}
-                            <div className='flex flex-wrap justify-start items-center gap-2'>
-                                <button
-                                    type="button"
-                                    onClick={() => navigate(`add-new-branch`)}
-                                    className="flex-shrink-0 px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button"
-                                >
-                                    Add New Branch
-                                </button>
-                            </div>
-                        </div>
-                        {fields.map((branch, index) => (
-                            <div key={index} className="flex flex-wrap -m-3 mb-5">
-                                <div className="inline-flex items-center justify-center w-full">
-                                    <hr className="w-64 md:w-80 h-1 my-8 bg-gray-200 border-0 rounded " />
-                                    <div className="absolute px-4 -translate-x-1/2 bg-white left-1/2 font-semibold font-mono">
-                                        Branch No : {index + 1}
-                                    </div>
-                                </div>
 
 
-                                {/* Street Address */}
-                                <div className="w-full p-3">
-                                    <label htmlFor={`branches[${index}].streetAddress`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                                        Street Address
-                                    </label>
-                                    <input
-                                        id={`branches[${index}].streetAddress`}
-                                        {...register(`branches[${index}].streetAddress`, {
-                                            required: '*Street Address is required',
-                                        })}
-                                        className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                                        type="text"
-                                        placeholder="Enter your street address"
-                                    />
-                                    {errors.branches && errors.branches[index]?.streetAddress && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].streetAddress.message}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* City/Town */}
-                                <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].city`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                                        City/Town
-                                    </label>
-                                    <select
-                                        
-                                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
-
-                                        defaultValue={`branches[${index}].city`}
-                                        {...register(`branches[${index}].city`, { required: 'City/Town is required' })}
-                                      onChange={(e)=>{setValue(`branches[${index}].stateProvince`,getProvinceOfSelectedCity(e.target.value))}}
-                                    >
-                                        <option value="" disabled>
-                                            Select City
-                                        </option>
-
-                                        {AllDistricts.map((item, _idx) => (
-                                            <option key={item?.name} value={item?.name}>
-                                                {item?.name}
-                                            </option>
-                                        ))}
-                                    </select>
-
-                                    {errors.branches && errors.branches[index]?.city && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].city.message}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* State / Province */}
-                                <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].stateProvince`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                                        State / Province
-                                    </label>
-                                    <select
-                                    
-                                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
-
-                                        defaultValue={`branches[${index}].stateProvince`}
-                                        {...register(`branches[${index}].stateProvince`, { required: 'State / Province is required' })}
-                                             >
-                                        <option value="" disabled>
-                                            Select Province / State
-                                        </option>
-
-                                        {AllDivisions.map((item, _idx) => (
-                                            <option key={item?.name} value={item?.name}>
-                                                {item?.name}
-                                            </option>
-                                        ))}
-                                    </select>
-
-                                
-                                    {errors.branches && errors.branches[index]?.stateProvince && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].stateProvince.message}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* ZIP / Postal Code */}
-                                <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].postalCode`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                                        ZIP / Postal code
-                                    </label>
-                                    <input
-                                        {...register(`branches[${index}].postalCode`, { required: 'ZIP / Postal code is required' })}
-                                        className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                                        type="text"
-                                        placeholder="ZIP / Postal code"
-                                    />
-                                    {errors.branches && errors.branches[index]?.postalCode && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].postalCode.message}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Country */}
-                                <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].country`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                                        Country
-                                    </label>
-                                    <div className="relative">
-                                        <svg className="absolute right-4 top-1/2 transhtmlForm -translate-y-1/2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" data-config-id="auto-svg-2-3">
-                                            <path d="M11.3333 6.1133C11.2084 5.98913 11.0395 5.91943 10.8633 5.91943C10.6872 5.91943 10.5182 5.98913 10.3933 6.1133L8.00001 8.47329L5.64001 6.1133C5.5151 5.98913 5.34613 5.91943 5.17001 5.91943C4.99388 5.91943 4.82491 5.98913 4.70001 6.1133C4.63752 6.17527 4.58792 6.249 4.55408 6.33024C4.52023 6.41148 4.50281 6.49862 4.50281 6.58663C4.50281 6.67464 4.52023 6.76177 4.55408 6.84301C4.58792 6.92425 4.63752 6.99799 4.70001 7.05996L7.52667 9.88663C7.58865 9.94911 7.66238 9.99871 7.74362 10.0326C7.82486 10.0664 7.912 10.0838 8.00001 10.0838C8.08801 10.0838 8.17515 10.0664 8.25639 10.0326C8.33763 9.99871 8.41136 9.94911 8.47334 9.88663L11.3333 7.05996C11.3958 6.99799 11.4454 6.92425 11.4793 6.84301C11.5131 6.76177 11.5305 6.67464 11.5305 6.58663C11.5305 6.49862 11.5131 6.41148 11.4793 6.33024C11.4454 6.249 11.3958 6.17527 11.3333 6.1133Z" fill="#8896AB"></path>
-                                        </svg>
-                                        <select
-                                            {...register(`branches[${index}].country`, { required: 'Country is required' })}
-                                           
-                                            className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg appearance-none"
-                                        >
-                                            <option value="" disabled>Select Country</option>
-                                            {countries.map((country, i) => (
-                                                <option key={i + index} value={country?.en_short_name} className='text-black'>
-                                                    {country?.en_short_name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    {errors.branches && errors.branches[index]?.country && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].country.message}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="w-full md:w-1/2 p-3">
-                                    <label htmlFor={`branches[${index}].branch_name`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                                        Branch Name
-                                    </label>
-                                    <input
-                                        {...register(`branches[${index}].branch_name`, { required: 'Branch Name is required' })}
-                                        className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                                        type="text"
-                                        placeholder="Enter branch name"
-                                    />
-                                    {errors.branches && errors.branches[index]?.branch_name && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].branch_name?.message}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Branch ID */}
-                                <div className="w-full md:w-1/2 p-3 relative">
-                                    <label htmlFor={`branches[${index}].branchID`} className="mb-1.5 font-medium text-base text-coolGray-800">
-                                        Branch ID
-                                    </label>
-                                    <input
-                                        {...register(`branches[${index}].branchID`, { required: 'branch ID is required', },)}
-                                        className="read-only:cursor-not-allowed w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
-                                        type="text"
-                                        placeholder="Branch ID"
-                                        readOnly
-                                    />
-
-                                    {errors.branches && errors.branches[index]?.branchID && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.branches[index].branchID.message}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Remove Branch Button */}
-                                <div className='w-full flex flex-wrap justify-end items-center gap-2'>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            Swal.fire({
-                                                title: "Are you sure?",
-                                                text: "You won't be able to revert this!",
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#3085d6",
-                                                cancelButtonColor: "#d33",
-                                                confirmButtonText: "Yes, delete it!"
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    remove(index)
-
-                                                }
-                                            });
-
-                                        }}
-                                        className="flex-shrink-0 px-4 py-2 bg-red-500 hover:bg-red-600 font-medium text-sm text-white border border-red-500 rounded-md shadow-button"
-                                    >
-                                        Remove Branch
-                                    </button>
-
-                                </div>
-
-                            </div>
-                        ))}
-
-
+                <div className="flex items-start mb-5 mt-2 pl-2">
+                    <div className="flex items-center h-5">
+                        <input id="terms" type="checkbox" defaultChecked className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
                     </div>
-
-                    <div className="flex items-start mb-5 mt-2 pl-2">
-                        <div className="flex items-center h-5">
-                            <input id="terms" type="checkbox" defaultChecked className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
-                        </div>
-                        <label htmlFor="terms" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="/privacy-policy" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
-                    </div>
-
-                    <div className='my-4 w-full flex flex-wrap justify-center items-center gap-2'>
-                        <button
-                            type='submit' className="flex flex-wrap justify-center  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                            <p data-config-id="auto-txt-22-3">Update</p>
-                        </button>
-                    </div>
+                    <label htmlFor="terms" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="/privacy-policy" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
                 </div>
+
+                <div className='my-4 w-full flex flex-wrap justify-center items-center gap-2'>
+                    <button
+                        type='submit' className="flex flex-wrap justify-center  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
+                        <p data-config-id="auto-txt-22-3">Update</p>
+                    </button>
+                </div>
+
 
 
 

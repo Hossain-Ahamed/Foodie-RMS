@@ -92,7 +92,7 @@ const AddCoupon = () => {
                 <div className="flex flex-wrap pb-3">
                     <div className="w-full">
                         <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Coupon Name</p>
-                        <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="Front, row-2 col-1"
+                        <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="LoveFoodie20"
                             {...register("name", {
                                 required: "*name  is Required",
                             })} />
@@ -104,7 +104,7 @@ const AddCoupon = () => {
 
                 <div className="w-full relative">
                     <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Percantage</p>
-                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="2"
+                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="20"
                         {...register("percantage", percantageValidation)} />
                     {errors.percantage?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.percantage?.message}</p>)}
                     {errors.percantage?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
@@ -116,7 +116,7 @@ const AddCoupon = () => {
                 {/* minimum order ammount  */}
                 <div className="w-full relative">
                     <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Minimum Order Ammount</p>
-                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="8"
+                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="1000"
                         {...register("minimumOrderAmmount", minOrderAmmountValidation)} />
                     {errors.minimumOrderAmmount?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.minimumOrderAmmount?.message}</p>)}
                     {errors.minimumOrderAmmount?.type === "minValue" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*minimum value must be 0</p>)}
@@ -127,7 +127,7 @@ const AddCoupon = () => {
                 {/* Maximum Discount Limit  */}
                 <div className="w-full relative">
                     <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Maximum Discount Limit</p>
-                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="8"
+                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="200"
                         {...register("maximumDiscountLimit", maxDiscountLimitValidation)} />
                     {errors.maximumDiscountLimit?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.maximumDiscountLimit?.message}</p>)}
                     {errors.maximumDiscountLimit?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
@@ -138,7 +138,7 @@ const AddCoupon = () => {
                 {/* Maximum number of use   */}
                 <div className="w-full ">
                     <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Maximum Number of Use</p>
-                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="8"
+                    <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="5"
                         {...register("maximumNumberOfUse", maxNumberOfUseValidation)} />
                     {errors.maximumNumberOfUse?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.maximumNumberOfUse?.message}</p>)}
                     {errors.maximumNumberOfUse?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}

@@ -1,23 +1,34 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import MyRestaurants from '../../pages/Admin/MyRestaurant/MyRestaurant';
-
+import CryptoJS from 'crypto-js';
 export const BranchAndRestaurantNameContext = createContext({});
 
 const BranchAndRestaurantNameProvider = ({ children }) => {
-    const [selectedData, setSelectedData] = useState(() => {
-        const cookieData = Cookies.get('_foodie_rms_bd_rd');
-        return cookieData ? JSON.parse(cookieData) : null;
-    });
+
+
+    const ParsingData = () => {
+        try {
+            return JSON.parse(CryptoJS.AES.decrypt(Cookies.get('_foodie_rms_bd_rd'), import.meta.env.VITE_ENC).toString(CryptoJS.enc.Utf8))
+        } catch (error) {
+            Cookies.remove('_foodie_rms_bd_rd');
+            return null;
+        }
+    }
+
+    
+    const [selectedData, setSelectedData] = useState(Cookies.get('_foodie_rms_bd_rd') ? ParsingData() : null);
 
     const setBranchAndRestaurantName = (data) => {
-        Cookies.set('_foodie_rms_bd_rd', JSON.stringify(data), { expires: 7, path: '/' });
+
+        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_ENC).toString();
+        Cookies.set('_foodie_rms_bd_rd', encryptedData, {
+            secure: true, // Secure flag (requires HTTPS)
+        sameSite: 'Strict', // SameSite attribute ('Strict' or 'Lax')
+        });
         setSelectedData(data);
     };
 
-    useEffect(() => {
-        console.log('changed')
-    }, [selectedData]);
 
     const value = {
         res_id: selectedData?.res_id,
@@ -31,19 +42,23 @@ const BranchAndRestaurantNameProvider = ({ children }) => {
 
     
 
-    if (selectedData) {
+    if (!selectedData) {
+      console.log('object')
         return (
             <BranchAndRestaurantNameContext.Provider value={value}>
-                {children}
+               <MyRestaurants/>
             </BranchAndRestaurantNameContext.Provider>
         );
+       
     }
-
+   
     return (
         <BranchAndRestaurantNameContext.Provider value={value}>
-           <MyRestaurants/>
+            {children}
         </BranchAndRestaurantNameContext.Provider>
     );
+  
+    
 };
 
 export default BranchAndRestaurantNameProvider;
