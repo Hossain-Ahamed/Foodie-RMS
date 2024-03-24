@@ -30,7 +30,6 @@ const stripePromise = loadStripe(import.meta.env.VITE_Payment_GateWay_PK);
 
 const Payment = () => {
     const { branchID } = useParams();
-    console.log('s       ',branchID)
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const { data: { Details, price } = {}, error: detailError, isLoading: detailLoading, refetch: detailrefetch } = useQuery({
@@ -39,6 +38,7 @@ const Payment = () => {
         queryFn: async () => {
            
             const res = await axiosSecure.get(`/subscription-payment-for-extend-and-add-branch/${branchID}`);
+            console.log(res.data);
             return res.data;
         },
         
