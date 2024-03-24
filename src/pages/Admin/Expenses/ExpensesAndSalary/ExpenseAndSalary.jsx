@@ -6,14 +6,15 @@ import { useQuery } from 'react-query';
 import ExpenseRow from './ExpenseRow';
 import { Link } from 'react-router-dom';
 import { IoAddOutline } from 'react-icons/io5';
+import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 
 const ExpenseAndSalary = () => {
-    const [branch,setBranch] = useState('ALL')
+    const {branchID, res_id} = useRestauarantAndBranch();
     const axiosSecure = useAxiosSecure();
     const { refetch, data: expenses = [], isLoading, error } = useQuery({
         queryKey: ['expenses'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/admin/all-expenses?branch=${branch}`);  // token : res_id  branchID , role 
+            const res = await axiosSecure.get(`/admin/all-expenses/${branchID}`);  // token : res_id  branchID , role 
 
             /**
              * if role === super-admin 
@@ -102,7 +103,7 @@ const ExpenseAndSalary = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>{expenses.map((expense, _idx) => <ExpenseRow key={_idx} expense={expense} />)}</tbody>
+                            <tbody>{expenses.map((expense, _idx) => <ExpenseRow key={_idx} expense={expense} branchID={branchID} res_id={res_id} refetch={refetch} />)}</tbody>
                         </table>
                     </div>
                 </div>

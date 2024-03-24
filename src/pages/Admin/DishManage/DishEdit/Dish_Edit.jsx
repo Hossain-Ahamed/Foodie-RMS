@@ -161,7 +161,8 @@ const Dish_Edit = () => {
             setDescriptionContent(res?.data?.dish?.description); // Set description content
 
             // Set options array
-            setValue('options', res?.data?.options);
+            setValue('options', res?.data?.dish?.options);
+            setValue('addOn', res?.data?.dish?.addOn);
             setSelectedImage0(res?.data?.dish?.img);
             return res?.data;
         },
@@ -192,7 +193,7 @@ const Dish_Edit = () => {
             return;
         }
         // request for edit dish
-        axiosSecure.patch(`/admin/edit-dishes/${dishID}`, data)
+        axiosSecure.patch(`/admin/${branchID}/edit-dishes/${dishID}`, data)
             .then(res => {
                 toast.success('Dish Edited Successfully')
                 navigate('/dish-list')
@@ -630,7 +631,7 @@ const Dish_Edit = () => {
                         {/* save button  */}
 
                         <button type='submit' className="flex flex-wrap justify-center w-full max-w-96  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                            <p data-config-id="auto-txt-22-3">Create</p>
+                            <p data-config-id="auto-txt-22-3">Edit</p>
                         </button>
 
 
