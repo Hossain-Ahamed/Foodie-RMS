@@ -132,7 +132,7 @@ const CheckOutForm = ({ price, priceDetails }) => {
 
                 }
 
-                axiosSecure.post('/enlisted-payment', data)
+                axiosSecure.post('/rms-enlist-payment', data)
                     .then(res => {
 
                         Swal.fire({
@@ -142,8 +142,6 @@ const CheckOutForm = ({ price, priceDetails }) => {
                             showConfirmButton: false,
                             timer: 1500
                         })
-
-                        window.open('https://facebook.com', '_blank')
                     })
                     .catch(e => {
                         console.error(e);

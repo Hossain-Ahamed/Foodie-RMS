@@ -37,6 +37,7 @@ import AllEmployeeList from "../../pages/Admin/Employee/AllEmployeeList/AllEmplo
 import AllBranches from "../../pages/Admin/AllBranches/AllBranches";
 import BranchEdit from "../../pages/Admin/AllBranches/BranchEdit";
 import AddBranch from './../../pages/Admin/ManageRestaurant/AddBranch/AddBranch';
+import Payment from "../../pages/Others/Payment/Payment";
 
 
 
@@ -188,10 +189,24 @@ export const router = createBrowserRouter([
                 element: <AllEmployeeList />
                 // '/restaurant/:res_id/branch/:branchID/employee-list',
             },
+            // {
+
+            //     //payment page for admin to pay for a branch
+            //     path: '/subscription-payment/:branchID',
+            //     element: <Payment />
+            
+            // },
 
 
         ]
 
+    },
+    {
+
+        //payment page for admin to pay for a branch
+        path: '/subscription-payment/:branchID',
+        element: <Payment />
+    
     },
     {
         path: '/login',
