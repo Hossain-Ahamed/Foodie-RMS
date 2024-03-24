@@ -58,15 +58,15 @@ const AddBranch = () => {
           return;
         }
         console.log(data)
-        navigate(`/subscription-payment/65f58f6bdb04fc0c1e571f8f`, {replace: true})
-        // setLoading(true);
-        // axiosSecure.post(`/admin/restaurant/${res_id}/create/branch`,data)
-        // .then((res)=>{
-        //     navigate(`/subscription-payment/${res.data._id}`, {replace: true})
-        //     toast.success("Please pay to continue")
-        // })
-        // .catch(e=>SwalErrorShow(e))
-        // .finally(()=>setLoading(false));
+        // navigate(`/subscription-payment/65f58f6bdb04fc0c1e571f8f`, {replace: true})
+        setLoading(true);
+        axiosSecure.post(`/admin/restaurant/${res_id}/create/branch`,data)
+        .then((res)=>{
+            navigate(`/subscription-payment/${res.data.branchID}`, {replace: true})
+            toast.success("Please pay to continue")
+        })
+        .catch(e=>SwalErrorShow(e))
+        .finally(()=>setLoading(false));
     }
 
     if (dataLoading || loading) {
