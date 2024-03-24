@@ -9,8 +9,9 @@ import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 const ExpenseRow = ({ expense, branchID, res_id, refetch }) => {
-    let dueAmount = expense?.expense - parseFloat(expense?.transactions[0]?.paymentAmount)
+    let dueAmount = parseFloat(expense?.expense) - parseFloat(expense?.totalPayment)
     const axiosSecure = useAxiosSecure()
+
     let status = "";
     if(dueAmount > 0){
         status = "Due";
@@ -31,7 +32,7 @@ const ExpenseRow = ({ expense, branchID, res_id, refetch }) => {
                 // for deleting expense
                 axiosSecure.delete(`/admin/${res_id}/branch/${branchID}/delete-expenses/${id}`)
                 .then(res => {
-                    toast.success("Expense Deleted Successfull")
+                    toast.success("Expense Deleted Successfully")
                     refetch()
                 })
                 .catch(err => SwalErrorShow(err))
