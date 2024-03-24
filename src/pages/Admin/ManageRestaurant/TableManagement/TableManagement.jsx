@@ -48,7 +48,7 @@ const TableManagement = () => {
       const res = await axiosSecure.get(
         `/restaurant/${res_id}/branch/${branchID}/tables`
       );
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
       // return [
       //     { number: "1", capacity: "4", location: 'Window', qrCodeData: 'https://www.foodie.com/restaurant/743ndsa8t43/branch/3485jdsfu?table=1' },

@@ -10,12 +10,13 @@ import Swal from 'sweetalert2';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 const AddBranch = () => {
     const { res_id } = useRestauarantAndBranch();
     const countries = getCountries();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const axiosSecure = useAxiosSecure();
-
+    const navigate = useNavigate();
     const AllDistricts = getAllDistricts();
     const AllDivisions = getDivisions();
 
@@ -40,7 +41,7 @@ const AddBranch = () => {
             showCancelButton: true,
             confirmButtonColor: "info",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Purchase"
+            confirmButtonText: `Yes, Purchase "${Changedata}" package`
         }).then((result) => {
             if (result.isConfirmed) {
                 setValue('packageType', Changedata);
@@ -57,9 +58,18 @@ const AddBranch = () => {
           return;
         }
         console.log(data)
+        navigate(`/subscription-payment/65f58f6bdb04fc0c1e571f8f`, {replace: true})
+        // setLoading(true);
+        // axiosSecure.post(`/admin/restaurant/${res_id}/create/branch`,data)
+        // .then((res)=>{
+        //     navigate(`/subscription-payment/${res.data._id}`, {replace: true})
+        //     toast.success("Please pay to continue")
+        // })
+        // .catch(e=>SwalErrorShow(e))
+        // .finally(()=>setLoading(false));
     }
 
-    if (dataLoading) {
+    if (dataLoading || loading) {
         return <LoadingPage />
     }
     if (dataError) {
@@ -266,10 +276,10 @@ const AddBranch = () => {
                 </fieldset>
 
 
-            <div className='my-4 w-full flex flex-wrap justify-center items-center gap-2'>
+            <div className='mt-10    w-full flex flex-wrap justify-center items-center gap-2'>
                 <button
-                    type='submit' className="flex flex-wrap justify-center  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                    <p data-config-id="auto-txt-22-3">Add</p>
+                    type='submit' className="flex flex-wrap justify-center  px-9 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
+                    <p data-config-id="auto-txt-22-3">Create Branch</p>
                 </button>
             </div>
 

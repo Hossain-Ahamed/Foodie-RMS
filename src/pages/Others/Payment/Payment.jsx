@@ -29,19 +29,19 @@ const stripePromise = loadStripe(import.meta.env.VITE_Payment_GateWay_PK);
 
 
 const Payment = () => {
-    
     const { branchID } = useParams();
+    console.log('s       ',branchID)
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const { data: { Details, price } = {}, error: detailError, isLoading: detailLoading, refetch: detailrefetch } = useQuery({
         queryKey: ['detailCartData', branchID],
        
         queryFn: async () => {
-            const res = await axiosSecure.get(`/subscription-payment/${branchID}`);
-            // console.log(res.data)
+           
+            const res = await axiosSecure.get(`/subscription-payment-for-extend-and-add-branch/${branchID}`);
             return res.data;
         },
-        cacheTime:0
+        
     })
 
 
