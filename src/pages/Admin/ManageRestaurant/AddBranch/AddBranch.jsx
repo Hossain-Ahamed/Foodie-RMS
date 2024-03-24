@@ -1,31 +1,78 @@
 import React, { useState } from 'react';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
-import { getAllDistricts, getCountries, getDivisions, getProvinceOfSelectedCity } from '../../../../assets/scripts/Utility';
+import { getAllDistricts, getCountries, getDivisions, getProvinceOfSelectedCity, SwalErrorShow } from '../../../../assets/scripts/Utility';
 import { useForm } from 'react-hook-form';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import SetTitle from '../../../Shared/SetTtitle/SetTitle';
-
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import { useQuery } from 'react-query';
+import Swal from 'sweetalert2';
+import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
+import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
+import { toast } from 'react-hot-toast';
 const AddBranch = () => {
     const { res_id } = useRestauarantAndBranch();
     const countries = getCountries();
     const [loading, setLoading] = useState(true);
-    // const axiosSecure = useAxiosSecure();
+    const axiosSecure = useAxiosSecure();
 
     const AllDistricts = getAllDistricts();
     const AllDivisions = getDivisions();
 
     const { register, handleSubmit, formState: { errors }, setValue, control, getValues } = useForm();
 
+    const { refetch: dataRefetch, data: data = [], isLoading: dataLoading, error: dataError, } = useQuery({
+        queryKey: ['allpackages'],
+        enabled: true,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/subscription-packages`);
+            return res?.data;
+        },
+    });
+
+
+    // package selection 
+    const handleChange = (Changedata) => {
+        Swal.fire({
+            title: "Are you sure?",
+            
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "info",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Purchase"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setValue('packageType', Changedata);
+            }
+        });
+
+    };
+
+
+    // post the data to server
     const onSubmit = (data) => {
+        if(!data?.packageType){
+          toast.error("Select a package");
+          return;
+        }
         console.log(data)
     }
 
+    if (dataLoading) {
+        return <LoadingPage />
+    }
+    if (dataError) {
+        return <ErrorPage />
+    }
+
+
     return (
         <>
-        <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto py-12' autoComplete='off'>
+        <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto my-12 border rounded-lg shadow-sm p-2 md:p-3 lg:p-4' autoComplete='off'>
             <SectionTitle h1="Branch Form" />
             <SetTitle title="Branch form" />
-            <div className="flex flex-wrap items-center  select-none border rounded-lg shadow-sm p-2 md:p-3 lg:p-4">
+            <div className="flex flex-wrap items-center  select-none ">
                 <div className="w-full  p-3">
                     <label htmlFor={`name`} className="mb-1.5 font-medium text-base text-coolGray-800">
                         Branch Name
@@ -178,6 +225,45 @@ const AddBranch = () => {
 
             </div>
 
+            <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-stretch md:grid-cols-3 md:gap-8 mx-auto mt-4">
+                    <legend className='my-4 text-center text-xl font-semibold text-blue-500'>Payment Packages</legend>
+
+                    {
+
+                        data && Array.isArray(data) && data.map((item, _idx) => <React.Fragment key={_idx}>
+                            <input
+                                type="radio"
+                                
+                                id={item?.packageType}
+                               
+                                className="peer hidden [&:checked_+_label_svg]:block"
+                                onClick={() => handleChange(item?.packageType)}
+                            />
+                            <label htmlFor={item?.packageType} className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-500 hover:shadow-md peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500">
+                                <div className="divide-y divide-gray-200 rounded-2xl  ">
+                                    <div className="p-6 sm:px-8">
+                                        <h2 className="text-lg font-medium text-gray-900">
+                                            {item?.packageType}
+                                            <span className="sr-only">Plan</span>
+                                        </h2>
+
+                                        <p className="mt-2 text-gray-700">{item?.shortDescription}</p>
+
+                                        <p className="mt-2 sm:mt-4">
+                                            <strong className="text-3xl font-bold text-gray-900 sm:text-4xl flex ">{item?.finalPrice} ৳ </strong>
+
+                                            <span className="text-sm font-medium text-gray-700 line-through">৳ {item?.cutPrice}</span>
+                                        </p>
+
+                                       
+                                    </div>
+                                </div>
+                            </label>
+                        </React.Fragment>)
+
+
+                    }
+                </fieldset>
 
 
             <div className='my-4 w-full flex flex-wrap justify-center items-center gap-2'>
