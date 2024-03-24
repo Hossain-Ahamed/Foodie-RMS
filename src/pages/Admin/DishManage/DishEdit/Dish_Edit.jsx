@@ -631,7 +631,7 @@ const Dish_Edit = () => {
                         {/* save button  */}
 
                         <button type='submit' className="flex flex-wrap justify-center w-full max-w-96  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                            <p data-config-id="auto-txt-22-3">Edit</p>
+                            <p data-config-id="auto-txt-22-3">Update</p>
                         </button>
 
 
