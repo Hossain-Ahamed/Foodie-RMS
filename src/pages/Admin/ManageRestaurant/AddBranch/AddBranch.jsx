@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { getAllDistricts, getCountries, getDivisions, getProvinceOfSelectedCity } from '../../../../assets/scripts/Utility';
 import { useForm } from 'react-hook-form';
+import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
+import SetTitle from '../../../Shared/SetTtitle/SetTitle';
 
 const AddBranch = () => {
     const { res_id } = useRestauarantAndBranch();
@@ -20,26 +22,27 @@ const AddBranch = () => {
 
     return (
         <>
-            <p className="mb-1.5 text-[18px] font-semibold text-gray-900 text-coolGray-800" data-config-id="auto-txt-21-3">Branch Addresses</p>
-            <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto flex flex-col items-center py-12 select-none ' autoComplete='off'>
-
+        <form onSubmit={handleSubmit(onSubmit)} className='max-w-7xl mx-auto py-12' autoComplete='off'>
+            <SectionTitle h1="Branch Form" />
+            <SetTitle title="Branch form" />
+            <div className="flex flex-wrap items-center  select-none border rounded-lg shadow-sm p-2 md:p-3 lg:p-4">
                 <div className="w-full  p-3">
                     <label htmlFor={`name`} className="mb-1.5 font-medium text-base text-coolGray-800">
                         Branch Name
                     </label>
                     <input
-                        {...register(`name`, { required: 'Branch Name is required' })}
+                        {...register(`branch_name`, { required: 'Branch Name is required' })}
                         className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                         type="text"
                         placeholder="Enter branch name"
                     />
-                    {errors.branches && errors?.name && (
+                    {errors.branch_name && errors?.branch_name && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                            {errors.name?.message}
+                            {errors.branch_name?.message}
                         </p>
                     )}
                 </div>
-                <div className="w-full p-3">
+                <div className="w-full  p-3">
                     <label htmlFor={`streetAddress`} className="mb-1.5 font-medium text-base text-coolGray-800">
                         Street Address
                     </label>
@@ -52,7 +55,7 @@ const AddBranch = () => {
                         type="text"
                         placeholder="Enter your street address"
                     />
-                    {errors.branches && errors?.streetAddress && (
+                    {errors?.streetAddress && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                             {errors.streetAddress.message}
                         </p>
@@ -83,7 +86,7 @@ const AddBranch = () => {
                         ))}
                     </select>
 
-                    {errors.branches && errors?.city && (
+                    {errors?.city && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                             {errors.city.message}
                         </p>
@@ -114,7 +117,7 @@ const AddBranch = () => {
                     </select>
 
 
-                    {errors.branches && errors?.stateProvince && (
+                    {errors?.stateProvince && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                             {errors.stateProvince.message}
                         </p>
@@ -131,7 +134,7 @@ const AddBranch = () => {
                         type="text"
                         placeholder="ZIP / Postal code"
                     />
-                    {errors.branches && errors?.postalCode && (
+                    {errors?.postalCode && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                             {errors.postalCode.message}
                         </p>
@@ -160,7 +163,7 @@ const AddBranch = () => {
                             ))}
                         </select>
                     </div>
-                    {errors.branches && errors?.country && (
+                    {errors?.country && (
                         <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
                             {errors.country.message}
                         </p>
@@ -173,27 +176,23 @@ const AddBranch = () => {
 
 
 
+            </div>
 
 
-                <div className="flex items-start mb-5 mt-2 pl-2">
-                    <div className="flex items-center h-5">
-                        <input id="terms" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
-                    </div>
-                    <label htmlFor="terms" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="/privacy-policy" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
-                </div>
 
-                <div className='my-4 w-full flex flex-wrap justify-center items-center gap-2'>
-                    <button
-                        type='submit' className="flex flex-wrap justify-center  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                        <p data-config-id="auto-txt-22-3">Submit</p>
-                    </button>
-                </div>
-            </form >
+            <div className='my-4 w-full flex flex-wrap justify-center items-center gap-2'>
+                <button
+                    type='submit' className="flex flex-wrap justify-center  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
+                    <p data-config-id="auto-txt-22-3">Add</p>
+                </button>
+            </div>
+
+        </form >
 
 
 
 
-        </>
+    </>
     );
 };
 
