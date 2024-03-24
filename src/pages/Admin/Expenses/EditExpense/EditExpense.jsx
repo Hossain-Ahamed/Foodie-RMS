@@ -81,7 +81,7 @@ const EditExpense = () => {
     const onSubmit = async (data) => {
         console.log(data);
 
-        axiosSecure.patch(`/admin/${res_id}/branch/${branchID}/edit-expenses/${expenseID}`)
+        axiosSecure.patch(`/admin/${res_id}/branch/${branchID}/edit-expenses/${expenseID}`, data)
         .then(res => {
             toast.success('Expense Edited Successfully')
             navigate('/expenses')
@@ -329,11 +329,6 @@ const EditExpense = () => {
 
                                         })}
                                     />
-                                    {errors.paymentDate && (
-                                        <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
-                                            {errors.paymentDate.message}
-                                        </p>
-                                    )}
                                 </div>
                                 <div className="w-full md:w-1/2 p-1">
                                     <p className="mb-1.5 font-medium text-base text-gray-800">Payment Amount</p>
@@ -341,7 +336,7 @@ const EditExpense = () => {
                                         {...register(`paymentAmount`, {
                                             required: "*Payment Amount  is Required",
                                         })} />
-                                    {errors.paymentAmount?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.paymentAmount?.message}</p>)}
+                                   
                                 </div>
                                 <div className="w-full p-1">
                                     <p className="mb-1.5 font-medium text-base text-gray-800">Reference ID/Transaction ID</p>
@@ -349,7 +344,7 @@ const EditExpense = () => {
                                         {...register(`reference`, {
                                             required: "*Ref/TransactionID is Required",
                                         })} />
-                                    {errors.reference?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.reference?.message}</p>)}
+                                    
                                 </div>
                                 <div className="w-full p-1">
                                     <textarea
@@ -359,7 +354,7 @@ const EditExpense = () => {
                                         className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
 
                                     ></textarea>
-                                    {errors.description?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.description?.message}</p>)}
+                                   
                                 </div>
 
                             </div>
