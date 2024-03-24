@@ -291,6 +291,7 @@ const getEmployeeData = () => {
 };
 
 const SwalErrorShow = (e) => {
+  console.error(e)
   Swal.fire({
     icon: "error",
     text: e?.code + " " + e?.message,

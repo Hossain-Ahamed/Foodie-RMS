@@ -44,7 +44,7 @@ const EditRestaurant = () => {
 
     // fetch data 
     const axiosSecure = useAxiosSecure();
-    const { res_id ,setBranchAndRestaurantName} = useRestauarantAndBranch();
+    const { res_id, setBranchAndRestaurantName } = useRestauarantAndBranch();
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['restaurantData', res_id],
@@ -93,19 +93,19 @@ const EditRestaurant = () => {
 
 
         let cookieData = ParsingData();
-    
 
-        
-       
-        if(data?.res_name){
+
+
+
+        if (data?.res_name) {
             cookieData.res_name = data?.res_name;
         }
-        if(data?.img){
+        if (data?.img) {
             cookieData.res_img = data?.img;
         }
         setBranchAndRestaurantName(cookieData)
 
-console.log(cookieData)
+        // console.log(cookieData)
 
 
         setLoading(false);

@@ -15,12 +15,10 @@ const AllBranches = () => {
     const { res_id ,setBranchAndRestaurantName} = useRestauarantAndBranch();
     const {user} = useAuthProvider();
  
-
     const { refetch, data, isLoading, error } = useQuery({
-        queryKey: ['restaurantData', res_id],
-     
+        queryKey: ['restaurantData', res_id,user],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/all-branches-of-super-admin/${user?.email}/restaurant/${res_id}`)
+            const res = await axiosSecure.get(`/all-branches-of-super-admin/${user?.email}/restaurant/${res_id}`);
             return res?.data;
         },
 

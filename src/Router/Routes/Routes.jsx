@@ -35,6 +35,7 @@ import EditExpense from "../../pages/Admin/Expenses/EditExpense/EditExpense";
 import ProtectedByRole from "../ProtectedByRole/ProtectedByRole";
 import AllEmployeeList from "../../pages/Admin/Employee/AllEmployeeList/AllEmployeeList";
 import AllBranches from "../../pages/Admin/AllBranches/AllBranches";
+import BranchEdit from "../../pages/Admin/AllBranches/BranchEdit";
 
 
 
@@ -56,6 +57,11 @@ export const router = createBrowserRouter([
             {
                 path: '/all-branches',
                 element: <ProtectedByRole allowedRoles={['Super-Admin']}><AllBranches /></ProtectedByRole>
+            },
+
+            {
+                path: '/branch-detail/edit/:branchID',
+                element: <ProtectedByRole allowedRoles={['Super-Admin']}><BranchEdit /></ProtectedByRole>
             },
             {
                 path: '/edit-restaurant',
