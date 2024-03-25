@@ -8,13 +8,16 @@ import useAxiosSecure from '../../../../../Hooks/useAxiosSecure';
 import useRestauarantAndBranch from '../../../../../Hooks/useRestauarantAndBranch';
 
 import { Button } from "@nextui-org/react";
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
+import { SwalErrorShow } from '../../../../../assets/scripts/Utility';
 
 const AddCoupon = () => {
 
     const { handleSubmit, control, setValue, register, formState: { errors }, reset } = useForm();
     const axiosSecure = useAxiosSecure();
     const { res_id, branchID, res_name } = useRestauarantAndBranch();
-
+    const navigate = useNavigate()
     const today = new Date();
     today.setHours(0, 1, 0, 0); // Set to 12:01 AM
 
@@ -38,7 +41,7 @@ const AddCoupon = () => {
 
     // Validation rules for fields
     const percantageValidation = {
-        required: "*percantage is Required",
+        required: "*Percantage is Required",
         validate: {
             isNumber: (value) => !isNaN(value),
             minValue: (value) => value >= minPercantage,
@@ -47,7 +50,7 @@ const AddCoupon = () => {
     };
 
     const minOrderAmmountValidation = {
-        required: "*minimum Order Ammount is Required",
+        required: "*Minimum Order Ammount is Required",
         validate: {
             isNumber: (value) => !isNaN(value),
             minValue: (value) => value >= minOrderAmmount,
@@ -79,7 +82,13 @@ const AddCoupon = () => {
     // Function to handle form submission
     const onSubmit = async (data) => {
         console.log(data)
-
+        // creating coupon
+        axiosSecure.post(`/admin/${res_id}/branch/${branchID}/create-coupons`, data)
+        .then(res => {
+            toast.success('Coupon Created Successfully')
+            navigate('/coupon-list')
+        })
+        .catch(err => SwalErrorShow(err))
     };
 
     return (
@@ -105,7 +114,7 @@ const AddCoupon = () => {
                 <div className="w-full relative">
                     <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Percantage</p>
                     <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="20"
-                        {...register("percantage", percantageValidation)} />
+                        {...register("percentage", percantageValidation)} />
                     {errors.percantage?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.percantage?.message}</p>)}
                     {errors.percantage?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
                     {errors.percantage?.type === "minValue" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*minimum value must be 0</p>)}
@@ -117,7 +126,7 @@ const AddCoupon = () => {
                 <div className="w-full relative">
                     <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Minimum Order Ammount</p>
                     <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="number" placeholder="1000"
-                        {...register("minimumOrderAmmount", minOrderAmmountValidation)} />
+                        {...register("minimumOrderAmount", minOrderAmmountValidation)} />
                     {errors.minimumOrderAmmount?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.minimumOrderAmmount?.message}</p>)}
                     {errors.minimumOrderAmmount?.type === "minValue" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*minimum value must be 0</p>)}
                     {errors.minimumOrderAmmount?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
