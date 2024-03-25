@@ -236,7 +236,7 @@ const PrintingSetup = () => {
       <div className="w-full md:w-1/2  filter grayscale select-none cursor-move">
         <div className="w-80 h-fit min-h-[300px] bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 p-4">
           <div className="flex justify-center items-center flex-col">
-            <p className="p-0 m-0 mb-1 text-xs">&#34;{headerText}&#34;</p>
+            <p className="p-0 m-0 mb-1 text-xs">{headerText}</p>
             {printLogo && <img className="w-20" src={data?.img} alt="" />}
             <p>
               {data?.res_name}{" "}
