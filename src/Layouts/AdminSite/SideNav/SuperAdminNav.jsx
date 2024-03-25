@@ -273,7 +273,7 @@ const SuperAdminNav = () => {
                              }>
 
 
-                             <span className="text-sm font-medium">Purchase history & Stock</span> 
+                             <span className="text-sm font-medium">Purchase history</span> 
                          </NavLink>
                      </li>
                      <li>

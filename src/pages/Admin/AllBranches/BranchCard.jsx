@@ -45,7 +45,7 @@ const BranchCard = ({ data, setBranchAndRestaurantName }) => {
     }
     return (
         <>
-            <div onClick={handleSelect} className="relative block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100 ">
+            <div onClick={handleSelect} className="relative block rounded-lg p-4 border border-slate-300 shadow-sm shadow-indigo-100 w-64">
                 <img
                     alt="img"
                     src={data?.res_img}
