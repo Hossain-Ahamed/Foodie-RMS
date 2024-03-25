@@ -8,7 +8,7 @@ import { IoIosTransgender } from "react-icons/io";
 import user from '../../../assets/images/Home/user.png';
 import ScrollToTop from '../../../components/ScrollToTop/ScrollToTop';
 import { Link } from 'react-router-dom';
-import ChangePasswordModal from '../../../components/Modal/ChangePasswordModal';
+import ChangePasswordModal from '../../../components/Modal/ChangePasswordModal/ChangePasswordModal';
 import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 const ViewEmployee = ({ title, data, editable: viewAsAdminOrNot }) => {
     const { res_id, branchID } = useRestauarantAndBranch();
@@ -90,7 +90,7 @@ const ViewEmployee = ({ title, data, editable: viewAsAdminOrNot }) => {
 
                 {/* address */}
                 <div className="w-full md:w-3/4 p-3 mt-8 relative">
-                  
+
                     <div className='w-full p-6 h-full flex flex-wrap border border-coolGray-100 overflow-hidden bg-white rounded-md shadow-dashboard'>
                         <div className='w-full md:w-1/2 flex gap-3 items-center mb-4 mt-3'>
                             {/* icon */}

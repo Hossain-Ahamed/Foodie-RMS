@@ -177,7 +177,6 @@ const CouponList = () => {
             //     ]
             // }
 
-            console.log(res.data)
             return res.data;
         },
 

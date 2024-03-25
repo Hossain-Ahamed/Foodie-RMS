@@ -6,7 +6,8 @@ import { MdOutlineCheckCircle } from 'react-icons/md';
 import { FaTrashAlt } from 'react-icons/fa';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
-
+import edit from "../../../../assets/images/Home/edit.svg"
+import trash from "../../../../assets/images/Home/delete.svg"
 const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
 
     const { branchID, res_id } = useRestauarantAndBranch();
@@ -128,9 +129,9 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
                 <span
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
                 >
-                    <Link title="Edit category" to={`/update-employee-profile/${employee?._id}`} className="inline-flex ml-3 cursor-pointer text-gray-500"><BiEditAlt size={25} /></Link>
+                    <Link title="Edit category" to={`/update-employee-profile/${employee?._id}`} className="inline-flex ml-3 cursor-pointer"><img src={edit} /></Link>
                     {
-                        employee?.role === "Super-Admin" || <span title="Delete category" onClick={() => handleDeleteEmployee(employee._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></span>
+                        employee?.role === "Super-Admin" || <span title="Delete category" onClick={() => handleDeleteEmployee(employee._id)} className="inline-flex ml-3 cursor-pointer"><img src={trash} /></span>
                     }
 
                 </span>
