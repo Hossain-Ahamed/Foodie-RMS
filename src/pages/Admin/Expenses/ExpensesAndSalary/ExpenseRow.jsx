@@ -9,8 +9,8 @@ import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 const ExpenseRow = ({ expense, branchID, res_id, refetch }) => {
-    let dueAmount = parseFloat(expense?.expense) - parseFloat(expense?.totalPayment)
     const axiosSecure = useAxiosSecure()
+    let dueAmount = parseFloat(expense?.expense) - parseFloat(expense?.totalPayment)
 
     let status = "";
     if(dueAmount > 0){
@@ -58,7 +58,7 @@ const ExpenseRow = ({ expense, branchID, res_id, refetch }) => {
                 <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.expense}</span></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
-                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.transactions[0]?.paymentAmount}</span></span>
+                <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.totalPayment}</span></span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
                 <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{dueAmount}</span></span>

@@ -19,165 +19,165 @@ const CouponList = () => {
         queryFn: async () => {
 
 
-            // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/coupon-list`);
+            const res = await axiosSecure.get(`/admin/${res_id}/branch/${branchID}/coupon-list`);
 
 
-            const res = {
-                data: [
-                    {
-                        _id: "43058934",
-                        name: "Coupon 1",
-                        percantage: "10",
-                        minimumOrderAmmount: "20",
-                        maximumDiscountLimit: "50",
-                        maximumNumberOfUse: "3",
-                        from: "2024-02-01T08:00:00.000Z",
-                        to: "2023-02-10T20:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 2",
-                        percantage: "15",
-                        minimumOrderAmmount: "30",
-                        maximumDiscountLimit: "70",
-                        maximumNumberOfUse: "5",
-                        from: "2024-02-12T10:00:00.000Z",
-                        to: "2024-02-20T22:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 3",
-                        percantage: "20",
-                        minimumOrderAmmount: "25",
-                        maximumDiscountLimit: "60",
-                        maximumNumberOfUse: "4",
-                        from: "2022-03-01T12:00:00.000Z",
-                        to: "2022-03-10T23:59:59.999Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 4",
-                        percantage: "8",
-                        minimumOrderAmmount: "15",
-                        maximumDiscountLimit: "40",
-                        maximumNumberOfUse: "2",
-                        from: "2024-03-15T15:30:00.000Z",
-                        to: "2024-03-25T18:45:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 5",
-                        percantage: "5",
-                        minimumOrderAmmount: "10",
-                        maximumDiscountLimit: "30",
-                        maximumNumberOfUse: "1",
-                        from: "2024-04-01T08:00:00.000Z",
-                        to: "2024-04-10T20:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 6",
-                        percantage: "12",
-                        minimumOrderAmmount: "40",
-                        maximumDiscountLimit: "80",
-                        maximumNumberOfUse: "6",
-                        from: "2024-04-12T10:00:00.000Z",
-                        to: "2024-04-20T22:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 7",
-                        percantage: "18",
-                        minimumOrderAmmount: "35",
-                        maximumDiscountLimit: "65",
-                        maximumNumberOfUse: "5",
-                        from: "2024-05-01T12:00:00.000Z",
-                        to: "2024-05-10T23:59:59.999Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 8",
-                        percantage: "7",
-                        minimumOrderAmmount: "18",
-                        maximumDiscountLimit: "45",
-                        maximumNumberOfUse: "3",
-                        from: "2024-05-15T15:30:00.000Z",
-                        to: "2024-05-25T18:45:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 9",
-                        percantage: "14",
-                        minimumOrderAmmount: "28",
-                        maximumDiscountLimit: "55",
-                        maximumNumberOfUse: "4",
-                        from: "2024-06-01T08:00:00.000Z",
-                        to: "2024-06-10T20:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 10",
-                        percantage: "22",
-                        minimumOrderAmmount: "50",
-                        maximumDiscountLimit: "90",
-                        maximumNumberOfUse: "7",
-                        from: "2024-06-12T10:00:00.000Z",
-                        to: "2024-06-20T22:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 11",
-                        percantage: "9",
-                        minimumOrderAmmount: "22",
-                        maximumDiscountLimit: "48",
-                        maximumNumberOfUse: "2",
-                        from: "2024-07-01T12:00:00.000Z",
-                        to: "2024-07-10T23:59:59.999Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 12",
-                        percantage: "17",
-                        minimumOrderAmmount: "38",
-                        maximumDiscountLimit: "68",
-                        maximumNumberOfUse: "5",
-                        from: "2024-07-15T15:30:00.000Z",
-                        to: "2024-07-25T18:45:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 13",
-                        percantage: "25",
-                        minimumOrderAmmount: "60",
-                        maximumDiscountLimit: "100",
-                        maximumNumberOfUse: "8",
-                        from: "2023-08-01T08:00:00.000Z",
-                        to: "2023-08-10T20:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 14",
-                        percantage: "11",
-                        minimumOrderAmmount: "33",
-                        maximumDiscountLimit: "58",
-                        maximumNumberOfUse: "3",
-                        from: "2023-08-12T10:00:00.000Z",
-                        to: "2024-08-20T22:00:00.000Z",
-                    },
-                    {
-                        _id: "43058934",
-                        name: "Coupon 15",
-                        percantage: "19",
-                        minimumOrderAmmount: "42",
-                        maximumDiscountLimit: "75",
-                        maximumNumberOfUse: "6",
-                        from: "2024-09-01T12:00:00.000Z",
-                        to: "2024-09-10T23:59:59.999Z",
-                    },
-                ]
-            }
+            // const res = {
+            //     data: [
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 1",
+            //             percantage: "10",
+            //             minimumOrderAmmount: "20",
+            //             maximumDiscountLimit: "50",
+            //             maximumNumberOfUse: "3",
+            //             from: "2024-02-01T08:00:00.000Z",
+            //             to: "2023-02-10T20:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 2",
+            //             percantage: "15",
+            //             minimumOrderAmmount: "30",
+            //             maximumDiscountLimit: "70",
+            //             maximumNumberOfUse: "5",
+            //             from: "2024-02-12T10:00:00.000Z",
+            //             to: "2024-02-20T22:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 3",
+            //             percantage: "20",
+            //             minimumOrderAmmount: "25",
+            //             maximumDiscountLimit: "60",
+            //             maximumNumberOfUse: "4",
+            //             from: "2022-03-01T12:00:00.000Z",
+            //             to: "2022-03-10T23:59:59.999Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 4",
+            //             percantage: "8",
+            //             minimumOrderAmmount: "15",
+            //             maximumDiscountLimit: "40",
+            //             maximumNumberOfUse: "2",
+            //             from: "2024-03-15T15:30:00.000Z",
+            //             to: "2024-03-25T18:45:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 5",
+            //             percantage: "5",
+            //             minimumOrderAmmount: "10",
+            //             maximumDiscountLimit: "30",
+            //             maximumNumberOfUse: "1",
+            //             from: "2024-04-01T08:00:00.000Z",
+            //             to: "2024-04-10T20:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 6",
+            //             percantage: "12",
+            //             minimumOrderAmmount: "40",
+            //             maximumDiscountLimit: "80",
+            //             maximumNumberOfUse: "6",
+            //             from: "2024-04-12T10:00:00.000Z",
+            //             to: "2024-04-20T22:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 7",
+            //             percantage: "18",
+            //             minimumOrderAmmount: "35",
+            //             maximumDiscountLimit: "65",
+            //             maximumNumberOfUse: "5",
+            //             from: "2024-05-01T12:00:00.000Z",
+            //             to: "2024-05-10T23:59:59.999Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 8",
+            //             percantage: "7",
+            //             minimumOrderAmmount: "18",
+            //             maximumDiscountLimit: "45",
+            //             maximumNumberOfUse: "3",
+            //             from: "2024-05-15T15:30:00.000Z",
+            //             to: "2024-05-25T18:45:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 9",
+            //             percantage: "14",
+            //             minimumOrderAmmount: "28",
+            //             maximumDiscountLimit: "55",
+            //             maximumNumberOfUse: "4",
+            //             from: "2024-06-01T08:00:00.000Z",
+            //             to: "2024-06-10T20:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 10",
+            //             percantage: "22",
+            //             minimumOrderAmmount: "50",
+            //             maximumDiscountLimit: "90",
+            //             maximumNumberOfUse: "7",
+            //             from: "2024-06-12T10:00:00.000Z",
+            //             to: "2024-06-20T22:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 11",
+            //             percantage: "9",
+            //             minimumOrderAmmount: "22",
+            //             maximumDiscountLimit: "48",
+            //             maximumNumberOfUse: "2",
+            //             from: "2024-07-01T12:00:00.000Z",
+            //             to: "2024-07-10T23:59:59.999Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 12",
+            //             percantage: "17",
+            //             minimumOrderAmmount: "38",
+            //             maximumDiscountLimit: "68",
+            //             maximumNumberOfUse: "5",
+            //             from: "2024-07-15T15:30:00.000Z",
+            //             to: "2024-07-25T18:45:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 13",
+            //             percantage: "25",
+            //             minimumOrderAmmount: "60",
+            //             maximumDiscountLimit: "100",
+            //             maximumNumberOfUse: "8",
+            //             from: "2023-08-01T08:00:00.000Z",
+            //             to: "2023-08-10T20:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 14",
+            //             percantage: "11",
+            //             minimumOrderAmmount: "33",
+            //             maximumDiscountLimit: "58",
+            //             maximumNumberOfUse: "3",
+            //             from: "2023-08-12T10:00:00.000Z",
+            //             to: "2024-08-20T22:00:00.000Z",
+            //         },
+            //         {
+            //             _id: "43058934",
+            //             name: "Coupon 15",
+            //             percantage: "19",
+            //             minimumOrderAmmount: "42",
+            //             maximumDiscountLimit: "75",
+            //             maximumNumberOfUse: "6",
+            //             from: "2024-09-01T12:00:00.000Z",
+            //             to: "2024-09-10T23:59:59.999Z",
+            //         },
+            //     ]
+            // }
 
-
+            console.log(res.data)
             return res.data;
         },
 
@@ -214,9 +214,9 @@ const CouponList = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.delete(`/restaurant/${res_id}/branch/${branchID}/delete-coupon/${couponID}`)
+                axiosSecure.delete(`/admin/${res_id}/branch/${branchID}/delete-coupon/${couponID}`)
                     .then(data => {
-                        toast.success("Successfully deleted");
+                        toast.success("Successfully Deleted");
                         dataRefetch();
                     })
                     .catch((error) => {
@@ -265,7 +265,7 @@ const CouponList = () => {
                                 Discount <br /><span className='text-gray-400 text-[10px] font-normal'>(in percantage)</span>
                             </th>
                             <th scope="col" className="px-2 py-3 text-center text-nowrap">
-                                Order Ammount <br /><span className='text-gray-400 text-[10px] font-normal'>(Minimum)</span>
+                                Order Amount <br /><span className='text-gray-400 text-[10px] font-normal'>(Minimum)</span>
                             </th>
                             <th scope="col" className="px-2 py-3 text-center text-nowrap">
                                 Discount Limit <br /><span className='text-gray-400 text-[10px] font-normal'>( Maximum )</span>
@@ -307,7 +307,7 @@ const CouponList = () => {
                                             data-tooltip-variant={fieldsStatus?.text == "Active" ? "success" : fieldsStatus?.text === "Expired" ? "error" : "info"}
                                             data-tooltip-place='bottom'>
                                             <Tooltip id={_idx + item?.name + item?.from + item?.to + 'percantage'} />
-                                            {item?.percantage} %
+                                            {item?.percentage} %
                                         </td>
                                         <td className="px-1 py-4 text-center"
                                             data-tooltip-id={_idx + item?.name + item?.from + item?.to + 'minimumOrderAmmount'}
@@ -315,7 +315,7 @@ const CouponList = () => {
                                             data-tooltip-variant={fieldsStatus?.text == "Active" ? "success" : fieldsStatus?.text === "Expired" ? "error" : "info"}
                                             data-tooltip-place='bottom'>
                                             <Tooltip id={_idx + item?.name + item?.from + item?.to + 'minimumOrderAmmount'} />
-                                            {item?.minimumOrderAmmount} tk
+                                            {item?.minimumOrderAmount} tk
                                         </td>
                                         <td className="px-1 py-4 text-center"
                                             data-tooltip-id={_idx + item?.name + item?.from + item?.to + 'maximumDiscountLimit'}

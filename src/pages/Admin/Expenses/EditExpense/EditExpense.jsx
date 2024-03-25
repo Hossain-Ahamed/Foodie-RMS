@@ -21,7 +21,7 @@ const EditExpense = () => {
     const { expenseID } = useParams();
     const navigate = useNavigate()
     const drowpdownCategory = ["Purchase", "Salaries"]
-    const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
+    const { refetch: dataRefetch, data: data = [], isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
             let res = await axiosSecure.get(`/admin/${res_id}/branch/${branchID}/get-expenses/${expenseID}`)
@@ -56,18 +56,17 @@ const EditExpense = () => {
             //     }
             // }
 
-            setValue("category", res?.data[0]?.category)
-            setValue("billDate", res?.data[0]?.billDate)
-            setValue("expense", res?.data[0]?.expense)
-            setValue("payTo", res?.data[0]?.payTo)
+            // setValue("category", res?.data[0]?.category)
+            // setValue("billDate", res?.data[0]?.billDate)
+            // setValue("expense", res?.data[0]?.expense)
+            // setValue("payTo", res?.data[0]?.payTo)
 
-            setValue("payeeID", res?.data[0]?.payeeID)
-            setValue("vendorDescription", res?.data[0]?.vendorDescription)
-            setValue("paymentDate", res?.data[0]?.paymentDate)
-            setValue("paymentAmount", res?.data[0]?.paymentAmount)
-            setValue("reference", res?.data[0]?.reference)
-            setValue("description", res?.data[0]?.description)
-            setValue("img", res?.data[0]?.img)
+            // setValue("payeeID", res?.data[0]?.payeeID)
+            // setValue("vendorDescription", res?.data[0]?.vendorDescription)
+            // setValue("paymentDate", res?.data[0]?.paymentDate)
+            // setValue("paymentAmount", res?.data[0]?.paymentAmount)
+            // setValue("reference", res?.data[0]?.reference)
+            // setValue("description", res?.data[0]?.description)
             return res?.data[0]
         }
     })
@@ -117,7 +116,7 @@ const EditExpense = () => {
                                     label="Select Dish Category"
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
 
-                                    defaultValue=""
+                                    defaultValue={data?.category}
                                     {...register("category", {
                                         required: "*Category  is Required",
                                     })}
@@ -173,6 +172,7 @@ const EditExpense = () => {
                                         required: '*Bill Date is required',
 
                                     })}
+                                    defaultValue={data?.billDate}
                                 />
                                 {errors.billDate && (
                                     <p className='m-0 p-0 pl-1 text-base text-red-500 text-[9px]' role="alert">
@@ -188,7 +188,8 @@ const EditExpense = () => {
                                         validate: {
                                             isNumber: (value) => !isNaN(value)
                                         },
-                                    })} />
+                                    })} 
+                                    defaultValue={data?.expense}/>
                                 {errors.expense?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.expense?.message}</p>)}
                                 {errors.expense?.type === "isNumber" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">*is not a number</p>)}
                             </div>
@@ -209,7 +210,7 @@ const EditExpense = () => {
                                        focus:border-gray-500 block p-2.5`}
 
                                             disabled={!(expenseCategory === "Purchase" || expenseCategory === "Salaries")}
-                                            defaultValue=""
+                                            defaultValue={data?.payTo}
                                             // jdi expense type purchase or salary na hole disable thakbe
                                             {...register("payTo", {
                                             })}
@@ -235,7 +236,8 @@ const EditExpense = () => {
                                         <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="Alexa"
                                             {...register("payTo", {
                                                 required: "*Pay To is Required"
-                                            })} />
+                                            })} 
+                                            defaultValue={data?.payTo}/>
                                         {errors.payTo?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payTo?.message}</p>)}
                                     </div>
                             }
@@ -243,17 +245,18 @@ const EditExpense = () => {
                             <div className="w-full md:w-1/2 p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Payee ID</p>
                                 <input className="disabled:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="0000"
-                                    defaultValue={!drowpdownCategory.includes(expenseCategory) && 'N/A'}
+                                    defaultValue={data?.payeeID ? data?.payeeID :'N/A'}
                                     disabled={drowpdownCategory.includes(expenseCategory)}
                                     {...register("payeeID", {
                                         required: "*Payee ID is required"
-                                    })} />
+                                    })} 
+                                    />
                                 {errors.payeeID?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payeeID?.message}</p>)}
                             </div>
                             <div className="w-full p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Description</p>
                                 <textarea
-                                    defaultValue="N/A"
+                                    defaultValue={data?.vendorDescription ? data?.vendorDescription : 'N/A'}
                                     {...register('vendorDescription')}
                                     className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
                                 ></textarea>
@@ -323,9 +326,9 @@ const EditExpense = () => {
                                         className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input"
                                         type="date"
                                         min="1800-01-01"
+                                        defaultValue=""
                                         max={new Date().toISOString().split('T')[0]}
                                         {...register(`paymentDate`, {
-                                            required: '*Payment Date is required',
 
                                         })}
                                     />
@@ -334,25 +337,26 @@ const EditExpense = () => {
                                     <p className="mb-1.5 font-medium text-base text-gray-800">Payment Amount</p>
                                     <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: 1000"
                                         {...register(`paymentAmount`, {
-                                            required: "*Payment Amount  is Required",
-                                        })} />
+                                        })} 
+                                        defaultValue={0}
+                                    />
                                    
                                 </div>
                                 <div className="w-full p-1">
                                     <p className="mb-1.5 font-medium text-base text-gray-800">Reference ID/Transaction ID</p>
                                     <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="*** *** ***"
                                         {...register(`reference`, {
-                                            required: "*Ref/TransactionID is Required",
-                                        })} />
+                                        })} 
+                                        defaultValue='N/A'
+                                        />
                                     
                                 </div>
                                 <div className="w-full p-1">
                                     <textarea
                                         defaultValue="N/A"
                                         placeholder='Description'
-                                        {...register(`description`, { required: "*Description is required" })}
+                                        {...register(`description`)}
                                         className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
-
                                     ></textarea>
                                    
                                 </div>
