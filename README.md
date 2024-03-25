@@ -12,3 +12,4 @@
 - delete status check
 - is the data sent checked by branch
 - role wise authorization
+- employee all and selected branch is not working correctly
