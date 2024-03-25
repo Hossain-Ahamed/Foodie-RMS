@@ -5,7 +5,7 @@ import { FaKey } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from './EyeSlashFilledIcon'
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 // import { MailIcon } from "./MailIcon";
 // import { LockIcon } from "./LockIcon";
 // import ToasterProvider from "../Toastprovider/ToastProvider";

@@ -38,6 +38,7 @@ import AllBranches from "../../pages/Admin/AllBranches/AllBranches";
 import BranchEdit from "../../pages/Admin/AllBranches/BranchEdit";
 import AddBranch from './../../pages/Admin/ManageRestaurant/AddBranch/AddBranch';
 import Payment from "../../pages/Others/Payment/Payment";
+import Vendors from "../../pages/Admin/Expenses/Vendors/VendorsList";
 
 
 
@@ -107,6 +108,11 @@ export const router = createBrowserRouter([
             {
                 path: '/expenses',
                 element: <ExpenseAndSalary />
+                // '/restaurant/:res_id/branch/:branchID/expenses',
+            },
+            {
+                path: '/vendors',
+                element: <Vendors />
                 // '/restaurant/:res_id/branch/:branchID/expenses',
             },
             {
