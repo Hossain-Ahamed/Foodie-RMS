@@ -83,7 +83,8 @@ const Dish_Add = () => {
             resetField("sales_tax")
             resetField("supplementary_duty")
             resetField("img")
-            setDescriptionContent("")
+            setDescriptionContent("");
+            navigate('/dish-list')
           })
           .catch(err => SwalErrorShow(err))
       })
