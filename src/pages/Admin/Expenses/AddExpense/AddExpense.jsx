@@ -18,7 +18,7 @@ const AddExpense = () => {
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
     const expenseType = getAllExpenseType();
-    const drowpdownCategory = ["Purchase","Salaries"]
+    const drowpdownCategory = ["Purchase", "Salaries"]
     const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
@@ -86,8 +86,8 @@ const AddExpense = () => {
 
     useEffect(() => {
         // setOptionList([])
-        if(expenseCategory === "Purchase"){
-            if(data?.vendors && Array.isArray(data?.vendors)){
+        if (expenseCategory === "Purchase") {
+            if (data?.vendors && Array.isArray(data?.vendors)) {
 
                 setOptionList(data?.vendors)
             }
@@ -101,7 +101,7 @@ const AddExpense = () => {
 
     const { register, handleSubmit, formState: { errors }, setValue, getValues, resetField, control } = useForm({
         defaultValues: {
-            
+
         },
     });
 
@@ -133,23 +133,23 @@ const AddExpense = () => {
         data.res_id = res_id
         console.log(data);
         axiosSecure.post('/admin/create/expense', data)
-        .then(data => {
-            toast.success("Expense added successfully!")
-            resetField("billDate");
-            resetField("category");
-            resetField("description");
-            resetField("expense");
-            resetField("payTo");
-            resetField("payeeID");
-            resetField("paymentAmount");
-            resetField("paymentDate");
-            resetField("reference");
-            resetField("vendorDescription");
-            // navigate('/expenses')
-        })
-        .catch(err => {
-            toast.error("Something went wrong")
-        })
+            .then(data => {
+                toast.success("Expense added successfully!")
+                resetField("billDate");
+                resetField("category");
+                resetField("description");
+                resetField("expense");
+                resetField("payTo");
+                resetField("payeeID");
+                resetField("paymentAmount");
+                resetField("paymentDate");
+                resetField("reference");
+                resetField("vendorDescription");
+                // navigate('/expenses')
+            })
+            .catch(err => {
+                toast.error("Something went wrong")
+            })
 
         // if (!selectedImage0) {
 
@@ -188,9 +188,9 @@ const AddExpense = () => {
                                     {...register("category", {
                                         required: "*Category  is Required",
                                     })}
-                                    onChange={event => { 
-                                        SetExpenseCategory(event.target.value); 
-                                        setValue('category',event.target.value);
+                                    onChange={event => {
+                                        SetExpenseCategory(event.target.value);
+                                        setValue('category', event.target.value);
                                         setValue('payTo', '');
                                         setValue('payeeID', '');
                                     }}
@@ -265,7 +265,7 @@ const AddExpense = () => {
                             {/* Pay to */}
                             {
                                 drowpdownCategory.includes(expenseCategory)
-                                ?
+                                    ?
                                     <div className="w-full md:w-1/2 p-3 pb-0">
                                         <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Pay To</p>
                                         <select
@@ -288,10 +288,10 @@ const AddExpense = () => {
 
                                             {/* jdi expense type salary hoi tahole employee name ashbe drowpdown otherwise vendor der list ashbe */}
                                             {optionList && Array.isArray(optionList) && optionList.map((item, _idx) => (
-                                                    <option key={_idx} value={item?.name}>
-                                                        {item?.name}
-                                                    </option>
-                                                ))
+                                                <option key={_idx} value={item?.name}>
+                                                    {item?.name}
+                                                </option>
+                                            ))
                                             }
                                         </select>
                                         {(expenseCategory === "Purchase" || expenseCategory === "Salaries") && errors.payTo?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payTo?.message}</p>)}
@@ -318,13 +318,12 @@ const AddExpense = () => {
                                 {errors.payeeID?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.payeeID?.message}</p>)}
                             </div>
                             <div className="w-full p-3">
-                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Description</p>
+                                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">{expenseCategory === "Purchase" ? "Purchase" : "Description"}</p>
                                 <textarea
-                                defaultValue="N/A"
+                                    defaultValue="N/A"
                                     {...register('vendorDescription')}
                                     className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
                                 ></textarea>
-
                             </div>
                         </div>
                     </div>
@@ -380,7 +379,7 @@ const AddExpense = () => {
                                 </div>
                                 <div className="w-full p-1">
                                     <textarea
-                                    defaultValue="N/A"
+                                        defaultValue="N/A"
                                         placeholder='Description'
                                         {...register(`description`, { required: "*Description is required" })}
                                         className="block w-full h-32 p-4 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input resize-none"
