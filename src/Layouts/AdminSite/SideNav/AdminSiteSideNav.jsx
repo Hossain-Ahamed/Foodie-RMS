@@ -23,13 +23,13 @@ const AdminSiteSideNav = ({ isChecked, setChecked }) => {
         <>
             <aside
                 id="default-sidebar"
-                className={`shadow-md bg-white border-r-2 select-none cursor-pointer fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isChecked ? '' : '-translate-x-full sm:translate-x-0'
+                className={`shadow-md bg-white border-r-2 select-none cursor-pointer fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isChecked ? '' : '-translate-x-full lg:translate-x-0'
                     }`}
                 aria-label="Sidebar"
             >
 
                 <div className="h-full px-3 py-4 overflow-y-auto  relative">
-                    <button className='absolute md:hidden top-2 right-1 z-[5000] bg-slate-500 p-1 rounded' onClick={() => setChecked(false)}>
+                    <button className='absolute lg:hidden top-2 right-1 z-[5000] bg-slate-500 p-1 rounded' onClick={() => setChecked(false)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.00098 5L19 18.9991" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M4.99996 18.9991L18.999 5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
