@@ -39,6 +39,8 @@ import BranchEdit from "../../pages/Admin/AllBranches/BranchEdit";
 import AddBranch from './../../pages/Admin/ManageRestaurant/AddBranch/AddBranch';
 import Payment from "../../pages/Others/Payment/Payment";
 import Vendors from "../../pages/Admin/Expenses/Vendors/VendorsList";
+import AdminOrderPlace from "../../pages/Admin/Orders/AdminOrderPlace/AdminOrderPlace";
+import AttendanceAdd from "../../pages/Admin/Employee/Attendance/AttendanceAdd";
 
 
 
@@ -181,6 +183,11 @@ export const router = createBrowserRouter([
                 // '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
             },
             {
+                path: '/add-attendance',
+                element: <AttendanceAdd />
+                // '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
+            },
+            {
                 path: '/ongoing-orders',
                 element: <OngoingOrders />
                 // '/restaurant/:res_id/branch/:branchID/ongoing-orders',
@@ -202,6 +209,16 @@ export const router = createBrowserRouter([
             //     element: <Payment />
             
             // },
+            {
+                path: '/place-order',
+                element : <AdminOrderPlace/>
+            },
+
+            {
+                path: '/place-order',
+                element :<>
+                </>
+            }
 
 
         ]

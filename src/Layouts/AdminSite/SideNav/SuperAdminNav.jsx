@@ -430,7 +430,7 @@ const SuperAdminNav = () => {
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to={`/all-employeeList`}
+                                <NavLink to={`/all-employee-list`}
                                     className={({ isActive }) =>
                                         isActive
                                             ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -443,7 +443,7 @@ const SuperAdminNav = () => {
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to={`/employeeList`}
+                                <NavLink to={`/employee-list`}
                                     className={({ isActive }) =>
                                         isActive
                                             ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -453,6 +453,19 @@ const SuperAdminNav = () => {
 
 
                                     <span className="text-sm font-medium"> Employee <span className='text-[9px]'>(selected branch)</span> </span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={`/add-attendance`}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+
+                                            : "flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                                    }>
+
+
+                                    <span className="text-sm font-medium">Add Attendance </span>
                                 </NavLink>
                             </li>
                             <li>

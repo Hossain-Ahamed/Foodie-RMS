@@ -243,3 +243,32 @@ const Test = () => {
 };
 
 export default Test;
+
+
+// {days.map((day, dayIdx) => (
+//     <div
+//         key={day.toString()}
+//         className={classNames(
+//             dayIdx === 0 && colStartClasses[getDay(day)],
+//             'py-1.5'
+//         )}
+//     >
+//         <button
+//             type="button"
+//             onClick={() => setSelectedDay(day)}
+//             className={classNames(
+//                 attendate.some((date) => isSameDay(parseISO(date), day)) && 'bg-green-400 text-white',
+//                 isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900 text-white',
+//                 !isEqual(day, selectedDay) && 'hover:bg-gray-200',
+//                 (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
+//                 // Check if the day is in the past, not today, not in the attendate list, and in the same month as today
+//                 (!isToday(day) && !attendate.some((date) => isSameDay(parseISO(date), day)) && !isSameMonth(day, today)) && 'bg-red-400 text-white',
+//                 'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
+//             )}
+//         >
+//             <time dateTime={format(day, 'yyyy-MM-dd')}>
+//                 {format(day, 'd')}
+//             </time>
+//         </button>
+//     </div>
+// ))}
