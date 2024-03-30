@@ -26,7 +26,7 @@ const DishCategory_Edit = () => {
 
   const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
     queryKey: ['categoryData', categoryID],
-    enabled: true,
+    enabled: fetchEnabled,
 
     queryFn: async () => {
       const res = await axiosSecure.get(`/admin/get-categories/${categoryID}`);
@@ -34,7 +34,7 @@ const DishCategory_Edit = () => {
 
       setSelectedImage0(res?.data?.img);
       setActive(res?.data?.active);
-      console.log(res.data);
+      setFetchEnabled(false)
       return res?.data;
     },
 

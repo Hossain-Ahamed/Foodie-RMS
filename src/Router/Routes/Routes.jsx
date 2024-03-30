@@ -40,6 +40,7 @@ import AddBranch from './../../pages/Admin/ManageRestaurant/AddBranch/AddBranch'
 import Payment from "../../pages/Others/Payment/Payment";
 import Vendors from "../../pages/Admin/Expenses/Vendors/VendorsList";
 import AdminOrderPlace from "../../pages/Admin/Orders/AdminOrderPlace/AdminOrderPlace";
+import AttendanceAdd from "../../pages/Admin/Employee/Attendance/AttendanceAdd";
 
 
 
@@ -179,6 +180,11 @@ export const router = createBrowserRouter([
             {
                 path: '/view-employee/:employeeID',
                 element: <ViewAsAdmin />
+                // '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
+            },
+            {
+                path: '/add-attendance',
+                element: <AttendanceAdd />
                 // '/restaurant/:res_id/branch/:branchID/view-employee/:employeeID',
             },
             {
