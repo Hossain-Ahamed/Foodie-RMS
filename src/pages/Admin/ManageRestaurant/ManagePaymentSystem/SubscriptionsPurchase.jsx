@@ -76,7 +76,7 @@ const SubscriptionsPurchase = () => {
     });
 
     const getColor = (from, to) => {
-        const currentTime = new Date().toISOString();
+        const currentTime = new Date();
         const toDate = new Date(to); // Example date
 
         const currentMonth = new Date().getMonth() + 1; // Get current month

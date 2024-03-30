@@ -58,7 +58,7 @@ const AllBranches = () => {
                             </div>
                     <div className='mt-10 flex flex-wrap justify-center items-center gap-3'>
                         {
-                            data && Array.isArray(data) && data.map((data, _idx) => <BranchCard key={_idx} data={data} setBranchAndRestaurantName={setBranchAndRestaurantName} />)
+                            data && Array.isArray(data) && data.map((data, _idx) => <BranchCard key={_idx} data={data} setBranchAndRestaurantName={setBranchAndRestaurantName}  refetch={refetch}/>)
                         }
                     </div>
                 </div>

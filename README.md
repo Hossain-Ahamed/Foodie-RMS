@@ -1,8 +1,15 @@
-# React + Vite
+### Need to Do :
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- JWT
+- subscription is running or not check via jwt
+- if not paid, then block
+- extend subscription package
+- `expenses` add for purchase and salary and vendor
+- membership
+- order
+- graph
+- pagination and searching
+- delete status check
+- is the data sent checked by branch
+- role wise authorization
+- employee all and selected branch is not working correctly

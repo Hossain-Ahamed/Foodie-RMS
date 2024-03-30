@@ -408,6 +408,7 @@ const TableManagement = () => {
                   data-tooltip-id={_idx + table?.qrCodeData}
                   data-tooltip-content={table?.qrCodeData}
                 >
+                  <a href={table?.qrCodeData}></a>
                   {table?.qrCodeData.slice(0, 40)}
                 </p>
                 {table?.qrCodeData.length > 40 && (

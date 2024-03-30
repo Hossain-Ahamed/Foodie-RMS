@@ -86,7 +86,7 @@ const DishCategoryRow = ({ category, refetch, isLoading }) => {
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
                  
-                <span className='text-gray-600 whitespace-no-wrap block'>{category?.description}</span>
+                <span className='text-gray-600 whitespace-no-wrap block'>{category?.description.substring(0,30)}</span>
             </td>
            
             {/* <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>

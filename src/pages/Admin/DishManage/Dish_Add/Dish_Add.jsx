@@ -18,6 +18,7 @@ import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage'
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 const Dish_Add = () => {
 
+  const [loading,setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { branchID, res_id } = useRestauarantAndBranch();
 
@@ -66,6 +67,7 @@ const Dish_Add = () => {
       return;
     }
 
+    setLoading(true)
     imageUpload(data?.img)
       .then(res => {
         data.img = res?.data?.display_url
@@ -83,16 +85,18 @@ const Dish_Add = () => {
             resetField("sales_tax")
             resetField("supplementary_duty")
             resetField("img")
-            setDescriptionContent("")
+            setDescriptionContent("");
+            navigate('/dish-list')
           })
           .catch(err => SwalErrorShow(err))
       })
       .catch(err => SwalErrorShow(err))
+      .finally(()=>setLoading(false))
 
 
   };
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <LoadingPage />
   }
 
@@ -232,7 +236,7 @@ const Dish_Add = () => {
 
               </div>
               <div className="w-full md:w-1/2 p-3">
-                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Offer Price</p>
+                <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Offer Price/Selling price</p>
                 <input className="w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="780"
                   {...register("offerPrice", {
                     required: "*offerPrice  is Required",
@@ -370,7 +374,7 @@ const Dish_Add = () => {
                       {...register(`options[${index}].price`, { required: 'price is required' })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-green-500 border border-coolGray-200 rounded-lg shadow-input"
                       type="number"
-                      placeholder="Price"
+                      placeholder="Extra Price"
                     />
                     {errors.options && errors.options[index]?.price && (
                       <p className='m-0 p-0 pl-1 text-sm text-red-500 text-[9px]' role="alert">

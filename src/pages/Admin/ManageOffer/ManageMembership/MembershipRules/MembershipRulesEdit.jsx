@@ -5,22 +5,23 @@ import useRestauarantAndBranch from '../../../../../Hooks/useRestauarantAndBranc
 import { useQuery } from 'react-query';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 
-const MembershipRulesEdit = ({ data, handleChange }) => {
+const MembershipRulesEdit = ({ data, handleChange ,loading, isOpen, onOpen, onOpenChange}) => {
     const { control, handleSubmit, setValue } = useForm();
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  
 
     useEffect(() => {
-        setValue('singleTimeMinimumOrderAmount', data?.singleTimeMinimumOrderAmount || "");
-        setValue('MinimumOrderAmountTillNow', data?.MinimumOrderAmountTillNow || "");
-        setValue('percentageOffer', data?.percentageOffer || "");
-        setValue('MaximumLimit_in_TK', data?.MaximumLimit_in_TK || "");
-        setValue('rules', data?.rules || "");
+        setValue('singleTimeMinimumOrderAmount', data?.singleTimeMinimumOrderAmount);
+        setValue('MinimumOrderAmountTillNow', data?.MinimumOrderAmountTillNow);
+        setValue('percentageOffer', data?.percentageOffer);
+        setValue('MaximumLimit_in_TK', data?.MaximumLimit_in_TK);
+        setValue('rules', data?.rules);
     }, [data, setValue])
 
 
 
     const onSubmit = (formData) => {
-        handleChange(formData)
+        handleChange(formData);
+    
     };
 
     return (
@@ -44,7 +45,7 @@ const MembershipRulesEdit = ({ data, handleChange }) => {
                                                     <Controller
                                                         name="singleTimeMinimumOrderAmount"
                                                         control={control}
-                                                        defaultValue={data?.singleTimeMinimumOrderAmount || ""}
+                                                        defaultValue={data?.singleTimeMinimumOrderAmount}
                                                         render={({ field }) => (
                                                             <input
                                                                 {...field}
@@ -141,7 +142,7 @@ const MembershipRulesEdit = ({ data, handleChange }) => {
 
                                         </div>
                                     </div>
-                                    <Button type='submit' color="success" variant="flat" onPress={onClose} className='ml-5'>
+                                    <Button type='submit' color="success" variant="flat" className='ml-5' disabled={loading}> 
                                         Update
                                     </Button>
                                  

@@ -2,8 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import Swal from "sweetalert2";
-const BranchCard = ({ data, setBranchAndRestaurantName }) => {
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { SwalErrorShow } from '../../../assets/scripts/Utility';
+import { useNavigate } from 'react-router-dom';
+const BranchCard = ({ data, setBranchAndRestaurantName, refetch }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    const axioseSecure = useAxiosSecure();
 
     const handleSelect = () => {
 
@@ -23,8 +28,9 @@ const BranchCard = ({ data, setBranchAndRestaurantName }) => {
     const handleDeleteButton = () => {
         onOpenChange()
     }
+    const navigate = useNavigate()
 
-    const handleDelete = ()=>{
+    const handleDelete = () => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -35,12 +41,19 @@ const BranchCard = ({ data, setBranchAndRestaurantName }) => {
             confirmButtonText: "Yes, Delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                axioseSecure.delete(`/restaurant/${data?.res_id}/branch/${data?.branchID}/delete-branch`)
+                    .then((res) => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "branch has been deleted.",
+                            icon: "success"
+                        });
+                        refetch();
+                        navigate('/',{replace : true})
+                    })
             }
+        }).catch(e => {
+            SwalErrorShow(e);
         });
     }
     return (
@@ -67,7 +80,7 @@ const BranchCard = ({ data, setBranchAndRestaurantName }) => {
 
 
                         <div className="w-full flex gap-2 mt-3  justify-around items-center border rounded-lg p-2 " title='View' aria-label='view'>
-                            
+
                             <Link to={`/branch-detail/edit/${data?.branchID}`} className=" cursor-pointer w-full flex items-center justify-center text-blue-500" title='Edit' aria-label='Edit'>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -118,6 +131,7 @@ const BranchCard = ({ data, setBranchAndRestaurantName }) => {
                                         <span className="ml-1">Consider exporting or backing up any important data before proceeding.</span>
                                     </p>
 
+
                                     <p className="flex items-start mb-2">
                                         <span className="mr-2">&#8226;</span>
                                         <span className="ml-1">Ensure to communicate this decision with relevant stakeholders.</span>
@@ -130,7 +144,7 @@ const BranchCard = ({ data, setBranchAndRestaurantName }) => {
 
 
                             <ModalFooter>
-                             
+
                                 <Button color="danger" onPress={handleDelete}>
                                     Delete
                                 </Button>
