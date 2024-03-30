@@ -9,6 +9,7 @@ import { SwalErrorShow, getAllCategories, imageUpload } from '../../../../assets
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
+import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 
 const DishCategory_Add = () => {
   const [loading, setLoading] = useState(false)
@@ -81,6 +82,10 @@ const DishCategory_Add = () => {
         setValue('title', title);
       }
     }
+  }
+
+  if (loading) {
+    return <LoadingPage />
   }
 
   return (

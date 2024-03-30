@@ -10,9 +10,14 @@ import { useQuery } from 'react-query';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
-import { getAllCategories } from '../../../../assets/scripts/Utility';
+import { getAllCategories, imageUpload, SwalErrorShow } from '../../../../assets/scripts/Utility';
 
 const DishCategory_Edit = () => {
+  //  edit page 
+  const [loading, setLoading] = useState(false);
+  const [fetchEnabled, setFetchEnabled] = useState(true);
+  // -----------------------------------------------------------
+
   const { categoryID } = useParams();
   const categories = getAllCategories();
 
@@ -26,21 +31,11 @@ const DishCategory_Edit = () => {
     queryFn: async () => {
       const res = await axiosSecure.get(`/admin/get-categories/${categoryID}`);
 
-      //   to do uncomment 
-      
-      // const prev = {
-        //   id: 1,
-        //   title: 'Italian',
-        //   description: "tui moros na k",
-        //   img: 'https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no',
-        //   active: false,
-        
-        // }
-        
-        setSelectedImage0(res?.data?.img);
-        setActive(res?.data?.active);
-        console.log(res.data);
-        return res?.data;
+
+      setSelectedImage0(res?.data?.img);
+      setActive(res?.data?.active);
+      console.log(res.data);
+      return res?.data;
     },
 
   });
@@ -62,15 +57,7 @@ const DishCategory_Edit = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
-
-    console.log(data)
-    if (!selectedImage0) {
-      toast.error('Cover Photo needed');
-      return;
-    }
-
-    console.log('Create action', data);
+  const uploadtoDB = (data) => {
 
     axiosSecure.patch(`/admin/edit-categories/${categoryID}`, data)
       .then(data => {
@@ -78,15 +65,32 @@ const DishCategory_Edit = () => {
         setActive(true);
         toast.success('Category Modified Successfully')
         navigate(`/category`, { replace: true });
-      }).catch(e => {
-        console.error(e);
-        return <ErrorPage />
       })
+      .catch(err => SwalErrorShow(err))
+      .finally(() => setLoading(false))
+  }
+
+
+  const onSubmit = async (data) => {
+
+    console.log(data);
+    setLoading(true);
+    if (data?.img) {
+
+      imageUpload(data?.img)
+        .then(res => {
+          data.img = res?.data?.display_url;
+          uploadtoDB(data)
+        })
+        .catch(err => SwalErrorShow(err))
+    } else {
+      uploadtoDB(data)
+    }
 
 
   };
 
-  if (dataLoading) {
+  if (dataLoading || loading) {
     return <LoadingPage />
   }
 
@@ -162,7 +166,7 @@ const DishCategory_Edit = () => {
                 <select
                   label="Select Category"
                   className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
-  
+
                   defaultValue={data?.title}
                   {...register("title", {
                     required: "*title category  is Required",
