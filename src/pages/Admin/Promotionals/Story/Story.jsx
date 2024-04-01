@@ -11,9 +11,11 @@ import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import AddStoryModal from '../../../../components/Modal/AddStoryModal/AddStoryModal';
 import Swal from 'sweetalert2';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
-
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import ViewStoryModal from '../../../../components/Modal/ViewStoryModal/ViewStoryModal';
 const Story = () => {
-    const axioseSecure = useAxiosSecure()
+    const axioseSecure = useAxiosSecure();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { res_id, branchID } = useRestauarantAndBranch();
     const { refetch, data, isLoading, error } = useQuery({
         queryKey: ['restaurantData', res_id, branchID],
@@ -23,7 +25,15 @@ const Story = () => {
             return [
                 {
                     _id: "234783bfc",
+                    img: "https://plus.unsplash.com/premium_photo-1669312747277-b1acd3eb2f98?q=80&w=1994&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                },
+                {
+                    _id: "234783bfc",
                     img: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
+                },
+                {
+                    _id: "234783bfc",
+                    img: "https://images.unsplash.com/photo-1711216818794-cd4f226dc88d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8",
                 },
                 {
                     _id: "234783bfc",
@@ -35,19 +45,11 @@ const Story = () => {
                 },
                 {
                     _id: "234783bfc",
-                    img: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
+                    img: "https://images.unsplash.com/photo-1707344088547-3cf7cea5ca49?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8fA%3D%3D",
                 },
                 {
                     _id: "234783bfc",
-                    img: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
-                },
-                {
-                    _id: "234783bfc",
-                    img: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
-                },
-                {
-                    _id: "234783bfc",
-                    img: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
+                    img: "https://images.unsplash.com/photo-1711926641543-a37d9a020571?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0M3x8fGVufDB8fHx8fA%3D%3D",
                 },
             ]
         },
@@ -104,12 +106,13 @@ const Story = () => {
                         <div key={_idx} className='group max-w-sm'>
                             <div className='flex flex-col gap-2 w-full'>
                                 <div
-                                    className='aspect-square w-full relative overflow-hidden rounded-xl'>
-                                    <img
-                                        className='object-cover h-full w-full group-hover:scale-110 transition'
+                                    className='w-full relative overflow-hidden rounded-xl'>
+                                    {/* <img
+                                        className='object-cover h-64 w-full group-hover:scale-110 transition'
                                         src={story.img}
                                         alt='story-img'
-                                    />
+                                    /> */}
+                                  <ViewStoryModal image={story.img}  />
                                     <div
                                         className='absolute top-3 right-3'
                                     >
