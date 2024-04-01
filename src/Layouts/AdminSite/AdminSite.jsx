@@ -48,8 +48,8 @@ const AdminSite = () => {
             <BranchAndRestaurantNameProvider>
 
                 {/* Button that acts as a checkbox -- for mobile */}
-                <Navbar isBordered className=" sm:hidden max-w-full" maxWidth="full">
-                    <NavbarContent className="sm:hidden" justify="start">
+                <Navbar isBordered className=" lg:hidden max-w-full" maxWidth="full">
+                    <NavbarContent className="lg:hidden" justify="start">
                         <label htmlFor="sidebarToggle">
                             <svg
                                 className="w-6 h-6"
@@ -67,7 +67,7 @@ const AdminSite = () => {
                         </label>
                     </NavbarContent>
 
-                    <NavbarBrand className="flex sm:hidden gap-4" justify="center" >
+                    <NavbarBrand className="flex lg:hidden gap-4" justify="center" >
                         <Link className="font-bold text-inherit text-red-500 cursor-pointer" href="/">Home</Link>
                     </NavbarBrand>
                 </Navbar>
@@ -85,7 +85,7 @@ const AdminSite = () => {
                 <AdminSiteSideNav isChecked={isChecked} setChecked={setChecked} />
 
                 {/* main page content */}
-                <div className="p-4 sm:ml-64 max-w-[2560px] mx-auto p">
+                <div className="p-4 lg:ml-64 max-w-[2560px] mx-auto p">
                     <Outlet />
                 </div>
 

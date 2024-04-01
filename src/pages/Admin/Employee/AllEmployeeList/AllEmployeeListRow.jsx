@@ -8,7 +8,18 @@ import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 import edit from "../../../../assets/images/Home/edit.svg"
 import trash from "../../../../assets/images/Home/delete.svg"
+
+
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import AdminOrderPlace from '../../Orders/AdminOrderPlace/AdminOrderPlace';
+import Employee_row_attendance from './Employee_row_attendance';
+
+
+
 const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
+
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const { branchID, res_id } = useRestauarantAndBranch();
     let statusStyle, paymentStatus, icon;
@@ -71,7 +82,7 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
     }
     return (
 
-        <tr>
+        <tr className='border-b'>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                 <div className='flex items-center '>
                     <div className='flex items-center gap-5 flex-col md:flex-row'>
@@ -125,7 +136,7 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
                     <p className="whitespace-nowrap text-sm text-center">{employee?.role}</p>
                 </span>
             </td>
-            <td className='py-5 border-b border-gray-200 bg-white text-sm'>
+            <td className='py-5  bg-white text-sm flex justify-center items-center gap-3'>
                 <span
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
                 >
@@ -135,7 +146,41 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
                     }
 
                 </span>
+
+                <span
+                    className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
+                >
+                    <button onClick={onOpen} className="inline-flex ml-3 cursor-pointer">
+                        <svg className='w-6 h-6 text-gray-900' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 2V5" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M16 2V5" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M3.5 9.08997H20.5" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M15.6947 13.7H15.7037" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M15.6947 16.7H15.7037" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M11.9955 13.7H12.0045" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M11.9955 16.7H12.0045" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M8.29431 13.7H8.30329" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M8.29431 16.7H8.30329" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+
+                    </button>
+
+
+                </span>
+
+                <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+                    <ModalContent>
+                        {(onClose) => (
+                            <ModalBody className='h-fit max-h-[85vh] overflow-scroll pt-0 mx-0 px-0 scrollbar-hide'>
+                                <Employee_row_attendance branchID={branchID} res_id={res_id} employee_ID={employee?._id}/>
+                            </ModalBody>
+                        )}
+                    </ModalContent>
+                </Modal>
             </td>
+
+
         </tr>
 
     );
