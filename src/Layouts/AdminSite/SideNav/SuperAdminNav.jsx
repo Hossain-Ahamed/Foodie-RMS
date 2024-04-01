@@ -6,6 +6,7 @@ import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 import { IoFastFoodOutline } from "react-icons/io5";
 import { BsGraphUpArrow } from "react-icons/bs";
 import AdminSideNavChoose from './AdminSideNavChoose';
+import { TbSpeakerphone } from "react-icons/tb";
 const SuperAdminNav = () => {
     return (
         <>
@@ -151,12 +152,7 @@ const SuperAdminNav = () => {
                             className="group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
                         >
                             <div className="flex items-center gap-2">
-                                <svg className="h-5 w-5 opacity-75" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M9 10C10.1046 10 11 9.10457 11 8C11 6.89543 10.1046 6 9 6C7.89543 6 7 6.89543 7 8C7 9.10457 7.89543 10 9 10Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M12 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path opacity="0.4" d="M16.12 5.1099C15.79 4.0699 16.18 2.7799 17.26 2.4299C17.83 2.2499 18.54 2.3999 18.94 2.9499C19.32 2.3799 20.05 2.2399 20.62 2.4299C21.71 2.7799 22.1 4.0699 21.77 5.1099C21.25 6.7499 19.45 7.6099 18.95 7.6099C18.44 7.6099 16.65 6.7699 16.12 5.1099Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path opacity="0.4" d="M2.66998 18.9501L7.59998 15.6401C8.38998 15.1101 9.52998 15.1701 10.24 15.7801L10.57 16.0701C11.35 16.7401 12.61 16.7401 13.39 16.0701L17.55 12.5001C18.33 11.8301 19.59 11.8301 20.37 12.5001L22 13.9001" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
+                                <TbSpeakerphone className="h-5 w-5 opacity-75" />
 
 
                                 <span className="text-sm font-medium"> Promotionals </span>
@@ -597,6 +593,68 @@ const SuperAdminNav = () => {
                                     }
                                 >
                                     Dishes
+                                </NavLink>
+                            </li>
+
+                        </ul>
+                    </details>
+                </li>
+                <li>
+                    <details className="group [&_summary::-webkit-details-marker]:hidden">
+                        <summary
+                            className="group flex items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700"
+                        >
+                            <div className="flex items-center gap-2">
+                                <svg className='h-5 w-5 opacity-75' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.0008 13.3C11.8708 13.3 11.7408 13.27 11.6208 13.2L2.79083 8.09002C2.43083 7.88002 2.31081 7.41999 2.52081 7.05999C2.73081 6.69999 3.18081 6.57997 3.55081 6.78997L12.0008 11.68L20.4008 6.82C20.7608 6.61 21.2208 6.74002 21.4308 7.09002C21.6408 7.45002 21.5108 7.90999 21.1608 8.11999L12.3908 13.2C12.2608 13.26 12.1308 13.3 12.0008 13.3Z" fill="#292D32" />
+                                    <path d="M12.001 22.36C11.591 22.36 11.251 22.02 11.251 21.61V12.54C11.251 12.13 11.591 11.79 12.001 11.79C12.411 11.79 12.751 12.13 12.751 12.54V21.61C12.751 22.02 12.411 22.36 12.001 22.36Z" fill="#292D32" />
+                                    <path d="M12.0011 22.75C11.1211 22.75 10.2511 22.56 9.5611 22.18L4.2211 19.21C2.7711 18.41 1.64111 16.48 1.64111 14.82V9.16998C1.64111 7.50998 2.7711 5.59002 4.2211 4.78002L9.5611 1.82C10.9311 1.06 13.0711 1.06 14.4411 1.82L19.7811 4.78997C21.2311 5.58997 22.3611 7.51999 22.3611 9.17999V14.83C22.3611 16.49 21.2311 18.41 19.7811 19.22L14.4411 22.18C13.7511 22.56 12.8811 22.75 12.0011 22.75ZM12.0011 2.74999C11.3711 2.74999 10.7511 2.88 10.2911 3.13L4.95111 6.09997C3.99111 6.63997 3.14111 8.06999 3.14111 9.17999V14.83C3.14111 15.93 3.99111 17.37 4.95111 17.91L10.2911 20.88C11.2011 21.39 12.8011 21.39 13.7111 20.88L19.0511 17.91C20.0111 17.37 20.8611 15.94 20.8611 14.83V9.17999C20.8611 8.07999 20.0111 6.63997 19.0511 6.09997L13.7111 3.13C13.2511 2.88 12.6311 2.74999 12.0011 2.74999Z" fill="#292D32" />
+                                    <path d="M17.0012 13.99C16.5912 13.99 16.2512 13.65 16.2512 13.24V10.0201L7.13116 4.76007C6.77116 4.55007 6.65114 4.09005 6.86114 3.74005C7.07114 3.38005 7.52116 3.26003 7.88116 3.47003L17.3712 8.95007C17.6012 9.08007 17.7512 9.33003 17.7512 9.60003V13.2601C17.7512 13.6501 17.4112 13.99 17.0012 13.99Z" fill="#292D32" />
+                                </svg>
+
+
+                                <span className="text-sm font-medium"> Inventory </span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </span>
+                        </summary>
+
+                        <ul className="mt-2 space-y-1 px-4">
+                            <li>
+                                <NavLink to={`/recipe`}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+
+                                            : "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                                    }
+                                >
+                                    Recipe
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={`/inventory-report`}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
+
+                                            : "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
+                                    }
+                                >
+                                    Inventory Report
                                 </NavLink>
                             </li>
 

@@ -39,8 +39,15 @@ import BranchEdit from "../../pages/Admin/AllBranches/BranchEdit";
 import AddBranch from './../../pages/Admin/ManageRestaurant/AddBranch/AddBranch';
 import Payment from "../../pages/Others/Payment/Payment";
 import Vendors from "../../pages/Admin/Expenses/Vendors/VendorsList";
+
+import Reels from "../../pages/Admin/Promotionals/Reels/Reels";
+import Story from "../../pages/Admin/Promotionals/Story/Story";
+import InventoryReport from "../../pages/Admin/Inventory/InventoryReport/InventoryReport";
+import RecipeList from "../../pages/Admin/Inventory/RecipeList/RecipeList";
+
 import AdminOrderPlace from "../../pages/Admin/Orders/AdminOrderPlace/AdminOrderPlace";
 import AttendanceAdd from "../../pages/Admin/Employee/Attendance/AttendanceAdd";
+
 
 
 
@@ -81,6 +88,14 @@ export const router = createBrowserRouter([
                 element:<ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Statistics /></ProtectedByRole> 
             },
             {
+                path: '/reels',
+                element:<ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Reels /></ProtectedByRole> 
+            },
+            {
+                path: '/story',
+                element:<ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Story /></ProtectedByRole> 
+            },
+            {
                 path: '/manage-shifts',
                 element: <TimeTable />
                 // '/restaurant/:res_id/branch/:branchID/manage-shifts',
@@ -98,6 +113,14 @@ export const router = createBrowserRouter([
             {
                 path: '/coupon-list',
                 element: <CouponList />
+            },
+            {
+                path: '/recipe',
+                element: <RecipeList />
+            },
+            {
+                path: '/inventory-report',
+                element: <InventoryReport />
             },
             {
                 path: '/membership',
