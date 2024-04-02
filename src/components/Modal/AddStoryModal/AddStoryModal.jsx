@@ -29,29 +29,30 @@ const AddStoryModal = ({ refetch }) => {
     const onSubmit = (data) => {
         data.date = new Date()
         console.log(data)
-        if(!data.img){
+        if (!data.img) {
             return toast.error("Image is not selected")
         }
         // imageBB story upload api
         imageUpload(data?.img)
-        .then(res => {
-            data.img = res?.data?.display_url;
-            // // edit request for package data
-            // axiosSecure.post(`/admin/${res_id}/branch/${branchID}/create-vendors`, data)
-            //     .then(data => {
-            //         toast.success('Story Successfully Created');
-            //         refetch();
-            //         resetField("name")
-            //         resetField("phone")
-            //         resetField("address")
-            //         setValue(null);
-            //         onOpenChange()
-            //     })
-            //     .catch(err => {
-            //         SwalErrorShow(err)
-            //     })
-        })
-        .catch(err => SwalErrorShow(err))
+            .then(res => {
+                data.img = res?.data?.display_url;
+                // // edit request for package data
+                // axiosSecure.post(`/admin/${res_id}/branch/${branchID}/create-vendors`, data)
+                //     .then(data => {
+                //         toast.success('Story Successfully Created');
+                // setSelectedImage0(null)
+                //         refetch();
+                //         resetField("name")
+                //         resetField("phone")
+                //         resetField("address")
+                //         setValue(null);
+                //         onOpenChange()
+                //     })
+                //     .catch(err => {
+                //         SwalErrorShow(err)
+                //     })
+            })
+            .catch(err => SwalErrorShow(err))
     }
     return (
         <>
@@ -112,7 +113,7 @@ const AddStoryModal = ({ refetch }) => {
                                         />
                                     </div>
                                     <ModalFooter>
-                                        <Button color="danger" variant="light" onPress={onClose}>
+                                        <Button color="danger" variant="light" onPress={() => { setSelectedImage0(null); onClose(); }}>
                                             Close
                                         </Button>
                                         <Button type="submit" color="success" variant="light">
