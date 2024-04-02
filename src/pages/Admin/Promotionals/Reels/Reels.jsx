@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore'; // (Optional) For progress updates
+import ReelProgress from '../../../../components/Progress/ReelProgress';
 
 const Reels = () => {
     const [selectedVideo, setSelectedVideo] = useState(null);
@@ -48,7 +49,8 @@ const Reels = () => {
             <button onClick={handleUpload} disabled={!selectedVideo}>
                 Upload Video
             </button>
-            {uploadProgress > 0 && <p>Uploading: {uploadProgress}%</p>}
+            {/* {uploadProgress > 0 && <p>Uploading: {uploadProgress}%</p>} */}
+            {(uploadProgress > 0 && uploadProgress !== 100) && <ReelProgress value={uploadProgress} />}
             {videoUrl && <video src={videoUrl} controls width="320" height="240" />}
         </div>
     );
