@@ -1,5 +1,5 @@
 import React from "react";
-import { Progress } from "@nextui-org/react";
+import { Progress, CircularProgress } from "@nextui-org/react";
 
 export default function ReelProgress({value}) {
     // const [value, setValue] = React.useState(0);
@@ -13,9 +13,9 @@ export default function ReelProgress({value}) {
     // }, []);
 
     return (
-        <Progress
+        <CircularProgress
             aria-label="Downloading..."
-            size="md"
+            size="lg"
             value={value}
             color="success"
             showValueLabel={true}
