@@ -1,62 +1,138 @@
-import React, { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { IoAddOutline } from 'react-icons/io5';
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { SwalErrorShow, imageUpload } from "../../../assets/scripts/Utility";
+import { SwalErrorShow, imageUpload, validateMobileNumber } from "../../../assets/scripts/Utility";
 import useRestauarantAndBranch from "../../../Hooks/useRestauarantAndBranch";
-
-const AddStoryModal = ({ refetch }) => {
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import ReelProgress from "../../Progress/ReelProgress";
+const AddReelsModal = ({ refetch }) => {
     const { res_id, branchID } = useRestauarantAndBranch()
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { handleSubmit, register, setValue, formState: { errors }, resetField } = useForm();
     const axiosSecure = useAxiosSecure();
-    const [selectedImage0, setSelectedImage0] = useState(null);
-
-    const handleImageUpload0 = (event) => {
+    const [selectedVideo, setSelectedVideo] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [videoUrl, setVideoUrl] = useState(null);
+    const handleVideoUpload = (event) => {
         const file = event.target.files[0];
-        setSelectedImage0(URL.createObjectURL(file));
-        setValue("img", file);
+        setSelectedVideo(file);
+        setVideoUrl(URL.createObjectURL(file))
+        setValue("videoFile", file);
 
     };
+    // const handleVideoSelect = (event) => {
+    //     setSelectedVideo(event.target.files[0]);
+    // };
     const onSubmit = (data) => {
         console.log(data)
-        if (!data.img) {
-            return toast.error("Image is not selected")
+        if (!data.videoFile) {
+            return toast.error("No file is selected")
         }
-        // imageBB story upload api
-        imageUpload(data?.img)
-            .then(res => {
-                onOpenChange()
-                data.img = res?.data?.display_url;
-                // post request for create story
-                axiosSecure.post(`/admin/restaurant/${res_id}/branch/${branchID}/create-stories`, data)
+        const storage = getStorage();
+        const storageRef = ref(storage, `videos/${selectedVideo.name}`); // Custom video path
+
+        const uploadTask = uploadBytesResumable(storageRef, selectedVideo);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setUploadProgress(Math.round(progress));
+            },
+            (error) => {
+                console.error('Upload failed:', error);
+            },
+            async () => {
+                const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                // setVideoUrl(downloadUrl);
+                data.videoFile = downloadUrl;
+                console.log(data);
+                axiosSecure.post(`/admin/restaurant/${res_id}/branch/${branchID}/create-reels`, data)
                     .then(data => {
+                        onOpenChange()
                         toast.success('Story Successfully Created');
-                        setSelectedImage0(null)
+                        setSelectedVideo(null)
                         refetch();
                         setValue(null);
                     })
                     .catch(err => {
                         SwalErrorShow(err)
                     })
-            })
-            .catch(err => SwalErrorShow(err))
+
+                // (Optional) Store video URL in Firestore (replace with MongoDB logic)
+                // const db = getFirestore(); // Assuming Firestore is initialized
+                // const videosColRef = collection(db, 'videos');
+                // await addDoc(videosColRef, { videoUrl });
+
+                console.log('Video uploaded:', downloadUrl);
+            }
+        );
+        // imageBB story upload api
+        // imageUpload(data?.img)
+        //     .then(res => {
+        //         data.img = res?.data?.display_url;
+        //         // post request for create story
+        // axiosSecure.post(`/admin/restaurant/${res_id}/branch/${branchID}/create-stories`, data)
+        //     .then(data => {
+        //         toast.success('Story Successfully Created');
+        //         setSelectedVideo(null)
+        //         refetch();
+        //         setValue(null);
+        //         onOpenChange()
+        //     })
+        //     .catch(err => {
+        //         SwalErrorShow(err)
+        //     })
+        //     })
+        //     .catch(err => SwalErrorShow(err))
     }
+    // const handleUpload = async () => {
+    //     if (!selectedVideo) return;
+
+    //     const storage = getStorage();
+    //     const storageRef = ref(storage, `videos/${selectedVideo.name}`); // Custom video path
+
+    //     const uploadTask = uploadBytesResumable(storageRef, selectedVideo);
+
+    //     uploadTask.on(
+    //         'state_changed',
+    //         (snapshot) => {
+    //             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //             setUploadProgress(Math.round(progress));
+    //         },
+    //         (error) => {
+    //             console.error('Upload failed:', error);
+    //         },
+    //         async () => {
+    //             const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+    //             setVideoUrl(downloadUrl);
+
+    //             // (Optional) Store video URL in Firestore (replace with MongoDB logic)
+    //             // const db = getFirestore(); // Assuming Firestore is initialized
+    //             // const videosColRef = collection(db, 'videos');
+    //             // await addDoc(videosColRef, { videoUrl });
+
+    //             console.log('Video uploaded:', downloadUrl);
+    //         }
+    //     );
+    // };
     return (
         <>
             {/* <button className="bg-green-400 rounded-lg text-white p-2 flex items-center gap-1 text-lg font-medium justify-center" onClick={onOpen}> <FaPlus /> Add Vendors</button> */}
             <div>
                 <button onClick={onOpen}
-                    className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap'>Create Story<IoAddOutline className='text-white' />
+                    className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap'>Create Reels<IoAddOutline className='text-white' />
                 </button>
             </div>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Create Story</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">Create Reels</ModalHeader>
+                            {(uploadProgress > 0 && uploadProgress !== 100) && <ReelProgress value={uploadProgress} />}
                             <ModalBody>
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     {/* image */}
@@ -65,7 +141,7 @@ const AddStoryModal = ({ refetch }) => {
 
                                     >
 
-                                        {!selectedImage0 &&
+                                        {!selectedVideo &&
                                             <>
                                                 <div className="w-full">
                                                     <div className="flex flex-wrap -m-3">
@@ -78,10 +154,9 @@ const AddStoryModal = ({ refetch }) => {
                                                                     </svg>
                                                                 </svg>
                                                                 <p className="mb-1 text-sm text-gray-800 font-medium">
-                                                                    <span className="text-gray-500" data-config-id="auto-txt-11-3">Click to Upload a file</span>
+                                                                    <span className="text-gray-500" data-config-id="auto-txt-11-3">Click to Upload a file </span>
                                                                     <span data-config-id="auto-txt-12-3">or drag and drop</span>
                                                                 </p>
-                                                                <p className="text-xs text-gray-500 font-medium" data-config-id="auto-txt-13-3">PNG, JPG, GIF or up to 10MB</p>
 
                                                             </div>
                                                         </div>
@@ -90,24 +165,24 @@ const AddStoryModal = ({ refetch }) => {
 
                                             </>
                                         }
-                                        {selectedImage0 && (
-                                            <img src={selectedImage0} alt="Uploaded" className=" h-60 rounded-2xl object-contain" />
+                                        {selectedVideo && (
+                                            <video src={videoUrl} alt="Uploaded" className=" h-60 rounded-2xl object-contain" />
                                         )}
                                         <input
 
                                             type="file"
-                                            accept="image/*"
+                                            accept="video/*"
                                             className="opacity-0 w-full h-full absolute top-0 left-0 cursor-pointer"
-                                            onChange={handleImageUpload0}
+                                            onChange={handleVideoUpload}
 
                                         />
                                     </div>
                                     <ModalFooter>
-                                        <Button color="danger" variant="light" onPress={() => { setSelectedImage0(null); onClose(); }}>
+                                        <Button color="danger" variant="light" onPress={() => { setSelectedVideo(null); onClose(); }}>
                                             Close
                                         </Button>
-                                        <Button type="submit" color="success" variant="light">
-                                            Create Story
+                                        <Button type="submit" color="success" variant="light" disabled={!selectedVideo}>
+                                            Upload Video
                                         </Button>
                                     </ModalFooter>
                                 </form>
@@ -120,4 +195,4 @@ const AddStoryModal = ({ refetch }) => {
     );
 };
 
-export default AddStoryModal;
+export default AddReelsModal;
