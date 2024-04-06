@@ -6,7 +6,7 @@ import { CustomPlaceOrderContext } from '../../pages/Admin/Orders/AdminOrderPlac
 
 const DishForm = ({ dish, onOpenChange }) => {
 
-    const {addItems} = useContext(CustomPlaceOrderContext)
+    const { addItems } = useContext(CustomPlaceOrderContext)
 
     const [quantity, setQuantity] = useState(1);
 
@@ -65,24 +65,23 @@ const DishForm = ({ dish, onOpenChange }) => {
 
         // console.log('Selected Options:', selectedOptions);
         // console.log('Selected Addons:', selectedAddons);
-
         const optionsPrice = dish.options.find(option => option.name === selectedOptions)?.price || 0;
-        const totalPrice = dish.offerPrice + optionsPrice + extraPrice + parseFloat(((dish.offerPrice + extraPrice) * (dish?.supplementary_duty / 100 + dish?.sales_tax / 100)).toFixed(1));
+        const totalPrice = (dish.offerPrice + extraPrice + parseFloat(((dish.offerPrice + extraPrice) * (dish?.supplementary_duty / 100 + dish?.sales_tax / 100)).toFixed(1)));
         // console.log('Total Price:', totalPrice);
 
         const data = {
             dish_id: dish?._id,
-            img : dish?.img,
-            name : dish?.title,
-            
+            img: dish?.img,
+            name: dish?.title,
+
             quantity: formData?.quantity,
             options: selectedOptions,
             addOn: selectedAddons.map(i => i?.name),
-            basePrice : dish?.offerPrice,
-            extra : optionsPrice + extraPrice,
-            VAT : parseFloat(((dish.offerPrice + extraPrice) * (dish?.supplementary_duty / 100 + dish?.sales_tax / 100)).toFixed(1)),
+            basePrice: dish?.offerPrice,
+            extra: extraPrice,
+            VAT: parseFloat(((dish.offerPrice + extraPrice) * (dish?.supplementary_duty / 100 + dish?.sales_tax / 100)).toFixed(1)),
             totalPrice,
-            key : Date.now().toString()
+            key: Date.now().toString()
         }
         // console.log(data)
         addItems(data)
@@ -92,7 +91,7 @@ const DishForm = ({ dish, onOpenChange }) => {
     return (
 
         <div className="container mx-auto " >
-       
+
             <form onSubmit={handleSubmit(onSubmit)}>
                 <img src={dish?.img} className="w-full h-auto" alt="" />
                 <div className="px-1">
