@@ -6,9 +6,11 @@ import { toast } from 'react-hot-toast';
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 import LoadingPageWIthIconOnly from './../../../../Shared/LoadingPages/LoadingPageWIthIconOnly/LoadingPageWIthIconOnly';
+import useAxiosSecure from "../../../../../Hooks/useAxiosSecure";
 
 export default function AddMember({ refetch: memberListRefetch, handleAddMember }) {
     const { res_id } = useRestauarantAndBranch();
+    const axiosSecure = useAxiosSecure();
 
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
 
@@ -64,88 +66,25 @@ export default function AddMember({ refetch: memberListRefetch, handleAddMember 
         setLoadingonSearch(true);
         setSearchedResult(false);
 
-        // search from server 
-
-        // Todo: uncomment this to fetch
-        // await axiosSecure.post('/search-employee-to-add', trimmedData)
-        //     .then(res => {
-        //         setSearchedResult(res.data);
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //         toast.error(error?.code + " " + error?.response?.data?.message)
-        //     })
-        //     .finally(() => {
-
-        //         setLoadingonSearch(false);
-        //         setSearchedValueReceived(true);
-        //     })
+        // console.log(trimmedData)
 
 
+        await axiosSecure.get(`/restaurant/${res_id}/memberSearch?phone=${trimmedData?.mobile}`)
+            .then(res => {
+                setSearchedResult(res.data);
+            })
+            .catch(error => {
+                console.error(error);
+                toast.error(error?.code + " " + error?.response?.data?.message)
+            })
+            .finally(() => {
 
-
-
-        // --------------------------
-        // Todo: delete this to fetch
-        setSearchedResult([
-            {
-                _id: "1",
-                displayName: "Farhan Hasan",
-
-                email: "nilok@gmail.com",
-
-                phoneNumber: "018399473783",
-
-
-                uid: "4385884935",
-
-
-                photoURL: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                amount: 450,
-            },
-            {
-                _id: "2",
-                displayName: "Fattan Prodan",
-
-                email: "nilok@gmail.com",
-
-                phoneNumber: "018399473783",
-
-
-                uid: "4385884935",
-
-                photoURL: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                amount: 450,
-            },
-
-            {
-                _id: "6",
-                displayName: "Gazi Fuad",
-
-                email: "sodome@gmail.com",
-
-                phoneNumber: "018399473783",
-
-                uid: "4385884935",
-
-
-                photoURL: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-                amount: 450,
-
-            },
-        ]);
-
-
-
-
-        setLoadingonSearch(false)
-        setSearchedValueReceived(true);
-        // ---------------------------------
+                setLoadingonSearch(false);
+                setSearchedValueReceived(true);
+            })
 
     }
-    /**
-     * --------------------------------------------------------------------------------
-     */
+
 
 
 
@@ -241,12 +180,12 @@ export default function AddMember({ refetch: memberListRefetch, handleAddMember 
                                                                                     >
                                                                                         Mobile
                                                                                     </th>
-                                                                                    <th
+                                                                                    {/* <th
                                                                                         scope='col'
                                                                                         className='px-2 py-3 bg-white  border-b border-gray-200 text-gray-800 text-center text-sm uppercase font-normal'
                                                                                     >
                                                                                         Order Amount
-                                                                                    </th>
+                                                                                    </th> */}
 
 
                                                                                     <th
@@ -265,12 +204,12 @@ export default function AddMember({ refetch: memberListRefetch, handleAddMember 
                                                                                                 <div className=''>
                                                                                                     <img
                                                                                                         alt='profile'
-                                                                                                        src={item?.photoURL}
+                                                                                                        src={item?.imgURL}
                                                                                                         className='mx-auto object-cover rounded h-10 w-15 '
                                                                                                     />
                                                                                                 </div>
                                                                                                 <div>
-                                                                                                    <span className='text-gray-900 whitespace-no-wrap block'>{item?.displayName} </span>
+                                                                                                    <span className='text-gray-900 whitespace-no-wrap block'>{item?.name} </span>
                                                                                                     <span className='text-gray-900 whitespace-no-wrap block'>{item?.email}</span>
                                                                                                 </div>
                                                                                             </div>
@@ -280,12 +219,12 @@ export default function AddMember({ refetch: memberListRefetch, handleAddMember 
 
 
                                                                                     <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                                                                                        {item?.phoneNumber}
+                                                                                        {item?.phone}
                                                                                     </td>
 
-                                                                                    <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm text-center'>
+                                                                                    {/* <td className='px-2 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                                                                                         {item?.amount} ৳
-                                                                                    </td>
+                                                                                    </td> */}
 
 
 
@@ -294,7 +233,7 @@ export default function AddMember({ refetch: memberListRefetch, handleAddMember 
                                                                                         <span
                                                                                             className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
                                                                                         >
-                                                                                            <button onClick={() => handleAddMember(item, reset, onOpenChange)} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></button>
+                                                                                            <button onClick={() => {handleAddMember(item, reset, onOpenChange);setSearchedResult([]) }} className="inline-flex ml-3 cursor-pointer text-gray-500 transition-colors duration-300 "> <IoIosAddCircleOutline className='w-5 h-5 text-green-400 hover:text-green-600' /></button>
                                                                                         </span>
                                                                                     </td>
 
