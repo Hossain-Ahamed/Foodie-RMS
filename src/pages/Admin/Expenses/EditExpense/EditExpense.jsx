@@ -56,17 +56,17 @@ const EditExpense = () => {
             //     }
             // }
 
-            // setValue("category", res?.data[0]?.category)
-            // setValue("billDate", res?.data[0]?.billDate)
-            // setValue("expense", res?.data[0]?.expense)
-            // setValue("payTo", res?.data[0]?.payTo)
+            setValue("category", res?.data[0]?.category)
+            setValue("billDate", res?.data[0]?.billDate)
+            setValue("expense", res?.data[0]?.expense)
+            setValue("payTo", res?.data[0]?.payTo)
 
-            // setValue("payeeID", res?.data[0]?.payeeID)
-            // setValue("vendorDescription", res?.data[0]?.vendorDescription)
-            // setValue("paymentDate", res?.data[0]?.paymentDate)
-            // setValue("paymentAmount", res?.data[0]?.paymentAmount)
-            // setValue("reference", res?.data[0]?.reference)
-            // setValue("description", res?.data[0]?.description)
+            setValue("payeeID", res?.data[0]?.payeeID)
+            setValue("vendorDescription", res?.data[0]?.vendorDescription)
+            setValue("paymentDate", res?.data[0]?.paymentDate)
+            setValue("paymentAmount", res?.data[0]?.paymentAmount)
+            setValue("reference", res?.data[0]?.reference)
+            setValue("description", res?.data[0]?.description)
             return res?.data[0]
         }
     })

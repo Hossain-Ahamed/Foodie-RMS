@@ -25,7 +25,6 @@ import Dish_List from "../../pages/Admin/DishManage/Dish_List/Dish_List";
 
 import Test from "../../pages/Shared/VideoPlayer/Test";
 import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
-import ExpenseAndSalary from "../../pages/Admin/Expenses/ExpensesAndSalary/ExpenseAndSalary";
 import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
 import SearchEmployeePage_ToAdd from "../../pages/Admin/Employee/AddEmployee/SearchEmployeePage_ToAdd";
 import AddExistingEmployee from "../../pages/Admin/Employee/AddEmployee/AddExistingEmployee";
@@ -43,10 +42,13 @@ import Vendors from "../../pages/Admin/Expenses/Vendors/VendorsList";
 import Reels from "../../pages/Admin/Promotionals/Reels/Reels";
 import Story from "../../pages/Admin/Promotionals/Story/Story";
 import InventoryReport from "../../pages/Admin/Inventory/InventoryReport/InventoryReport";
-import RecipeList from "../../pages/Admin/Inventory/RecipeList/RecipeList";
+import RecipeList from "../../pages/Admin/Inventory/RecipeList/AddRecipe";
 
 import AdminOrderPlace from "../../pages/Admin/Orders/AdminOrderPlace/AdminOrderPlace";
 import AttendanceAdd from "../../pages/Admin/Employee/Attendance/AttendanceAdd";
+import ExpenseList from "../../pages/Admin/Expenses/ExpensesAndSalary/ExpenseList/ExpenseList";
+import PurchaseHistory from "../../pages/Admin/Expenses/ExpensesAndSalary/PurchaseHistory/PurchaseHistory";
+import AddInventory from "../../pages/Admin/Inventory/AddInventory/AddInventory";
 
 
 
@@ -85,15 +87,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/:res_id/branch/:branchID',
-                element:<ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Statistics /></ProtectedByRole> 
+                element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Statistics /></ProtectedByRole>
             },
             {
                 path: '/reels',
-                element:<ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Reels /></ProtectedByRole> 
+                element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Reels /></ProtectedByRole>
             },
             {
                 path: '/story',
-                element:<ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Story /></ProtectedByRole> 
+                element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Story /></ProtectedByRole>
             },
             {
                 path: '/manage-shifts',
@@ -115,7 +117,7 @@ export const router = createBrowserRouter([
                 element: <CouponList />
             },
             {
-                path: '/recipe',
+                path: '/recipe/:dishID',
                 element: <RecipeList />
             },
             {
@@ -132,7 +134,17 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/expenses',
-                element: <ExpenseAndSalary />
+                element: <ExpenseList />
+                // '/restaurant/:res_id/branch/:branchID/expenses',
+            },
+            {
+                path: '/purchase',
+                element: <PurchaseHistory />
+                // '/restaurant/:res_id/branch/:branchID/expenses',
+            },
+            {
+                path: '/add-inventory',
+                element: <AddInventory />
                 // '/restaurant/:res_id/branch/:branchID/expenses',
             },
             {
@@ -150,7 +162,7 @@ export const router = createBrowserRouter([
                 element: <EditExpense />
                 // '/restaurant/:res_id/branch/:branchID/edit-expenses',
             },
-          
+
             {
                 path: '/category',
                 element: <DishCategory_List />
@@ -188,16 +200,16 @@ export const router = createBrowserRouter([
             {
                 path: '/add-new-employee',
                 element: <AddEmployee />
-            //    '/restaurant/:res_id/branch/:branchID/add-new-employee',
+                //    '/restaurant/:res_id/branch/:branchID/add-new-employee',
             },
             {
                 path: '/add-existing-employee/:employeeID',
-                element: <AddExistingEmployee/>
+                element: <AddExistingEmployee />
                 // '/restaurant/:res_id/branch/:branchID/add-existing-employee/:employeeID',
             },
             {
                 path: '/update-employee-profile/:employeeID',
-                element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><EditEmployee/></ProtectedByRole>
+                element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><EditEmployee /></ProtectedByRole>
                 // '/restaurant/:res_id/branch/:branchID/update-employee-profile/:employeeID',
             },
             {
@@ -230,16 +242,16 @@ export const router = createBrowserRouter([
             //     //payment page for admin to pay for a branch
             //     path: '/subscription-payment/:branchID',
             //     element: <Payment />
-            
+
             // },
             {
                 path: '/place-order',
-                element : <AdminOrderPlace/>
+                element: <AdminOrderPlace />
             },
 
             {
                 path: '/place-order',
-                element :<>
+                element: <>
                 </>
             }
 
@@ -252,7 +264,7 @@ export const router = createBrowserRouter([
         //payment page for admin to pay for a branch
         path: '/subscription-payment/:branchID',
         element: <Payment />
-    
+
     },
     {
         path: '/login',
@@ -260,7 +272,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/test',
-        element: <Test/>
+        element: <Test />
     }
 
 

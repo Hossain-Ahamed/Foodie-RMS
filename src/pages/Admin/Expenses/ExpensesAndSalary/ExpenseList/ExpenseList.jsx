@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import SetTitle from '../../../Shared/SetTtitle/SetTitle';
-import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
-import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import SetTitle from '../../../../Shared/SetTtitle/SetTitle';
+import SectionTitle from '../../../../../components/SectionTitle/SectionTitle';
+import useAxiosSecure from '../../../../../Hooks/useAxiosSecure';
 import { useQuery } from 'react-query';
-import ExpenseRow from './ExpenseRow';
 import { Link } from 'react-router-dom';
 import { IoAddOutline } from 'react-icons/io5';
-import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
+import useRestauarantAndBranch from '../../../../../Hooks/useRestauarantAndBranch';
+import ExpenseRow from './ExpenseRow';
+import LoadingPage from '../../../../Shared/LoadingPages/LoadingPage/LoadingPage';
+import ErrorPage from '../../../../Shared/ErrorPage/ErrorPage';
 
-const ExpenseAndSalary = () => {
-    const {branchID, res_id} = useRestauarantAndBranch();
+const ExpenseList = () => {
+    const { branchID, res_id } = useRestauarantAndBranch();
     const axiosSecure = useAxiosSecure();
-    const { refetch, data: expenses = [], isLoading, error } = useQuery({
-        queryKey: ['expenses'],
+    const { refetch, data: data = [], isLoading, error } = useQuery({
+        queryKey: ['expenses', branchID],
         queryFn: async () => {
             const res = await axiosSecure.get(`/admin/all-expenses/${branchID}`);  // token : res_id  branchID , role 
 
@@ -25,6 +27,12 @@ const ExpenseAndSalary = () => {
             return res.data
         }
     });
+    if (isLoading) {
+        return <LoadingPage />
+    }
+    if (error) {
+        return <ErrorPage />
+    }
     return (
         <div className='container mx-auto px-4 sm:px-8 select-none'>
             <SetTitle title="Expense & Salary" />
@@ -62,14 +70,14 @@ const ExpenseAndSalary = () => {
                                     >
                                         Paid Date
                                     </th>
-                                   
+
                                     <th
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
                                     >
                                         Pay To
                                     </th>
-                                    
+
                                     <th
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
@@ -82,7 +90,7 @@ const ExpenseAndSalary = () => {
                                     >
                                         Payment Amount
                                     </th>
-                                    
+
                                     <th
                                         scope='col'
                                         className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
@@ -103,7 +111,7 @@ const ExpenseAndSalary = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>{expenses.map((expense, _idx) => <ExpenseRow key={_idx} expense={expense} branchID={branchID} res_id={res_id} refetch={refetch} />)}</tbody>
+                            <tbody>{data && Array.isArray(data) && data.map((expense, _idx) => <ExpenseRow key={_idx} expense={expense} branchID={branchID} res_id={res_id} refetch={refetch} />)}</tbody>
                         </table>
                     </div>
                 </div>
@@ -112,4 +120,4 @@ const ExpenseAndSalary = () => {
     );
 };
 
-export default ExpenseAndSalary;
+export default ExpenseList;

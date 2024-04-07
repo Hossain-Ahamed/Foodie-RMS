@@ -634,7 +634,7 @@ const SuperAdminNav = () => {
 
                         <ul className="mt-2 space-y-1 px-4">
                             <li>
-                                <NavLink to={`/recipe`}
+                                <NavLink to={`/add-inventory`}
                                     className={({ isActive }) =>
                                         isActive
                                             ? "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
@@ -642,7 +642,7 @@ const SuperAdminNav = () => {
                                             : "flex text-sm font-medium items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
                                     }
                                 >
-                                    Recipe
+                                    Add to Inventory
                                 </NavLink>
                             </li>
                             <li>

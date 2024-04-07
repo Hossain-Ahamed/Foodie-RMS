@@ -44,24 +44,24 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
 
     const handleSelectionChange = (e) => {
         setValue(e.target.value);
-        
+
         const selection = e.target.value;
-        const currentDate = new Date(); 
-        const isoDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 0, 0, 0); 
-        
+        const currentDate = new Date();
+        const isoDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 0, 0, 0);
+
         const data = {
-            date: isoDate.toISOString() 
+            date: isoDate.toISOString()
         };
-        
-        if(selection === "Yes") {
+
+        if (selection === "Yes") {
             data.status = true;
         } else {
             data.status = false;
         }
-        
-        axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/modify-attendance/${employee?._id}`,data)
-        .then(res=>toast.success('Changed Successfully'))
-        .catch(e=>toast.error('Error !Try Again'))
+
+        axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/modify-attendance/${employee?._id}`, data)
+            .then(res => toast.success('Changed Successfully'))
+            .catch(e => toast.error('Error !Try Again'))
     };
 
     return (
@@ -87,7 +87,7 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
                     </div>
                 </div>
             </td>
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
                     className='text-gray-900 whitespace-no-wrap block'
                 >
@@ -95,14 +95,14 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
                     {employee?.branchName}
                 </span>
             </td>
-          
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
 
                 <a href={`tel:${employee.mobile}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.mobile}</a>
             </td>
 
 
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
                     className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${statusStyle}`}
                 >
@@ -113,10 +113,10 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
                     <p className="whitespace-nowrap text-sm text-center">{employee?.role}</p>
                 </span>
             </td>
-            <td className='py-5  bg-white text-sm flex justify-center items-center gap-3'>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
 
-                <div className="flex w-full max-w-xs flex-col gap-2">
-                    <Select
+
+                {/* <Select
                        
                         variant="underlined"
                         
@@ -138,9 +138,26 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
                                 {i.title}
                             </SelectItem>
                         ))}
-                    </Select>
-                  
-                </div>
+                    </Select> */}
+
+                {/* <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900"> Select status </label> */}
+                <select
+                    className="mt-1.5 border w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2.5 px-4"
+                    onChange={handleSelectionChange}
+                >
+                    {[
+                        {
+                            "title": "Yes",
+                            value: true,
+                        },
+                        {
+                            "title": "No",
+                            value: false,
+                        }
+                    ].map((i) => (
+                        <option className='' key={i.title} value={i.value}>{i.title}</option>
+                    ))}
+                </select>
 
             </td>
 

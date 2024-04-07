@@ -22,7 +22,7 @@ const AddExpense = () => {
     const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
         queryKey: ['categories', res_id, branchID],
         queryFn: async () => {
-            // const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/add-expenses`)
+            // const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/add-expenses?expenseCategory={expenseCategory}`)
 
             // return res.data.categories;
             return {
