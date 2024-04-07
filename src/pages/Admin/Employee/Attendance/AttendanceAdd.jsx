@@ -30,8 +30,8 @@ const AttendanceAdd = () => {
     })
 
 
-    if(isLoading){
-        return <LoadingPage/>
+    if (isLoading) {
+        return <LoadingPage />
     }
     if (error) {
         return <ErrorPage />
@@ -40,16 +40,16 @@ const AttendanceAdd = () => {
 
     return (
         <section className='max-w-[1600px] mx-auto mt-5'>
-            <SetTitle title="Attendance"/>
+            <SetTitle title="Attendance" />
 
             <div className='flex  gap-3 '>
                 <div className='w-full '>
-                    <SectionTitle h1="Attendance"/>
+                    <SectionTitle h1="Attendance" />
                 </div>
-               
+
 
             </div>
-           
+
             <div className='py-8'>
                 <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                     <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
@@ -62,30 +62,30 @@ const AttendanceAdd = () => {
                                             <tr>
                                                 <th
                                                     scope='col'
-                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
                                                 >
                                                     Employee
                                                 </th>
                                                 <th
                                                     scope='col'
-                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
                                                 >Branch</th>
-                                                
+
                                                 <th
                                                     scope='col'
-                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal'
+                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-center text-sm uppercase font-normal'
                                                 >
                                                     mobile
                                                 </th>
                                                 <th
                                                     scope='col'
-                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
                                                 >
                                                     Role
                                                 </th>
                                                 <th
                                                     scope='col'
-                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-left'
+                                                    className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-sm uppercase font-normal text-center'
                                                 >
                                                     Attendance
                                                 </th>

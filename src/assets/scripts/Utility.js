@@ -6,6 +6,7 @@ import PostCodes from "../../assets/bangladesh-geojson/bd-postcodes.json";
 import countries from "../../assets/bangladesh-geojson/countries_data.json";
 import categories from "../data/categroy.json";
 import expenseType from "../data/expenseType.json";
+import units from '../data/units.json'
 import Cookies from "js-cookie";
 import CryptoJS from "crypto-js";
 import vendorData from "../data/vendor.json";
@@ -290,6 +291,10 @@ const getEmployeeData = () => {
   return employeeData;
 };
 
+const getUnits = () => {
+  return units
+}
+
 const SwalErrorShow = (e) => {
   console.error(e)
   Swal.fire({
@@ -338,5 +343,6 @@ export {
   getformatDate,
   disableScroll_Number_Input,
   SwalErrorShow,
-  imageUpload
+  imageUpload,
+  getUnits
 };

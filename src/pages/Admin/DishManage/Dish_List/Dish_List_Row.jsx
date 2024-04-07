@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import edit from "../../../../assets/images/Home/edit.svg"
 import trash from "../../../../assets/images/Home/delete.svg"
+import dishIcon from "../../../../assets/images/Home/dish.svg"
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 const Dish_List_Row = ({ dish, axiosSecure, refetch }) => {
     const { branchID, res_id } = useRestauarantAndBranch();
@@ -120,6 +121,7 @@ const Dish_List_Row = ({ dish, axiosSecure, refetch }) => {
                 >
                     <Link to={`/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
                     <span title="Delete category" onClick={() => handleDeletecategory(dish?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
+                    <Link to={`/recipe/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={dishIcon} /></Link>
                 </span>
             </td>
         </tr>
