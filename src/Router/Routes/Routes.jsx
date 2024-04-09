@@ -25,7 +25,6 @@ import Dish_List from "../../pages/Admin/DishManage/Dish_List/Dish_List";
 
 import Test from "../../pages/Shared/VideoPlayer/Test";
 import ViewAsAdmin from "../../pages/Admin/ViewEmployee/ViewAsAdmin";
-import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
 import SearchEmployeePage_ToAdd from "../../pages/Admin/Employee/AddEmployee/SearchEmployeePage_ToAdd";
 import AddExistingEmployee from "../../pages/Admin/Employee/AddEmployee/AddExistingEmployee";
 import EditEmployee from "../../pages/Admin/Employee/EditEmployee/EditEmployee";
@@ -49,6 +48,8 @@ import AttendanceAdd from "../../pages/Admin/Employee/Attendance/AttendanceAdd";
 import ExpenseList from "../../pages/Admin/Expenses/ExpensesAndSalary/ExpenseList/ExpenseList";
 import PurchaseHistory from "../../pages/Admin/Expenses/ExpensesAndSalary/PurchaseHistory/PurchaseHistory";
 import AddInventory from "../../pages/Admin/Inventory/AddInventory/AddInventory";
+import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
+import EditInventory from "../../pages/Admin/Inventory/EditInventory/EditInventory";
 
 
 
@@ -145,6 +146,11 @@ export const router = createBrowserRouter([
             {
                 path: '/add-inventory',
                 element: <AddInventory />
+                // '/restaurant/:res_id/branch/:branchID/expenses',
+            },
+            {
+                path: '/edit-inventory/:id',
+                element: <EditInventory />
                 // '/restaurant/:res_id/branch/:branchID/expenses',
             },
             {

@@ -131,7 +131,7 @@ const EditExpense = () => {
                                         Select Expense Category
                                     </option>
 
-                                    {expenseType.map((item, _idx) => (
+                                    {expenseType && Array.isArray(expenseType) && expenseType.map((item, _idx) => (
                                         <option key={item?.title} value={item?.title}>
                                             {item?.title}
                                         </option>

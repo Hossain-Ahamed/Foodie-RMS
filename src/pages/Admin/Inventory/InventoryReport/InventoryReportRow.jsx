@@ -39,10 +39,10 @@ const InventoryReportRow = ({ item, branchID, res_id, refetch }) => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                // for deleting expense
-                axiosSecure.delete(`/admin/${res_id}/branch/${branchID}/delete-expenses/${id}`)
+                // for deleting inventory
+                axiosSecure.delete(`/admin/${res_id}/branch/${branchID}/delete-inventory/${id}`)
                     .then(res => {
-                        toast.success("Expense Deleted Successfully")
+                        toast.success("Inventory Deleted Successfully")
                         refetch()
                     })
                     .catch(err => SwalErrorShow(err))
@@ -75,7 +75,7 @@ const InventoryReportRow = ({ item, branchID, res_id, refetch }) => {
                 <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{order?.payment_status}</p></span>
             </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <Link to={`/edit-expenses/${item?._id}`} title="Edit Order" className="inline-flex ml-3 cursor-pointer"><img src={edit} /></Link>
+                <Link to={`/edit-inventory/${item?._id}`} title="Edit Order" className="inline-flex ml-3 cursor-pointer"><img src={edit} /></Link>
                 <span title="Delete category" onClick={() => handleDeleteOrder(item?._id)} className="inline-flex ml-3 cursor-pointer"><img src={trash} /></span>
             </td>
         </tr>

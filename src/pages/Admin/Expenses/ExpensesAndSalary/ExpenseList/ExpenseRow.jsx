@@ -49,6 +49,7 @@ const ExpenseRow = ({ expense, branchID, res_id, refetch }) => {
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
                 <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.transactions[0]?.paymentDate}</span></span>
+                {/* have to check this field 4/9/24 */}
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
                 <span className='text-gray-900 whitespace-no-wrap block'><span className="text-gray-900">{expense?.payTo}</span></span>
