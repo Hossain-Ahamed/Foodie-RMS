@@ -16,7 +16,7 @@ const InventoryReport = () => {
     const { refetch, data: data = [], isLoading, error } = useQuery({
         queryKey: ['expenses', branchID],
         queryFn: async () => {
-            // const res = await axiosSecure.get(`/admin/all-expenses/${branchID}`);  // token : res_id  branchID , role 
+            const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/inventory-report/`);  // token : res_id  branchID , role 
 
             /**
              * if role === super-admin 
@@ -24,27 +24,27 @@ const InventoryReport = () => {
              * else 
              *   
              */
-            // return res.data
-            return [
-                {
-                    itemName: "Chicken",
-                    vendorName: "Chick Shop",
-                    unit: 3,
-                    unitPrice: 179
-                },
-                {
-                    itemName: "Tomato Sauce",
-                    vendorName: "Pran Sauce",
-                    unit: 12,
-                    unitPrice: 139
-                },
-                {
-                    itemName: "Bel Paper",
-                    vendorName: "Pran Sauce",
-                    unit: 0,
-                    unitPrice: 150
-                },
-            ]
+            return res.data
+            // return [
+            //     {
+            //         itemName: "Chicken",
+            //         vendorName: "Chick Shop",
+            //         unit: 3,
+            //         unitPrice: 179
+            //     },
+            //     {
+            //         itemName: "Tomato Sauce",
+            //         vendorName: "Pran Sauce",
+            //         unit: 12,
+            //         unitPrice: 139
+            //     },
+            //     {
+            //         itemName: "Bel Paper",
+            //         vendorName: "Pran Sauce",
+            //         unit: 0,
+            //         unitPrice: 150
+            //     },
+            // ]
         }
     });
     if (isLoading) {

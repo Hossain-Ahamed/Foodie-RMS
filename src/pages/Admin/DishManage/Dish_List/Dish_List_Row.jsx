@@ -121,7 +121,7 @@ const Dish_List_Row = ({ dish, axiosSecure, refetch }) => {
                 >
                     <Link to={`/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
                     <span title="Delete category" onClick={() => handleDeletecategory(dish?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
-                    <Link to={`/recipe/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={dishIcon} /></Link>
+                    <Link to={`/recipe/${dish?._id}`} title="Add Recipe" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={dishIcon} /></Link>
                 </span>
             </td>
         </tr>

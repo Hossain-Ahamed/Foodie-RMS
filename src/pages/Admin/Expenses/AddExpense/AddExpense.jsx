@@ -20,66 +20,66 @@ const AddExpense = () => {
     const expenseType = getAllExpenseType();
     const drowpdownCategory = ["Purchase", "Salaries"]
     const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError } = useQuery({
-        queryKey: ['categories', res_id, branchID],
+        queryKey: ['expense', res_id, branchID],
         queryFn: async () => {
-            // const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/add-expenses?expenseCategory={expenseCategory}`)
+            const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/get-expenses?expenseCategory={expenseCategory}`)
+            // console.log(res.data.employeeNames)
+            return res.data;
+            // return {
+            //     vendors: [
+            //         {
+            //             "name": "Kortoa Services",
+            //             "_id": "1"
+            //         },
+            //         {
+            //             "name": "Vai vai catering",
+            //             "_id": "2"
+            //         },
+            //         {
+            //             "name": "Mozid Meats",
+            //             "_id": "3"
+            //         },
+            //         {
+            //             "name": "Mr. Chicken",
+            //             "_id": "4"
+            //         },
+            //         {
+            //             "name": "Grocery point",
+            //             "_id": "5"
+            //         },
+            //         {
+            //             "name": "Nayan Masala stall",
+            //             "_id": "6"
+            //         }
+            //     ],
 
-            // return res.data.categories;
-            return {
-                vendors: [
-                    {
-                        "name": "Kortoa Services",
-                        "_id": "1"
-                    },
-                    {
-                        "name": "Vai vai catering",
-                        "_id": "2"
-                    },
-                    {
-                        "name": "Mozid Meats",
-                        "_id": "3"
-                    },
-                    {
-                        "name": "Mr. Chicken",
-                        "_id": "4"
-                    },
-                    {
-                        "name": "Grocery point",
-                        "_id": "5"
-                    },
-                    {
-                        "name": "Nayan Masala stall",
-                        "_id": "6"
-                    }
-                ],
-
-                employees: [
-                    {
-                        "name": "Tahsin",
-                        "_id": "malu"
-                    },
-                    {
-                        "name": "Pathul",
-                        "_id": "shemale"
-                    },
-                    {
-                        "name": "Hossain",
-                        "_id": "gay"
-                    },
-                    {
-                        "name": "Nilok",
-                        "_id": "Straight"
-                    },
-                    {
-                        "name": "Mokles",
-                        "_id": "null"
-                    },
-                    {
-                        "name": "Satoru",
-                        "_id": "Gojo"
-                    }
-                ]
-            }
+            //     employees: [
+            //         {
+            //             "name": "Tahsin",
+            //             "_id": "malu"
+            //         },
+            //         {
+            //             "name": "Pathul",
+            //             "_id": "shemale"
+            //         },
+            //         {
+            //             "name": "Hossain",
+            //             "_id": "gay"
+            //         },
+            //         {
+            //             "name": "Nilok",
+            //             "_id": "Straight"
+            //         },
+            //         {
+            //             "name": "Mokles",
+            //             "_id": "null"
+            //         },
+            //         {
+            //             "name": "Satoru",
+            //             "_id": "Gojo"
+            //         }
+            //     ]
+            // }
 
         }
     })
@@ -87,14 +87,14 @@ const AddExpense = () => {
     useEffect(() => {
         // setOptionList([])
         if (expenseCategory === "Purchase") {
-            if (data?.vendors && Array.isArray(data?.vendors)) {
+            if (data?.vendorNames && Array.isArray(data?.vendorNames)) {
 
-                setOptionList(data?.vendors)
+                setOptionList(data?.vendorNames)
             }
         } else if (expenseCategory === "Salaries") {
-            if (data?.employees && Array.isArray(data?.employees)) {
+            if (data?.employeeNames && Array.isArray(data?.employeeNames)) {
 
-                setOptionList(data?.employees)
+                setOptionList(data?.employeeNames)
             }
         }
     }, [expenseCategory, setOptionList, data])
@@ -181,7 +181,7 @@ const AddExpense = () => {
                         <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
                             <div className="w-full p-3">
                                 <select
-                                    label="Select Dish Category"
+                                    label="Select Expense Category"
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
 
                                     defaultValue=""
@@ -280,7 +280,7 @@ const AddExpense = () => {
                                             // jdi expense type purchase or salary na hole disable thakbe
                                             {...register("payTo", {
                                             })}
-                                            onChange={(e) => { optionList && Array.isArray(optionList) && setValue('payeeID', optionList.find(i => i?.name === e.target.value)?._id) }}
+                                            onChange={(e) => { optionList && Array.isArray(optionList) && setValue('payeeID', optionList.find(i => i?.name === e.target.value)?.id) }}
                                         >
                                             <option value="" disabled>
                                                 Select Whom to Pay

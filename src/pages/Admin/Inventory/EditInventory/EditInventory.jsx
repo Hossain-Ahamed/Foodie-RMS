@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle'
 import SetTitle from '../../../Shared/SetTtitle/SetTitle'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { SwalErrorShow, getUnits } from '../../../../assets/scripts/Utility'
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure'
@@ -10,21 +10,26 @@ import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch'
 import { useQuery } from 'react-query';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage'
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
-
-const AddInventory = () => {
+const EditInventory = () => {
     // sInventory catch the purchase if user select option other than purchase vendor will be disabled
     const [expenseCategory, SetExpenseCategory] = useState('');
     const [optionList, setOptionList] = useState([]);
     const axiosSecure = useAxiosSecure();
     const { branchID, res_id } = useRestauarantAndBranch();
     const units = getUnits();
+    const { id } = useParams()
     const drowpdownCategory = ["Purchase", "Salaries"]
-    const { refetch, data: data = [], isLoading, error: dataError } = useQuery({
+    const { refetch: dataRefetch, data: data = {}, isLoading, error: dataError,  } = useQuery({
         queryKey: ['inventory', res_id, branchID],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/get-vendors-for-inventory`)
+            const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/get-inventory-data/${id}`)
 
             // return res.data.categories;
+            setValue("itemName", res?.data?.itemData?.itemName);
+            setValue("vendorName", res?.data?.itemData?.vendorName);
+            setValue("unitType", res?.data?.itemData?.unitType);
+            setValue("unit", res?.data?.itemData?.unit);
+            setValue("unitPrice", res?.data?.itemData?.unitPrice);
             return res.data;
             // return {
             //     vendors: [
@@ -87,30 +92,20 @@ const AddInventory = () => {
 
     const { register, handleSubmit, formState: { errors }, setValue, getValues, resetField, control } = useForm({
         defaultValues: {
-
+            active: true,
         },
     });
 
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        data.res_id = res_id;
-        data.branchID = branchID
         console.log(data);
-        axiosSecure.post('/admin/add-to-inventory', data)
-            .then(data => {
-                toast.success("Item Added to Inventory !")
-                resetField("itemName");
-                resetField("vendorName");
-                resetField("unitType");
-                resetField("unit");
-                resetField("unitPrice");
-                refetch()
-                // navigate('/expenses')
+        axiosSecure.patch(`/admin/restaurant/${res_id}/branch/${branchID}/edit-inventory/${id}`, data)
+            .then(res => {
+                toast.success('Inventory Edited Successfully')
+                navigate('/inventory-report')
             })
-            .catch(err => {
-                SwalErrorShow(err)
-            })
+            .catch(err => SwalErrorShow(err))
 
         // if (!selectedImage0) {
 
@@ -132,8 +127,8 @@ const AddInventory = () => {
 
     return (
         <section className='max-w-7xl mx-auto py-8'>
-            <SectionTitle h1="Add to Inventory" />
-            <SetTitle title="Add to Inventory" />
+            <SectionTitle h1="Edit Inventory" />
+            <SetTitle title="Edit Inventory" />
             <form onSubmit={handleSubmit(onSubmit)} className='mt-3 px-6 mx-auto py-5 border border-gray-300 overflow-hidden bg-white rounded-md max-w-4xl'>
 
                 <div className="w-full">
@@ -164,7 +159,7 @@ const AddInventory = () => {
                                         Select Vendor Name
                                     </option>
 
-                                    { data && Array.isArray(data) && data.map((vendor, _idx) => (
+                                    {data && Array.isArray(data.vendorNames) && data.vendorNames.map((vendor, _idx) => (
                                         <option key={_idx} value={vendor}>
                                             {vendor}
                                         </option>
@@ -195,7 +190,7 @@ const AddInventory = () => {
                                 </select>
                                 {errors.unitType?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.unitType?.message}</p>)}
                             </div>
-                            
+
 
                             {/* active  */}
                             {/* <div className="w-full mt-1 p-3">
@@ -245,7 +240,7 @@ const AddInventory = () => {
                     <div className='flex flex-wrap justify-center items-end gap-3 p-1'>
                         {/* save button  */}
                         <button type='submit' className="flex flex-wrap justify-center w-full max-w-96  px-4 py-2 bg-green-500 hover:bg-green-600 font-medium text-sm text-white border border-green-500 rounded-md shadow-button">
-                            <p data-config-id="auto-txt-22-3">Create</p>
+                            <p data-config-id="auto-txt-22-3">Update</p>
                         </button>
                     </div>
                 </div>
@@ -255,4 +250,4 @@ const AddInventory = () => {
     )
 }
 
-export default AddInventory; 
+export default EditInventory; 
