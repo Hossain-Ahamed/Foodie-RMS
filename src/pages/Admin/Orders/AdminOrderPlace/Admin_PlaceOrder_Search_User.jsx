@@ -3,21 +3,40 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CustomPlaceOrderContext } from './AdminOrderPlace';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
+import { useQuery } from 'react-query';
+import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
+import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 
 
 const Admin_PlaceOrder_Search_User = () => {
+
+    const { SelectedUser, setSelectedUser, tableNo, setTabeleNo } = useContext(CustomPlaceOrderContext);
+
+    const { branchID, res_id } = useRestauarantAndBranch();
+    const axiosSecure = useAxiosSecure();
+
+    const { isLoading, error, data: tableList, refetch } = useQuery({
+        queryKey: ['food-list', res_id, branchID],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/tables`);
+            // console.log(res.data)
+            return res.data
+        }
+    })
+
+
     const [isAnnoymus, setAnnoymus] = useState(true);
 
 
 
-    const {SelectedUser, setSelectedUser} = useContext(CustomPlaceOrderContext);
 
     const [searchText, setSearchText] = useState('');
     const [searchResult, setSearchResult] = useState(null);
     const [selectedUserIndex, setSelectedUserIndex] = useState(-1);
     const inputRef = useRef(null);
     const navigate = useNavigate();
-    const axiosSecure = useAxiosSecure();
+
 
     const handleInputChange = (event) => {
         setSearchText(event.target.value);
@@ -67,20 +86,11 @@ const Admin_PlaceOrder_Search_User = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const response = await axiosSecure.get(`${import.meta.env.VITE_SERVER_ADDRESS}/search?q=${searchText}`);
+                const res = await axiosSecure.get(`/search-user-by-phone?phone=${searchText}`);
 
-                setSearchResult([
-                    { _id: "14378jdsjf", name: 'John Doe', phone: '123-456-7890' },
-                    { _id: "124378jdsjf", name: 'Jane Smith', phone: '987-654-3210' },
-                    { _id: "234378jdsjf", name: 'Michael Johnson', phone: '555-555-5555' },
-                    { _id: "434378jdsjf", name: 'Emily Brown', phone: '111-222-3333' },
-                    { _id: "5344378jdsjf", name: 'David Wilson', phone: '444-444-4444' },
-                    { _id: "645378jdsjf", name: 'Emma Martinez', phone: '777-888-9999' },
-                    { _id: "743787jdsjf", name: 'James Taylor', phone: '666-666-6666' },
-                    { _id: "84378jdsjf", name: 'Olivia Thomas', phone: '333-333-3333' },
-                    { _id: "94378hhjdsjf", name: 'William Garcia', phone: '222-222-2222' },
-                    { _id: "14378jdscxjf", name: 'Sophia Lopez', phone: '999-999-9999' },
-                ])
+                setSearchResult(res.data)
+
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -114,6 +124,14 @@ const Admin_PlaceOrder_Search_User = () => {
 
 
     };
+
+    if (isLoading) {
+        return <LoadingPage />
+    }
+
+    if (error) {
+        return <ErrorPage />
+    }
     return (
 
 
@@ -233,7 +251,7 @@ const Admin_PlaceOrder_Search_User = () => {
 
                         {/*  name  */}
                         <div className="w-full md:w-1/2 px-3 pb-1">
-                            <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-4-3">Last name</p>
+                            <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-4-3">Name</p>
                             <input className="w-full px-4 py-1.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-400/40 rounded-lg shadow-input" type="text" placeholder="Doe"
                                 value={SelectedUser?.name} readOnly />
 
@@ -256,6 +274,15 @@ const Admin_PlaceOrder_Search_User = () => {
 
 
                 </div>
+
+                <select id="" onChange={(e) => setTabeleNo(e.target.value)} value={tableNo} className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="">Select Table </option>
+
+                    {
+                        tableList && Array.isArray(tableList) && tableList.map(i => <option value={i?.number} key={i?.number}>No : {i?.number} Capacity : {i?.capacity}</option>)
+                    }
+
+                </select>
             </div>
 
 

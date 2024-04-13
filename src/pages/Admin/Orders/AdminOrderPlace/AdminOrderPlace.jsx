@@ -14,8 +14,10 @@ import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 import { Button } from '@nextui-org/react';
+import Swal from 'sweetalert2';
 export const CustomPlaceOrderContext = createContext();
 const AdminOrderPlace = () => {
+    const [tableNo,setTabeleNo] = useState("");
 
     const [SelectedUser, setSelectedUser] = useState({ _id: "null", name: 'Anonymous', phone: '000-000-000' })
 
@@ -41,6 +43,8 @@ const AdminOrderPlace = () => {
             return res.data
         }
     })
+
+
 
 
     //set category initally
@@ -71,13 +75,25 @@ const AdminOrderPlace = () => {
             toast.error("Select Items Before Order");
             return;
         }
+
+        if(!tableNo){
+            toast.error("Select Table");
+            return;
+        }
+        
         const data = {
             userData : SelectedUser,
-            dish : selectedItems
+            dish : selectedItems,
+            tableNo
         }
-        axiosSecure.post(`/restaurant/${res_id}/branch/${branchID}/dishes-for-custom-order-for-admin`, data)
+        console.log(data)
+        axiosSecure.post(`/restaurant/${res_id}/branch/${branchID}/place-an-order-by-admin`, data)
             .then(res => {
-                toast.success("Order Placed");
+                Swal.fire({
+                    title: res.data?.token || "",
+                    text: res.data?.message || ""
+                });
+                console.log(res.data)
                 navigate('/ongoing-orders')
             })
             .catch((e) => {
@@ -96,7 +112,8 @@ const AdminOrderPlace = () => {
         isSelected,
         setIsSelected,
         dishesUnderCategory, setdishesUnderCategory,
-        SelectedUser, setSelectedUser
+        SelectedUser, setSelectedUser,
+        tableNo,setTabeleNo
     }
 
     if (isLoading) {
@@ -131,7 +148,7 @@ const AdminOrderPlace = () => {
 
                             <div className='w-full justify-between items-center flex'>
 
-                                <strong className="block font-medium">Need to Pay :  {selectedItems.reduce((sum, item) => sum + (item?.totalPrice || 0), 0)}</strong>
+                                <strong className="block font-medium">Need to Pay :  {selectedItems.reduce((sum, item) => sum + (item?.totalPrice * item?.quantity || 0), 0)}</strong>
                                 <button className='px-4 py-2 bg-success-500 shadow text-white font-medium rounded-lg' onClick={handlePlaceOrder}>
                                     Place Order
                                 </button>
