@@ -1,9 +1,9 @@
 import { MdOutlineCheckCircle, MdClear, MdPendingActions, MdCheck } from "react-icons/md";
 import { LuEye } from "react-icons/lu";
-import { BiDish, BiEditAlt } from "react-icons/bi";
-import { TbMoneybag, TbTruckDelivery } from "react-icons/tb";
+import { BiEditAlt } from "react-icons/bi";
+import { TbMoneybag } from "react-icons/tb";
 import Swal from "sweetalert2";
-import { FaTrashAlt } from "react-icons/fa";
+import { GiCampCookingPot } from "react-icons/gi";
 
 import userImg from '../../../assets/images/Gif/lazy.jpg'
 import noUserImage from '../../../assets/images/Gif/noUserImage.jpeg'
@@ -11,8 +11,10 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { SwalErrorShow } from "../../../assets/scripts/Utility";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
-import OrderDetailAdmin from "./OrderDetailAdmin";
-import DeliveryManSelectModal from "./DeliveryManSelectModal";
+import OrderDetailAdmin from "../OngoingOrderList/OrderDetailAdmin";
+import { CiDeliveryTruck } from "react-icons/ci";
+import DeliveryBoyDetailView from "./DeliveryBoyDetailView";
+import DeliveryBoyOTP_And_ReadyToDeliveryButtons from "./DeliveryBoyOTP_And_ReadyToDeliveryButtons";
 
 const statusColorMap = {
     active: "success",
@@ -46,7 +48,7 @@ const statusColorMap = {
 
 };
 
-const TableRow = ({ order, PaymentType, refetch }) => {
+const OrderListForDeliveryBoyTableRow = ({ order, PaymentType, refetch }) => {
 
     let statusStyle, paymentStatus, icon;
     switch (order.status) {
@@ -102,71 +104,27 @@ const TableRow = ({ order, PaymentType, refetch }) => {
 
 
 
-    /**
-     * 
-     * Onsite ===>
-     *      Money Bag CLick ==>
-     *                   * Pay First ==>   cash status  ---> Paid
-     *                                     All Items    ---->  all order placed status ---> Approved
-     *                                     status       ----> payment pending to processing 
-     * 
-     *                   * Pay Later ==>  cash status  ---> Paid
-     *                                      status     ----> completed
-     * 
-     *    Tick Mark Click  ==>
-     *                          all order-placed dishes to approved  but do not change whch are approved or any other state
-     *                                   
-     *                
-     * 
-     */
 
     const axiosSecure = useAxiosSecure();
-    const handleMoneyBagClick = () => {
 
-        if (order?.cash_status === "Paid") {
-            toast.error("Already Payment received");
-            return;
-        }
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You are confirming that you have received " + order?.finalPrice + "tk",
+    const handleApproveToCook = () => {
 
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Procceed"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (PaymentType === "PayFirst") {
-                    axiosSecure.patch(`/update-an-onsite-pay-first-order-by-clicking-money-bag-by-admin/${order?._id}`, { data: Date.now() })
-                        .then((res => {
-                            refetch();
-                            toast.success("Updated");
-                        }))
-                        .catch(e => {
-                            SwalErrorShow(e)
-                        })
-                } else {
-                    axiosSecure.patch(`/update-an-onsite-pay-later-order-by-clicking-money-bag-by-admin/${order?._id}`, { data: Date.now() })
-                        .then((res => {
-                            refetch();
-                            toast.success("Updated");
-                        }))
-                        .catch(e => {
-                            SwalErrorShow(e)
-                        })
-                }
-            }
-        });
+        axiosSecure.patch(`/approve-to-cook/${order?._id}`, { data: Date.now() })
+            .then((res => {
+                toast.success("Updated");
+                refetch();
+            }))
+            .catch(e => {
+                SwalErrorShow(e)
+            })
 
 
     }
-
-    const handleApproveToCook = () => {
+    const handleApproveToDelivery = () => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You are confirming Chef To cook",
+            text: "You are confirming dishes are ready to serve",
 
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -175,7 +133,7 @@ const TableRow = ({ order, PaymentType, refetch }) => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                axiosSecure.patch(`/apporve-an-order/${order?._id}`, { data: Date.now() })
+                axiosSecure.patch(`/approve-to-ready-to-serve/${order?._id}`, { data: Date.now() })
                     .then((res => {
                         toast.success("Updated");
                         refetch();
@@ -187,54 +145,7 @@ const TableRow = ({ order, PaymentType, refetch }) => {
             }
         });
     }
-    const handleDeleteOrder = id => {
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.delete(`/cancel-an-order/${order?._id}`)
-                    .then((res => {
-                        refetch();
-                        toast.success("Deleted");
-                    }))
-                    .catch(e => {
-                        SwalErrorShow(e)
-                    })
-            }
-        });
-    }
-
-
-    const handleDishServed = id => {
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You are confirming the Dishes are Delivered",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Confirmed"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.patch(`/onsite-pay-first-order-delivered/${order?._id}`)
-                    .then((res => {
-                        refetch();
-                        toast.success("Order Completed");
-                    }))
-                    .catch(e => {
-                        SwalErrorShow(e)
-                    })
-            }
-        });
-    }
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
         <>
@@ -298,32 +209,18 @@ const TableRow = ({ order, PaymentType, refetch }) => {
                     <button onClick={onOpen} title="View Details" className="inline-flex ml-3 cursor-pointer text-blue-500"><LuEye size={25} /></button>
 
 
-
-                    <button onClick={handleApproveToCook} title="Approve and Ready to Cook" className="inline-flex ml-3 cursor-pointer text-emerald-500"><MdCheck size={25} /></button>
-
-                    {
-                        (order?.order_from === "ONSITE") && order?.status === "Ready to serve" && <button onClick={handleDishServed} title="Food Served to Client" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiDish size={25} /></button>
-                    }
-                    {
-                        (order?.order_from === "OFFSITE" && order?.status === "Processed And Ready to Ship") && order?.orderNote === "Take-away" && <button onClick={handleDishServed} title="Food Served to Client" className="inline-flex ml-3 cursor-pointer text-gray-500"><BiDish size={25} /></button>}
-                    {(order?.order_from === "OFFSITE" && order?.status === "Processed And Ready to Ship") && order?.orderNote === "Delivery" && <DeliveryManSelectModal orderID={order?._id} refetch={refetch} />}
+                    <DeliveryBoyOTP_And_ReadyToDeliveryButtons order={order} refetch={refetch} />
 
 
 
-
-                    {
-                        order?.order_from === "ONSITE" && <button onClick={handleMoneyBagClick} title="Confirm Payment Received" className="inline-flex ml-3 cursor-pointer text-amber-500"><TbMoneybag size={25} /></button>
-                    }
-
-                    <button title="Cancel Order" onClick={handleDeleteOrder} className="inline-flex ml-3 cursor-pointer text-red-500"><FaTrashAlt size={25} /></button>
                 </td>
             </tr>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="auto">
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="auto" className='h-fit max-h-[85vh]  overflow-scroll pt-0 mx-0 px-0 scrollbar-hide'>
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalBody className='h-fit max-h-[85vh]  overflow-scroll pt-0 mx-0 px-0 scrollbar-hide'>
-                                <OrderDetailAdmin order={order} />
+                            <ModalBody className="p-0">
+                                <DeliveryBoyDetailView order={order} />
                             </ModalBody>
 
                         </>
@@ -334,4 +231,4 @@ const TableRow = ({ order, PaymentType, refetch }) => {
     )
 }
 
-export default TableRow
+export default OrderListForDeliveryBoyTableRow
