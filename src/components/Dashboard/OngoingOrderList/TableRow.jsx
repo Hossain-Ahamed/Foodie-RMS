@@ -113,7 +113,7 @@ const TableRow = ({ order, PaymentType, refetch }) => {
      *                                      status     ----> completed
      * 
      *    Tick Mark Click  ==>
-     *     Only for Pay Later ==>   all order-placed dishes to approved  but do not change whch are approved or any other state
+     *                          all order-placed dishes to approved  but do not change whch are approved or any other state
      *                                   
      *                
      * 
