@@ -8,7 +8,7 @@ import trash from "../../../../assets/images/Home/delete.svg"
 import dishIcon from "../../../../assets/images/Home/dish.svg"
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 const Dish_List_Row = ({ dish, axiosSecure, refetch }) => {
-    const { branchID, res_id } = useRestauarantAndBranch();
+    const { branchID, res_id, role } = useRestauarantAndBranch();
     let statusStyle, icon;
     // setting color and icon for dish status
     switch (dish?.isActive) {
@@ -119,9 +119,20 @@ const Dish_List_Row = ({ dish, axiosSecure, refetch }) => {
                 <span
                     className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-center'
                 >
-                    <Link to={`/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
-                    <span title="Delete category" onClick={() => handleDeletecategory(dish?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
-                    <Link to={`/recipe/${dish?._id}`} title="Add Recipe" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={dishIcon} /></Link>
+                    {
+                        ['Admin', 'Super-Admin'].includes(role) && <>
+                            <Link to={`/edit-dish/${dish?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
+                            <span title="Delete category" onClick={() => handleDeletecategory(dish?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
+                        </>
+                    }
+
+                    {
+                        ['Admin', 'Super-Admin', 'Kitchen Staff'].includes(role) && <>
+                            <Link to={`/recipe/${dish?._id}`} title="Add Recipe" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={dishIcon} /></Link>
+                        </>
+                    }
+
+
                 </span>
             </td>
         </tr>

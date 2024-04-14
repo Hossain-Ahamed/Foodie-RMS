@@ -12,7 +12,7 @@ import { SwalErrorShow } from "../../../../assets/scripts/Utility";
 const DishCategoryRow = ({ category, refetch, isLoading }) => {
     // console.log(category);
     const axiosSecure = useAxiosSecure()
-    const { branchName, restaurantName } = useRestauarantAndBranch();
+    const { branchName, restaurantName, role } = useRestauarantAndBranch();
     let statusStyle, paymentStatus, icon;
     switch (category.active) {
         case true:
@@ -38,16 +38,16 @@ const DishCategoryRow = ({ category, refetch, isLoading }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/admin/delete-categories/${id}`)
-                .then(res => {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your category has been deleted.",
-                        icon: "success"
-                    });
-                    isLoading = false
-                    refetch()
-                })
-                .catch(err => SwalErrorShow(err))
+                    .then(res => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your category has been deleted.",
+                            icon: "success"
+                        });
+                        isLoading = false
+                        refetch()
+                    })
+                    .catch(err => SwalErrorShow(err))
             }
         });
     }
@@ -85,17 +85,22 @@ const DishCategoryRow = ({ category, refetch, isLoading }) => {
                 </span>
             </td>
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center '>
-                 
-                <span className='text-gray-600 whitespace-no-wrap block'>{category?.description.substring(0,30)}</span>
+
+                <span className='text-gray-600 whitespace-no-wrap block'>{category?.description.substring(0, 30)}</span>
             </td>
-           
+
             {/* <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${paymentStatus}`}><p className="whitespace-nowrap text-sm text-center">{category?.payment_status}</p></span>
             </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
-                <Link to={`/edit-category/${category?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
-                {/* <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span> */}
-                <span title="Delete category" onClick={() => handleDeletecategory(category?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
+                {
+                    ['Admin', 'Super-Admin'].includes(role) && <>
+                        <Link to={`/edit-category/${category?._id}`} title="Edit category" className="inline-flex ml-3 cursor-pointer text-gray-500"><img src={edit} /></Link>
+                        {/* <span title="Delete category" onClick={() => handleDeletecategory(category.categoryID)} className="inline-flex ml-3 cursor-pointer text-red-500 transition-colors duration-300 hover:border-b-2 hover:border-b-blue-400"><MdClear size={25} /></span> */}
+                        <span title="Delete category" onClick={() => handleDeletecategory(category?._id)} className="inline-flex ml-3 cursor-pointer text-red-500"><img src={trash} /></span>
+                    </>
+                }
+
             </td>
         </tr>
     )

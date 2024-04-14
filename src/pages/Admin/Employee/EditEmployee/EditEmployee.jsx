@@ -665,6 +665,7 @@ console.log(data)
                                         <option value="Admin">Admin</option>
                                         <option value="Kitchen Staff">Kitchen Staff</option>
                                         <option value="Customer Service">Customer Service</option>
+                                        <option value="Delivery Boy">Delivery Boy</option>
                                         <option value="Others">Others</option>
                                     </select>
                                 </div>

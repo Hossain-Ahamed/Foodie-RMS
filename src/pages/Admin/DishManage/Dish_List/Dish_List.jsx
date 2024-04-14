@@ -12,7 +12,7 @@ import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 
 const Dish_List = () => {
   const axiosSecure = useAxiosSecure();
-  const { branchID, res_id } = useRestauarantAndBranch();
+  const { branchID, res_id, role } = useRestauarantAndBranch();
   const [selectedRange, setSelectedRange] = useState(30);
   const [selectActive, setSelectActive] = useState("all");
   const [currentPage, setCurrentPage] = useState(0)
@@ -21,68 +21,6 @@ const Dish_List = () => {
     queryKey: ['employee-list', selectedRange, selectActive, currentPage],
     queryFn: async () => {
       const res = await axiosSecure.get(`/admin/get-all-dishes/${branchID}?currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
-      // return [
-      //   {
-      //     _id: 1,
-      //     photo: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-      //     category: "Italian Cuisine",
-      //     title: "Pizza",
-      //     status: true,
-      //     price: '579',
-      //     offerPrice: '379',
-      //     preparation_cost: '299',
-      //     sales_tax: "25",
-      //     supplementary_duty: "27",
-      //   },
-      //   {
-      //     _id: 2,
-      //     photo: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-      //     category: "Mexican Cuisine",
-      //     title: "Pizza",
-      //     status: true,
-      //     price: '579',
-      //     offerPrice: '379',
-      //     preparation_cost: '299',
-      //     sales_tax: "25",
-      //     supplementary_duty: "27",
-      //   },
-      //   {
-      //     _id: 3,
-      //     photo: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-      //     category: "Italian Cuisine",
-      //     title: "Pizza",
-      //     status: false,
-      //     price: '579',
-      //     offerPrice: '379',
-      //     preparation_cost: '299',
-      //     sales_tax: "25",
-      //     supplementary_duty: "27",
-      //   },
-      //   {
-      //     _id: 4,
-      //     photo: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-      //     category: "Asian Cuisine",
-      //     title: "Rice bowl",
-      //     status: true,
-      //     price: '579',
-      //     offerPrice: '379',
-      //     preparation_cost: '299',
-      //     sales_tax: "25",
-      //     supplementary_duty: "27",
-      //   },
-      //   {
-      //     _id: 5,
-      //     photo: "https://lh3.googleusercontent.com/a/ACg8ocKjKSD7xxcI8hEoNgPnsxZ632hSVJFspYJNcAAmPKc39g=s360-c-no",
-      //     category: "Italian Cuisine",
-      //     title: "Pizza",
-      //     status: false,
-      //     price: '579',
-      //     offerPrice: '379',
-      //     preparation_cost: '299',
-      //     sales_tax: "25",
-      //     supplementary_duty: "27",
-      //   },
-      // ]
       return res.data
     }
   })
@@ -96,39 +34,43 @@ const Dish_List = () => {
     <div className='max-w-[1600px] mx-auto mt-4'>
       <SetTitle title="Dish List" />
       <div className='flex gap-3 justify-between items-center md:flex-row flex-col-reverse'>
-          <div>
-            <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900"> Select range </label>
-            <select
-              name="dataRange"
-              id="HeadlineAct"
-              className="mt-1.5 border w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2.5 px-4"
-              onChange={(event) => setSelectedRange(event.target.value)}
-              defaultValue={selectedRange}
-            >
-              {
-                ranges.map((range, idx) => <option key={idx} value={range}>{range}</option>)
-              }
-            </select>
-          </div>
-          <div>
-            <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900"> Select status </label>
-            <select
-              className="mt-1.5 border w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2.5 px-4"
-              onClick={(event) => setSelectActive(event.target.value)}
-              defaultValue={selectActive}
-            >
-              <option value="all">All</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
+        <div>
+          <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900"> Select range </label>
+          <select
+            name="dataRange"
+            id="HeadlineAct"
+            className="mt-1.5 border w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2.5 px-4"
+            onChange={(event) => setSelectedRange(event.target.value)}
+            defaultValue={selectedRange}
+          >
+            {
+              ranges.map((range, idx) => <option key={idx} value={range}>{range}</option>)
+            }
+          </select>
+        </div>
+        <div>
+          <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900"> Select status </label>
+          <select
+            className="mt-1.5 border w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2.5 px-4"
+            onClick={(event) => setSelectActive(event.target.value)}
+            defaultValue={selectActive}
+          >
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
         <div className='w-full flex-1'>
           <SectionTitle h1="Dish List" />
         </div>
         <div>
-          <Link to={`/add-dish`} 
-          className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap'>Add Dish<IoAddOutline className='text-white' />
-          </Link>
+          {
+            ['Admin', 'Super-Admin'].includes(role) && <>
+              <Link to={`/add-dish`}
+                className='flex justify-center items-center gap-2 text-white font-medium  px-4 py-2 bg-green-400 rounded-md text-nowrap'>Add Dish<IoAddOutline className='text-white' />
+              </Link>
+            </>
+          }
         </div>
 
       </div>

@@ -40,8 +40,12 @@ const Order_SelectedItems = () => {
                                             <td className="text-right pl-2 flex items-center font-semibold text-gray-600">{dishData.VAT}</td>
                                         </tr>
                                         <tr className='border-t'>
+                                            <td className="text-left text-gray-500 pr-2">Unit Cost :</td>
+                                            <td className="text-right pl-2 flex items-center font-semibold text-green-400">{(dishData.totalPrice).toFixed(1)}</td>
+                                        </tr>
+                                        <tr className='border-t'>
                                             <td className="text-left text-gray-500 pr-2">Total :</td>
-                                            <td className="text-right pl-2 flex items-center font-semibold text-green-400">{dishData.totalPrice}</td>
+                                            <td className="text-right pl-2 flex items-center font-semibold text-green-400">{(dishData.totalPrice*dishData?.quantity).toFixed(1)}</td>
                                         </tr>
 
                                     </tbody>

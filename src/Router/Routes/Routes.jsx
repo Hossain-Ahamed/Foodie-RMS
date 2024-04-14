@@ -7,7 +7,7 @@ import MyRestaurants from "../../pages/Admin/MyRestaurant/MyRestaurant";
 import Statistics from "../../pages/Admin/Statistics/Statistics";
 import ErrorPage from "../../pages/Shared/ErrorPage/ErrorPage";
 import ViewAsMyProfile from "../../pages/Admin/ViewEmployee/ViewAsMyProfile";
-import OngoingOrders from "../../pages/Admin/Orders/OngoingOrders/OngoingOrders";
+// import OngoingOrders from "../../pages/Admin/Orders/OngoingOrders/OngoingOrders";
 import DishCategory_Add from "../../pages/Admin/Dish_Category/DishCategory_Add/DishCategory_Add";
 import DishCategory_List from "../../pages/Admin/Dish_Category/DishCategory_List/DishCategory_List";
 import DishCategory_Edit from "../../pages/Admin/Dish_Category/DishCaregory_Edit/DishCatgory_Edit";
@@ -50,6 +50,9 @@ import PurchaseHistory from "../../pages/Admin/Expenses/ExpensesAndSalary/Purcha
 import AddInventory from "../../pages/Admin/Inventory/AddInventory/AddInventory";
 import AddExpense from "../../pages/Admin/Expenses/AddExpense/AddExpense";
 import EditInventory from "../../pages/Admin/Inventory/EditInventory/EditInventory";
+import OngoingOrderList from "../../components/Dashboard/OngoingOrderList/OngoingOrderList";
+import AllOrderList from "../../components/Dashboard/AllOrderList/AllOrderList";
+import OngoingOrders from "../../pages/Admin/Orders/OngoingOrders/OngoingOrders";
 
 
 
@@ -231,6 +234,11 @@ export const router = createBrowserRouter([
             {
                 path: '/ongoing-orders',
                 element: <OngoingOrders />
+                // '/restaurant/:res_id/branch/:branchID/ongoing-orders',
+            },
+            {
+                path: '/all-orders',
+                element: <AllOrderList />
                 // '/restaurant/:res_id/branch/:branchID/ongoing-orders',
             },
             {

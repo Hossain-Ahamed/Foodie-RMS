@@ -1,12 +1,23 @@
 import React from 'react';
-import OngoingOrderTable from '../../../../components/Dashboard/OngoingOrderTable/OngoingOrderTable';
+import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
+import OrderListForKitchenStuff from '../../../../components/Dashboard/OrderListForKitchenStuff/OrderListForKitchenStuff';
+import OngoingOrderList from '../../../../components/Dashboard/OngoingOrderList/OngoingOrderList';
 
 const OngoingOrders = () => {
-    return (
-        <div className='bg-gray-50 rounded-md h-auto'>
-            <OngoingOrderTable />
-        </div>
-    );
+
+    const {role} = useRestauarantAndBranch();
+
+    if(role==="Kitchen Staff"){
+        return <OrderListForKitchenStuff/>
+    }
+    if(role==="Delivery Boy"){
+        return <OrderListForKitchenStuff/>
+    }
+
+
+
+    return <OngoingOrderList/>
+    
 };
 
 export default OngoingOrders;

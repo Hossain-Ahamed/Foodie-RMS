@@ -4,6 +4,7 @@ import { BranchAndRestaurantNameContext } from '../Contexts/BranchAndRestaurantN
 const useRestauarantAndBranch = () => {
   const data = useContext(BranchAndRestaurantNameContext);
 
+
   return data;
 }
 
