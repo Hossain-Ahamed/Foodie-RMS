@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { HiOutlineArrowRightCircle } from "react-icons/hi2";
+import { RiArrowDropLeftLine, RiArrowDropRightLine } from 'react-icons/ri';
 
 function Paginator({ currentPage, totalPages, setCurrentPage }) {
     const displayRange = 4; // Number of pages to display on each side of the current page
@@ -39,7 +40,7 @@ function Paginator({ currentPage, totalPages, setCurrentPage }) {
             ) {
                 pages.push(
                     <span key={i} className="mx-1 text-gray-700">
-                        ...
+                        ..
                     </span>
                 );
             }
@@ -53,9 +54,9 @@ function Paginator({ currentPage, totalPages, setCurrentPage }) {
             {currentPage > 1 && (
                 <button
                     onClick={() => onPageChange(currentPage - 1)}
-                    className="bg-blue-500 dark:bg-blue-700 text-white px-3 py-1 mx-1 rounded-full focus:outline-none"
+                    className="bg-blue-500  text-white  px-1 mx-1 rounded-full focus:outline-none"
                 >
-                    Previous
+                 <RiArrowDropLeftLine className='text-2xl' />
                 </button>
             )}
 
@@ -64,10 +65,10 @@ function Paginator({ currentPage, totalPages, setCurrentPage }) {
             {currentPage < totalPages && (
                 <button
                     onClick={() => onPageChange(currentPage + 1)}
-                    className="bg-blue-500 dark:bg-blue-700 text-white px-3 py-1 mx-1 rounded-full focus:outline-none"
-                >
-                    Next
-                </button>
+                    className="bg-blue-500  text-white  px-1 mx-1 rounded-full focus:outline-none"
+                    >
+                        <RiArrowDropRightLine className='text-2xl' />
+                    </button>
             )}
 
 

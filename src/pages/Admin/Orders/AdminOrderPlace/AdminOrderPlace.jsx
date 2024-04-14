@@ -148,7 +148,7 @@ const AdminOrderPlace = () => {
 
                             <div className='w-full justify-between items-center flex'>
 
-                                <strong className="block font-medium">Need to Pay :  {selectedItems.reduce((sum, item) => sum + (item?.totalPrice * item?.quantity || 0), 0)}</strong>
+                                <strong className="block font-medium">Need to Pay :  {selectedItems.reduce((sum, item) => sum + (item?.totalPrice * item?.quantity || 0), 0).toFixed(1)} ≈ {Math.ceil(selectedItems.reduce((sum, item) => sum + (item?.totalPrice * item?.quantity || 0), 0))}</strong>
                                 <button className='px-4 py-2 bg-success-500 shadow text-white font-medium rounded-lg' onClick={handlePlaceOrder}>
                                     Place Order
                                 </button>

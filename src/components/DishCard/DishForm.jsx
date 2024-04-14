@@ -80,7 +80,7 @@ const DishForm = ({ dish, onOpenChange }) => {
             basePrice: dish?.offerPrice,
             extra: extraPrice,
             VAT: parseFloat(((dish.offerPrice + extraPrice) * (dish?.supplementary_duty / 100 + dish?.sales_tax / 100)).toFixed(1)),
-            totalPrice,
+            totalPrice : parseFloat(totalPrice.toFixed(1)),
             key: Date.now().toString()
         }
         // console.log(data)

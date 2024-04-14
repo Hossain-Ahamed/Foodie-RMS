@@ -13,7 +13,7 @@ import ErrorPage from "../../../Shared/ErrorPage/ErrorPage";
 
 const DishCategory_List = () => {
     const axiosSecure = useAxiosSecure();
-    const { branchID, res_id } = useRestauarantAndBranch();
+    const { branchID, res_id ,role} = useRestauarantAndBranch();
     const [searchQuery, setSearchQuery] = useState('')
     const [numberOfButtons, setNumberOfButtons] = useState([])
     const [totalPage, setTotalPage] = useState(0)
@@ -97,12 +97,15 @@ const DishCategory_List = () => {
                                 </select>
                             </div>
                         </div>
-                        <Link
-                            className="inline-block mt-5 mb-5 rounded border border-green-600 px-8 py-2.5 text-sm font-medium text-green-600 hover:bg-green-600 hover:text-white focus:outline-none focus:ring active:bg-green-500"
-                            to={`/add-category`}
-                        >
-                            Add Category
-                        </Link>
+                        {
+                            ['Admin', 'Super-Admin'].includes(role) && <>
+                                <Link
+                                    className="inline-block mt-5 mb-5 rounded border border-green-600 px-8 py-2.5 text-sm font-medium text-green-600 hover:bg-green-600 hover:text-white focus:outline-none focus:ring active:bg-green-500"
+                                    to={`/add-category`}
+                                >
+                                    Add Category
+                                </Link>
+                            </>}
                     </div>
                 </div>
                 <div className='py-8'>
@@ -134,7 +137,7 @@ const DishCategory_List = () => {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>{data?.categories && Array.isArray(data?.categories) && data?.categories.map((category, _idx) => <DishCategoryRow key={_idx} category={category} refetch={refetch} isLoading={isLoading}/>)}</tbody>
+                                <tbody>{data?.categories && Array.isArray(data?.categories) && data?.categories.map((category, _idx) => <DishCategoryRow key={_idx} category={category} refetch={refetch} isLoading={isLoading} />)}</tbody>
                             </table>
                         </div>
                     </div>
