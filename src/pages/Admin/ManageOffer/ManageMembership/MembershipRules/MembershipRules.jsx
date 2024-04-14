@@ -13,7 +13,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 const MembershipRules = () => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const axiosSecure = useAxiosSecure();
-    const { res_id } = useRestauarantAndBranch();
+    const { res_id ,role} = useRestauarantAndBranch();
     const [loading, setLoading] = useState(false);
 
     const { refetch: dataRefetch, data: data = {}, isLoading: dataLoading, error: dataError } = useQuery({
@@ -62,11 +62,14 @@ const MembershipRules = () => {
                     <SectionTitle h2="Membership Conditions" />
                 </div>
                 <div className='w-1/4 flex justify-end'>
-                    <MembershipRulesEdit isOpen={isOpen}
+                    {
+                        ['Admin','Super-Admin'].includes(role) &&  <MembershipRulesEdit isOpen={isOpen}
                         onOpen={onOpen}
                         onOpenChange={onOpenChange}
 
                         data={data} handleChange={handleChange} loading={loading} />
+                    }
+                   
                 </div>
             </div>
 

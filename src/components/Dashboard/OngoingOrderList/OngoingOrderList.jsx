@@ -15,7 +15,7 @@ const OngoingOrderList = () => {
 
 
 
-    const {res_id,branchID} = useRestauarantAndBranch();
+    const {res_id,branchID,role} = useRestauarantAndBranch();
 
     /**
   * ----------------------------------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ const OngoingOrderList = () => {
     const { data: responseData = {}, isLoading: queryLoading, error: queryError, refetch } = useQuery({
         queryKey: ["orders", searchValue, currentPage, numberOfSizeInTableData, typeOfRange, startingDate, EndingDate,res_id,branchID],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/active-orders-list?search=${searchValue}&currentPage=${currentPage - 1}&numberOfSizeInTableData=${numberOfSizeInTableData}&typeOfRange=${typeOfRange}&startingDate=${startingDate}&endingDate=${EndingDate}`)
+            const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/active-orders-list?role=${role}&search=${searchValue}&currentPage=${currentPage - 1}&numberOfSizeInTableData=${numberOfSizeInTableData}&typeOfRange=${typeOfRange}&startingDate=${startingDate}&endingDate=${EndingDate}`)
 
             // console.log(res.data)
             if (res.data?.DataArrayList && Array.isArray(res.data?.DataArrayList)) {

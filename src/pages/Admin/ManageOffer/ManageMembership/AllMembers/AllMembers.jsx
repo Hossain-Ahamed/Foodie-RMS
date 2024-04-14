@@ -15,7 +15,7 @@ import { SwalErrorShow } from '../../../../../assets/scripts/Utility';
 
 const AllMembers = () => {
     const axiosSecure = useAxiosSecure();
-    const { res_id, branchID } = useRestauarantAndBranch();
+    const { res_id, branchID,role } = useRestauarantAndBranch();
 
     const { refetch: dataRefetch, data: data = [], isLoading: dataLoading, error: dataError } = useQuery({
         queryKey: ['membersData', res_id],
@@ -28,6 +28,10 @@ const AllMembers = () => {
 
 
     const handleRemoveMember = async (userData) => {
+
+        if(!['Admin','Super-Admin'].includes(role)){
+            return toast.error("You are not allowed to remove a Member");
+        }
         const confirmDelete = await Swal.fire({
             title: 'Are you sure?',
             text: 'This action cannot be undone.',
