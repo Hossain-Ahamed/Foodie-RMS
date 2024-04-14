@@ -18,7 +18,7 @@ const ExpenseRow = ({ expense, branchID, res_id, refetch }) => {
     } else if (dueAmount < 0 || dueAmount === 0) {
         status = "Paid"
     }
-    const handleDeleteOrder = id => {
+    const handleExpenseDelete = id => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -77,7 +77,7 @@ const ExpenseRow = ({ expense, branchID, res_id, refetch }) => {
             </td> */}
             <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <Link to={`/edit-expenses/${expense?._id}`} title="Edit Order" className="inline-flex ml-3 cursor-pointer"><img src={edit} /></Link>
-                <span title="Delete category" onClick={() => handleDeleteOrder(expense?._id)} className="inline-flex ml-3 cursor-pointer"><img src={trash} /></span>
+                <span title="Delete category" onClick={() => handleExpenseDelete(expense?._id)} className="inline-flex ml-3 cursor-pointer"><img src={trash} /></span>
             </td>
         </tr>
     )

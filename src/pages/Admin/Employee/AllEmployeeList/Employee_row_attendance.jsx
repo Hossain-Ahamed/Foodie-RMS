@@ -56,17 +56,18 @@ export default function Employee_row_attendance({employee_ID,  branchID, res_id 
         queryKey: ['employee-list',branchID,res_id,employee_ID,currentMonth],
         cacheTime: 0,
         queryFn: async () => {
-            // const res = await axiosSecure(`/restaurant/${res_id}/branch/${branchID}/get-attendance/${employee_ID}/month/${currentMonth}`);
-            console.log(`/restaurant/${res_id}/branch/${branchID}/get-attendance/${employee_ID}/month/${currentMonth}`)
-          
-            return [
-                '2024-03-11T13:00',
-                '2024-03-20T09:00',
-                '2024-03-20T17:00',
-                '2024-03-09T13:00',
-                '2024-03-29T14:00',
-                '2024-03-30T14:00'
-            ]
+            const res = await axiosSecure.get(`/restaurant/${res_id}/branch/${branchID}/get-attendance/${employee_ID}/month/${currentMonth}`);
+            // console.log(`/restaurant/${res_id}/branch/${branchID}/get-attendance/${employee_ID}/month/${currentMonth}`)
+            console.log(res.data)
+            return res.data?.yesDates || []
+            // return [
+            //     '2024-03-11T13:00',
+            //     '2024-03-20T09:00',
+            //     '2024-03-20T17:00',
+            //     '2024-03-09T13:00',
+            //     '2024-03-29T14:00',
+            //     '2024-03-30T14:00'
+            // ]
         }
     })
 

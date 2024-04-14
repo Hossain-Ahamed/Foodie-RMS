@@ -6,16 +6,13 @@ import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 import edit from "../../../../assets/images/Home/edit.svg"
 import trash from "../../../../assets/images/Home/delete.svg"
+import upload from "../../../../assets/images/Home/upload.svg"
 
-
-import { Select, SelectItem } from "@nextui-org/react";
 import { toast } from 'react-hot-toast';
 
 
 
-const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
-
-
+const AttendanceAdd_Row = ({ employee, axiosSecure, refetch, handleSelectionChange }) => {
 
 
     const { branchID, res_id } = useRestauarantAndBranch();
@@ -35,34 +32,56 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
         case 'Customer Service':
             statusStyle = 'bg-amber-100 text-amber-700'
             break
-        case 'Others':
+        case 'Delivery Boy':
             statusStyle = 'bg-blue-100 text-blue-700'
             break
     }
 
     const [value, setValue] = React.useState("No");
 
-    const handleSelectionChange = (e) => {
-        setValue(e.target.value);
+    // const handleSelectionChange = (e) => {
+    //     setValue(e.target.value);
 
-        const selection = e.target.value;
-        const currentDate = new Date();
-        const isoDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 0, 0, 0);
+    //     const selection = e.target.value;
+    //     const currentDate = new Date();
+    //     const isoDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 12, 0, 0, 0);
 
-        const data = {
-            date: isoDate.toISOString()
-        };
+    //     const data = {
+    //         date: isoDate.toISOString()
+    //     };
 
-        if (selection === "Yes") {
-            data.status = true;
-        } else {
-            data.status = false;
-        }
+    //     if (selection === "Yes") {
+    //         data.status = true;
+    //     } else {
+    //         data.status = false;
+    //     }
 
-        axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/modify-attendance/${employee?._id}`, data)
-            .then(res => toast.success('Changed Successfully'))
-            .catch(e => toast.error('Error !Try Again'))
-    };
+    //     axiosSecure.patch(`/restaurant/${res_id}/branch/${branchID}/modify-attendance/${employee?._id}`, data)
+    //         .then(res => toast.success('Changed Successfully'))
+    //         .catch(e => toast.error('Error !Try Again'))
+    // };
+
+    const handleAttendenceSave = id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // for deleting expense
+                axiosSecure.delete(`/admin/${res_id}/branch/${branchID}/delete-expenses/${id}`)
+                    .then(res => {
+                        toast.success("Expense Deleted Successfully")
+                        refetch()
+                    })
+                    .catch(err => SwalErrorShow(err))
+            }
+        });
+    }
 
     return (
 
@@ -143,9 +162,10 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
                 {/* <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900"> Select status </label> */}
                 <select
                     className="mt-1.5 border w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm py-2.5 px-4"
-                    onChange={handleSelectionChange}
+                    onChange={(e) => handleSelectionChange(e, employee?._id)}
+                    defaultValue= {employee.status}
                 >
-                    {[
+                    {/* {[
                         {
                             "title": "Yes",
                             value: true,
@@ -155,10 +175,11 @@ const AttendanceAdd_Row = ({ employee, axiosSecure, refetch }) => {
                             value: false,
                         }
                     ].map((i) => (
-                        <option className='' key={i.title} value={i.value}>{i.title}</option>
-                    ))}
+                        <option key={i.title} value={i.value}>{i.title}</option>
+                    ))} */}
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
                 </select>
-
             </td>
 
         </tr>
