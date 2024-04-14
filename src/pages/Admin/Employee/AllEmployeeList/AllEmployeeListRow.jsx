@@ -38,7 +38,7 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
         case 'Customer Service':
             statusStyle = 'bg-amber-100 text-amber-700'
             break
-        case 'Others':
+        case 'Delivery Boy':
             statusStyle = 'bg-blue-100 text-blue-700'
             break
     }
@@ -103,15 +103,15 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
                     </div>
                 </div>
             </td>
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
-                    className='text-gray-900 whitespace-no-wrap block'
+                    className='text-gray-900 whitespace-no-wrap block '
                 >
 
                     {employee?.branchName}
                 </span>
             </td>
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
                     className='text-gray-900 whitespace-no-wrap block'
                 >
@@ -119,13 +119,13 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
                     {employee?.nid}
                 </span>
             </td>
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
 
                 <a href={`tel:${employee.mobile}`} className='text-gray-600 whitespace-no-wrap block hover:underline cursor-pointer'>{employee?.mobile}</a>
             </td>
 
 
-            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+            <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm text-center'>
                 <span
                     className={`inline-flex items-center justify-center rounded-full  px-2.5 py-0.5 ${statusStyle}`}
                 >
@@ -136,9 +136,9 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
                     <p className="whitespace-nowrap text-sm text-center">{employee?.role}</p>
                 </span>
             </td>
-            <td className='py-5  bg-white text-sm flex justify-center items-center gap-3'>
+            <td className='py-5  bg-white text-sm flex justify-center items-center gap-1'>
                 <span
-                    className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
+                    className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-1 md:gap-0 items-center'
                 >
                     <Link title="Edit category" to={`/update-employee-profile/${employee?._id}`} className="inline-flex ml-3 cursor-pointer"><img src={edit} /></Link>
                     {
@@ -148,7 +148,7 @@ const AllEmployeeListRow = ({ employee, axiosSecure, refetch }) => {
                 </span>
 
                 <span
-                    className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-4 md:gap-0 items-center'
+                    className='text-gray-900 whitespace-no-wrap flex flex-col md:flex-row gap-1 md:gap-0 items-center'
                 >
                     <button onClick={onOpen} className="inline-flex ml-3 cursor-pointer">
                         <svg className='w-6 h-6 text-gray-900' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

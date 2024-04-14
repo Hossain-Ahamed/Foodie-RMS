@@ -4,17 +4,19 @@ import SectionTitle from '../../../../components/SectionTitle/SectionTitle'
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
-import { IoAddOutline } from 'react-icons/io5';
 import LoadingPage from '../../../Shared/LoadingPages/LoadingPage/LoadingPage';
 import ErrorPage from '../../../Shared/ErrorPage/ErrorPage';
 import { useFieldArray, useForm } from 'react-hook-form';
 import ScrollToTop from '../../../../components/ScrollToTop/ScrollToTop';
 import { MdDelete } from 'react-icons/md';
 import { CiSquarePlus } from 'react-icons/ci';
-
+import { useParams, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { SwalErrorShow, getUnits } from '../../../../assets/scripts/Utility';
 const AddRecipe = () => {
     const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate()
+    const { dishID } = useParams();
     const { register, handleSubmit, formState: { errors }, setValue, getValues, resetField, control } = useForm({
         defaultValues: {
             active: true,
@@ -26,53 +28,38 @@ const AddRecipe = () => {
         name: 'ingredients',
     });
     const { branchID, res_id } = useRestauarantAndBranch();
+    const units = getUnits();
     const { refetch, data: data = [], isLoading, error } = useQuery({
         queryKey: ['employee-list', branchID, res_id],
         queryFn: async () => {
-            // const res = await axiosSecure.get(`/admin/get-all-dishes/${branchID}?currentPage=${currentPage}&dataSize=${selectedRange}&status=${selectActive}`);
+            const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/get-dishes/${dishID}`);
 
-            const data = {
-                dish: "Mexican Chao",
-                ingredients: [
-                    {
-                        itemName: "Mexican Thai Noodle",
-                        unit: 4
-                    }
-                ]
-            }
-            setValue("ingredients", data.ingredients)
-            return data
+            // const data = {
+            //     dish: "Mexican Chao",
+            //     ingredients: [
+            //         {
+            //             itemName: "Mexican Thai Noodle",
+            //             unit: 4
+            //         }
+            //     ]
+            // }
+            // setValue("ingredients", data.ingredients)
+            setValue("dish", data.title)
+            return res.data
             // return res.data
         }
     })
     const onSubmit = async (data) => {
         console.log(data);
 
-        // setLoading(true)
-        // imageUpload(data?.img)
-        //     .then(res => {
-        //         data.img = res?.data?.display_url
-        //         axiosSecure.post(`/admin/${res_id}/add-new-dishes/${branchID}`, data)
-        //             .then(res => {
-        //                 toast.success('Dish Added Successfully')
-        //                 resetField("active")
-        //                 resetField("options")
-        //                 resetField("addOn")
-        //                 resetField("category")
-        //                 resetField("title")
-        //                 resetField("price")
-        //                 resetField("offerPrice")
-        //                 resetField("preparation_cost")
-        //                 resetField("sales_tax")
-        //                 resetField("supplementary_duty")
-        //                 resetField("img")
-        //                 setDescriptionContent("");
-        //                 navigate('/dish-list')
-        //             })
-        //             .catch(err => SwalErrorShow(err))
-        //     })
-        //     .catch(err => SwalErrorShow(err))
-        //     .finally(() => setLoading(false))
+        axiosSecure.post(`/admin/restaurant/${res_id}/branch/${branchID}/add-new-dishes/${dishID}`, data)
+            .then(res => {
+                toast.success('Dish Added Successfully')
+                resetField("ingredients")
+                resetField("dish")
+                navigate('/dish-list')
+            })
+            .catch(err => SwalErrorShow(err))
 
 
     };
@@ -133,6 +120,28 @@ const AddRecipe = () => {
                                                 {errors.ingredients[index].itemName.message}
                                             </p>
                                         )}
+                                    </div>
+                                    <div className="w-full md:w-1/2 p-3">
+                                        <select
+                                            label="Select Unit Type"
+                                            className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block p-2.5"
+
+                                            defaultValue=""
+                                            {...register(`ingredients[${index}].unitType`, {
+                                                required: "*Unit Type is Required",
+                                            })}
+                                        >
+                                            <option value="" disabled>
+                                                Select Unit Type
+                                            </option>
+
+                                            {units.map((item, _idx) => (
+                                                <option key={_idx} value={item}>
+                                                    {item}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        {errors.unitType?.type === "required" && (<p className='m-0 p-0 pl-1  text-base text-red-500 text-[9px]' role="alert">{errors?.unitType?.message}</p>)}
                                     </div>
                                     <div className="w-full md:w-1/2 p-1">
 
