@@ -53,6 +53,7 @@ import EditInventory from "../../pages/Admin/Inventory/EditInventory/EditInvento
 import OngoingOrderList from "../../components/Dashboard/OngoingOrderList/OngoingOrderList";
 import AllOrderList from "../../components/Dashboard/AllOrderList/AllOrderList";
 import OngoingOrders from "../../pages/Admin/Orders/OngoingOrders/OngoingOrders";
+import AllCustomerList from "../../pages/Admin/Employee/AllCustomers/AllCustomerList";
 
 
 
@@ -109,6 +110,11 @@ export const router = createBrowserRouter([
             {
                 path: '/manage-tables',
                 element: <TableManagement />
+                // '/restaurant/:res_id/branch/:branchID/manage-tables',
+            },
+            {
+                path: '/customers',
+                element: <AllCustomerList />
                 // '/restaurant/:res_id/branch/:branchID/manage-tables',
             },
             {

@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BiEditAlt } from 'react-icons/bi';
 import Swal from 'sweetalert2';
 import { MdOutlineCheckCircle } from 'react-icons/md';
-import { FaTrashAlt } from 'react-icons/fa';
 import useRestauarantAndBranch from '../../../../Hooks/useRestauarantAndBranch';
 import { SwalErrorShow } from '../../../../assets/scripts/Utility';
 import edit from "../../../../assets/images/Home/edit.svg"
@@ -11,7 +9,6 @@ import trash from "../../../../assets/images/Home/delete.svg"
 
 
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
-import AdminOrderPlace from '../../Orders/AdminOrderPlace/AdminOrderPlace';
 import Employee_row_attendance from './Employee_row_attendance';
 
 
