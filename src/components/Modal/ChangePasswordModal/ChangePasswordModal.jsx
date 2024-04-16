@@ -17,28 +17,39 @@ export default function ChangePasswordModal({ userEmail }) {
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     const onSubmit = (data) => {
-        verifyEmailPassword(data, data.email, data.password, data.confirmPass)
+
+        //password -> old pass
+        //confirm pass -> new pass
+
+        if(data.confirmPass.length<6){
+            return toast.error("Length should be at least 6 character");
+        }
+
+        verifyEmailPassword(data.password,data.confirmPass)
     }
 
-    const verifyEmailPassword = (data, email, password, confirmPass) => {
-        if (userEmail === email) {
-            if (password === confirmPass) {
-                axiosSecure.post(`/change-passwords`, data)
-                    .then(data => {
-                        toast.success('Password Change successfully')
-                        onOpenChange();
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        toast.error(err?.response?.data?.message)
-                        onOpenChange();
-                    })
-            } else {
-                toast.error("Password didn't matched, Try again.")
-            }
-        } else {
-            toast.error("Email didn't matched.")
+    const verifyEmailPassword = (oldpassword, newPass) => {
+
+
+
+        const data = {
+            email: userEmail,
+            newPass: newPass,
+            oldPass: oldpassword,
         }
+
+        console.log(data)
+        axiosSecure.post(`/change-rms-passwords`, data)
+            .then(data => {
+                toast.success('Password Change successfully')
+                onOpenChange();
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error(err?.response?.data?.message)
+                onOpenChange();
+            })
+
     }
     return (
         <>
@@ -54,19 +65,8 @@ export default function ChangePasswordModal({ userEmail }) {
                             <ModalHeader className="flex flex-col md:flex-row items-center gap-1">Change Password <FaKey /></ModalHeader>
                             <ModalBody>
                                 <form onSubmit={handleSubmit(onSubmit)}>
-                                    <Input
-                                        autoFocus
-                                        // endContent={
-                                        //     <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                                        // }
-                                        label="Email"
-                                        placeholder="Enter your email"
-                                        variant="bordered"
-                                        {...register("email", {
-                                            required: "*Email is Required",
-                                        })}
-                                    />
-                                    {errors.email?.type === "required" && (<p className='m-0 p-0 text-base text-red-500 text-[9px]' role="alert">{errors.email.message}</p>)}
+
+
                                     <Input
                                         endContent={
                                             <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
@@ -78,11 +78,11 @@ export default function ChangePasswordModal({ userEmail }) {
                                             </button>
                                         }
                                         type={isVisible ? "text" : "password"}
-                                        label="Password"
-                                        placeholder="Enter your password"
+                                        label="Old  Password"
+                                        placeholder="Enter your old password"
                                         variant="bordered"
                                         {...register("password", {
-                                            required: "*Password is Required",
+                                            required: "*Old Password is Required",
                                         })}
                                         className="mt-4"
                                     />
@@ -98,11 +98,11 @@ export default function ChangePasswordModal({ userEmail }) {
                                             </button>
                                         }
                                         type={isVisible ? "text" : "password"}
-                                        label="Confirm Password"
-                                        placeholder="Confirm your password"
+                                        label="New Password"
+                                        placeholder="New password"
                                         variant="bordered"
                                         {...register("confirmPass", {
-                                            required: "*Confirm Password is Required",
+                                            required: "*New Password is Required",
                                         })}
                                         className="mt-4"
                                     />

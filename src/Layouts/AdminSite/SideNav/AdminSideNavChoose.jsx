@@ -3,6 +3,7 @@ import CustomerService from './CustomerService';
 import KitchenStuff from './KitchenStuff';
 import SuperAdminNav from './SuperAdminNav';
 import AdminNav from './AdminNav';
+import RiderNav from './RiderNav';
 
 const AdminSideNavChoose = ({ role }) => {
 
@@ -14,8 +15,8 @@ const AdminSideNavChoose = ({ role }) => {
         return <KitchenStuff />
     } else if (role === "Super-Admin") {
         return <SuperAdminNav />
-    } else if (role === "Rider") {
-        return <>rider nav</>
+    } else if (role === "Delivery Boy") {
+        return <RiderNav/>
     } else {
         return <>null</>
     }

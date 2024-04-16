@@ -54,7 +54,11 @@ import OngoingOrderList from "../../components/Dashboard/OngoingOrderList/Ongoin
 import AllOrderList from "../../components/Dashboard/AllOrderList/AllOrderList";
 import OngoingOrders from "../../pages/Admin/Orders/OngoingOrders/OngoingOrders";
 import AllCustomerList from "../../pages/Admin/Employee/AllCustomers/AllCustomerList";
+
 import TableReservationCard from "../../pages/Admin/ManageRestaurant/TableReservation/TableReservationCard";
+
+import RestaurantTransactionsHistory from "../../pages/Admin/RestaurantTransactionsHistory/RestaurantTransactionsHistory";
+
 
 
 
@@ -92,7 +96,7 @@ export const router = createBrowserRouter([
                 element: <ProtectedByRole allowedRoles={['Super-Admin']}><EditRestaurant /></ProtectedByRole>
             },
             {
-                path: '/:res_id/branch/:branchID',
+                path: '/statistics',
                 element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Statistics /></ProtectedByRole>
             },
             {
@@ -263,22 +267,14 @@ export const router = createBrowserRouter([
                 element: <AllEmployeeList />
                 // '/restaurant/:res_id/branch/:branchID/employee-list',
             },
-            // {
-
-            //     //payment page for admin to pay for a branch
-            //     path: '/subscription-payment/:branchID',
-            //     element: <Payment />
-
-            // },
             {
                 path: '/place-order',
                 element: <AdminOrderPlace />
             },
 
             {
-                path: '/place-order',
-                element: <>
-                </>
+                path: '/online-transaction-bills',
+                element: <RestaurantTransactionsHistory/>
             }
 
 
