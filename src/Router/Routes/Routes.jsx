@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
                 element: <ProtectedByRole allowedRoles={['Super-Admin']}><EditRestaurant /></ProtectedByRole>
             },
             {
-                path: '/:res_id/branch/:branchID',
+                path: '/statistics',
                 element: <ProtectedByRole allowedRoles={['Admin', 'Super-Admin']}><Statistics /></ProtectedByRole>
             },
             {
