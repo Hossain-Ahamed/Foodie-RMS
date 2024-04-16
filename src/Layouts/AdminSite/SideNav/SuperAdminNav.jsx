@@ -263,6 +263,7 @@ const SuperAdminNav = () => {
                         </summary>
 
                         <ul className="mt-2 space-y-1 px-4">
+                            
                             <li>
                                 <NavLink
                                     to={`/statistics`}
@@ -275,22 +276,7 @@ const SuperAdminNav = () => {
                                 >
 
 
-                                    <span className="text-sm font-medium">Graph<span className="text-[9px]">(All)</span></span>
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink
-                                    to={`/statistics`}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? "flex items-center gap-2 rounded-lg px-4 py-2 bg-gray-300 text-gray-700 hover:bg-gray-300 hover:text-gray-700"
-
-                                            : "flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-300 hover:text-gray-700 "
-                                    }
-                                >
-
-
-                                    <span className="text-sm font-medium">Graph<span className="text-[9px]">(selected branch)</span> </span>
+                                    <span className="text-sm font-medium">Graph</span>
                                 </NavLink>
                             </li>
 
