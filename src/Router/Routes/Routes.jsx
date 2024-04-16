@@ -54,6 +54,7 @@ import OngoingOrderList from "../../components/Dashboard/OngoingOrderList/Ongoin
 import AllOrderList from "../../components/Dashboard/AllOrderList/AllOrderList";
 import OngoingOrders from "../../pages/Admin/Orders/OngoingOrders/OngoingOrders";
 import AllCustomerList from "../../pages/Admin/Employee/AllCustomers/AllCustomerList";
+import TableReservationCard from "../../pages/Admin/ManageRestaurant/TableReservation/TableReservationCard";
 
 
 
@@ -110,6 +111,11 @@ export const router = createBrowserRouter([
             {
                 path: '/manage-tables',
                 element: <TableManagement />
+                // '/restaurant/:res_id/branch/:branchID/manage-tables',
+            },
+            {
+                path: '/tables-reservation',
+                element: <TableReservationCard />
                 // '/restaurant/:res_id/branch/:branchID/manage-tables',
             },
             {
