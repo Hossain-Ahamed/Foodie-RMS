@@ -19,7 +19,7 @@ const Reels = () => {
         queryKey: ['story', branchID],
         queryFn: async () => {
             const res = await axioseSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/all-reels`);
-            console.log(res.data[0].videoFile);
+            // console.log(res.data[0].videoFile);
             return res?.data;
             // return [
             //     {
