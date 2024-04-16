@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { SwalErrorShow } from '../../../assets/scripts/Utility';
 import { useNavigate } from 'react-router-dom';
+import FacebookProfileAdd from './FacebookProfileAdd';
 const BranchCard = ({ data, setBranchAndRestaurantName, refetch }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -81,6 +82,7 @@ const BranchCard = ({ data, setBranchAndRestaurantName, refetch }) => {
 
                         <div className="w-full flex gap-2 mt-3  justify-around items-center border rounded-lg p-2 " title='View' aria-label='view'>
 
+<FacebookProfileAdd />
                             <Link to={`/branch-detail/edit/${data?.branchID}`} className=" cursor-pointer w-full flex items-center justify-center text-blue-500" title='Edit' aria-label='Edit'>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
