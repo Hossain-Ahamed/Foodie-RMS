@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 import { useQuery } from 'react-query';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell, Label, LineChart, Line } from 'recharts';
+import LoadingPage from '../../Shared/LoadingPages/LoadingPage/LoadingPage';
 
 
 const Statistics = () => {
@@ -31,9 +32,9 @@ const Statistics = () => {
       if (screenWidth < 375) {
         setChartWidth(300); // Set width for small screens
       } else if (screenWidth <= 768) {
-        setChartWidth(350); // Set width for small screens
+        setChartWidth(360); // Set width for small screens
       } else if (screenWidth <= 1024) {
-        setChartWidth(300); // Set width for medium screens
+        setChartWidth(450); // Set width for medium screens
       } else {
         setChartWidth(600); // Set width for large screens
       }
@@ -49,7 +50,7 @@ const Statistics = () => {
   }, []);
     return (
         <>
-        <div className='mt-8 md:mt-12 lg:mt-24 mx-3 lg:mx-40 grid grid-cols-1 md:grid-cols-2 gap-20 justify-center'>
+        <div className='mt-8 md:mt-12 lg:mt-24 mx-3 lg:mx-40 flex flex-wrap gap-20 justify-center'>
             {/* --------------Order Count BarChart------------------ */}
             <div
             className="rounded-lg shadow-md"
@@ -61,7 +62,7 @@ const Statistics = () => {
         <BarChart
           width={chartWidth}
           height={400}
-          data={data}
+          data={data?.Hour}
           margin={{
             top: 5,
             right: 30,
@@ -70,11 +71,11 @@ const Statistics = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="_id" />
+          <XAxis dataKey="hour" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="orderCount" fill="#45D483" />
+          <Bar dataKey="revenue" fill="#45D483" />
         </BarChart>
         </div>
 
@@ -89,7 +90,7 @@ const Statistics = () => {
         <AreaChart
           width={chartWidth}
           height={400}
-          data={data}
+          data={data?.daywise}
           margin={{
             top: 10,
             right: 30,
@@ -106,6 +107,72 @@ const Statistics = () => {
         </div>
           </div>
 
+          {/* ----------------order status graph--------------------  */}
+          <div className="rounded-lg shadow-md" aria-label="order graph">
+            <div className="m-5">
+              <h1 className="text-lg">Order Status</h1>
+            </div>
+            <LineChart
+              width={chartWidth}
+              height={288}
+              data={data?.status}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="_id" className="text-[10px]" />
+              <YAxis className="text-[10px]" />
+              <Tooltip />
+
+              <Line type="monotone" dataKey="orderCount" stroke="#64c5b1" />
+            </LineChart>
+          </div>
+
+
+          {/* completed order pie chart */}
+          {/* <div className="" aria-label="completed order pie chart">
+            <div className="rounded-lg shadow-md">
+              <div className="m-5">
+                <h1 className="text-lg">Orders Completed vs Pending vs Cancelled</h1>
+              </div>
+              {data?.status ? (
+                <PieChart width={300} height={300}>
+                  <Pie
+                    data={data?.status}
+                    dataKey="totalOrders" // Update to the correct data property
+                    outerRadius={90}
+                    innerRadius={50}
+                    labelLine={false}
+                  >
+                    {data?.status?.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                        className="shadow-lg"
+                      />
+                    ))}
+                    <Label
+                      value={data?.status?.reduce(
+                        (sum, data) => sum + data.orderCount,
+                        0
+                      )} // Update to the correct data property
+                      position="center"
+                      fontSize={24}
+                      fontWeight="bold"
+                    />
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              ) : (
+                <LoadingPage />
+              )}
+            </div>
+            </div> */}
         </div>
       
         </>
