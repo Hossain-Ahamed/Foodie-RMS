@@ -70,7 +70,7 @@ const SearchEmployeePage_ToAdd = () => {
         setSearchedResult(false);
 
         // search from server 
-        await axiosSecure.post('/search-employee-to-add', trimmedData)
+        await axiosSecure.post('/search-employee-to-add', {data: trimmedData})
             .then(res => {
                 setSearchedResult(res.data);
             })
