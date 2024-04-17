@@ -30,7 +30,7 @@ const AddRecipe = () => {
     const { branchID, res_id } = useRestauarantAndBranch();
     const units = getUnits();
     const { refetch, data: data = [], isLoading, error } = useQuery({
-        queryKey: ['employee-list', branchID, res_id],
+        queryKey: ['dish-receipe-data-kasjfoiu438u', branchID, res_id,dishID],
         queryFn: async () => {
             const res = await axiosSecure.get(`/admin/restaurant/${res_id}/branch/${branchID}/get-dishes/${dishID}`);
 
