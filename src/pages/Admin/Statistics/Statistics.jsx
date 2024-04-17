@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useRestauarantAndBranch from '../../../Hooks/useRestauarantAndBranch';
 import { useQuery } from 'react-query';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell, Label, LineChart, Line } from 'recharts';
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell, Label, LineChart, Line, LabelList } from 'recharts';
 import LoadingPage from '../../Shared/LoadingPages/LoadingPage/LoadingPage';
 
 
@@ -50,6 +50,7 @@ const Statistics = () => {
   }, []);
     return (
         <>
+        
         <div className='mt-8 md:mt-12 lg:mt-24 mx-3 lg:mx-40 flex flex-wrap gap-20 justify-center'>
             {/* --------------Order Count BarChart------------------ */}
             <div
@@ -57,7 +58,7 @@ const Statistics = () => {
             aria-label="New Users Per Month graph"
           >
             <div className="m-5">
-              <h1 className="text-lg">Order Summary Per Count</h1>
+              <h1 className="text-lg">Revenue Per Hour <span className="text-xs">in tk</span></h1>
             </div>
         <BarChart
           width={chartWidth}
@@ -84,7 +85,7 @@ const Statistics = () => {
             <div className="rounded-lg shadow-md">
               <div className="m-5">
                 <h1 className="text-lg">
-                  Revenue <span className="text-xs">in tk</span>
+                  Revenue Per Day <span className="text-xs">in tk</span>
                 </h1>
               </div>
         <AreaChart
@@ -107,72 +108,37 @@ const Statistics = () => {
         </div>
           </div>
 
-          {/* ----------------order status graph--------------------  */}
-          <div className="rounded-lg shadow-md" aria-label="order graph">
-            <div className="m-5">
-              <h1 className="text-lg">Order Status</h1>
-            </div>
-            <LineChart
-              width={chartWidth}
-              height={288}
-              data={data?.status}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="_id" className="text-[10px]" />
-              <YAxis className="text-[10px]" />
-              <Tooltip />
 
-              <Line type="monotone" dataKey="orderCount" stroke="#64c5b1" />
-            </LineChart>
-          </div>
-
-
-          {/* completed order pie chart */}
-          {/* <div className="" aria-label="completed order pie chart">
+          {/* --------------order status pie chart--------------- */}
+          <div className="" aria-label="completed order pie chart">
             <div className="rounded-lg shadow-md">
               <div className="m-5">
-                <h1 className="text-lg">Orders Completed vs Pending vs Cancelled</h1>
+                <h1 className="text-lg">Order Status</h1>
               </div>
-              {data?.status ? (
-                <PieChart width={300} height={300}>
-                  <Pie
-                    data={data?.status}
-                    dataKey="totalOrders" // Update to the correct data property
-                    outerRadius={90}
+              <PieChart width={chartWidth} height={288}>
+      <Pie
+        data={data?.status}
+        outerRadius={90}
                     innerRadius={50}
                     labelLine={false}
-                  >
-                    {data?.status?.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                        className="shadow-lg"
-                      />
-                    ))}
-                    <Label
-                      value={data?.status?.reduce(
-                        (sum, data) => sum + data.orderCount,
-                        0
-                      )} // Update to the correct data property
-                      position="center"
-                      fontSize={24}
-                      fontWeight="bold"
-                    />
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              ) : (
-                <LoadingPage />
-              )}
+        fill="#8884d8"
+        dataKey="orderCount"
+      >
+        {data?.status.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+        <LabelList
+        fill='#000000'
+          dataKey="_id"
+          position="outside" /* You can use "inside" or "outside" */
+        />
+      </Pie>
+      <Legend />
+    </PieChart>
             </div>
-            </div> */}
+            </div>
+
+
         </div>
       
         </>
