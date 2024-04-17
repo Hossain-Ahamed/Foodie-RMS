@@ -82,7 +82,7 @@ const AddRecipe = () => {
                         <div className="flex flex-wrap pb-3 m-3 border-1 rounded">
                             <div className="w-full  p-3">
                                 <p className="mb-1.5 font-medium text-base text-gray-800" data-config-id="auto-txt-3-3">Title</p>
-                                <input defaultValue={data.dish} className="disabled:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: Rice Bowl"
+                                <input className="disabled:cursor-not-allowed w-full px-4 py-2.5 text-base text-gray-900 font-normal outline-none focus:border-green-500 border border-gray-300 rounded-lg shadow-input" type="text" placeholder="ie: Rice Bowl"
                                     {...register("dish", {
                                         required: "*Dish  is Required",
                                     })} disabled />
