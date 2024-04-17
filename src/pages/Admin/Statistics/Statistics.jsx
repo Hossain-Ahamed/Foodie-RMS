@@ -21,7 +21,16 @@ const Statistics = () => {
             return res?.data;
         },
     });
-    const COLORS = ["#64c5b1", "rgb(230, 137, 0)", "#DCDCDC"]; // Customize colors as needed
+    const COLORS = ['#FF5733', // Orange
+    '#33FF57', // Green
+    '#3357FF', // Blue
+    '#FF33A1', // Pink
+    '#FFBD33', // Yellow-Orange
+    '#8E44AD', // Purple
+    '#2ECC71', // Fresh Green
+    '#F39C12', // Golden Orange
+    '#E74C3C', // Deep Red
+    '#3498DB',]; // Cool Blue // Customize colors as needed
 
   
 
