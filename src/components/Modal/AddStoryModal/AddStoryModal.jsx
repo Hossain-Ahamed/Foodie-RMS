@@ -14,6 +14,7 @@ const AddStoryModal = ({ refetch }) => {
     const axiosSecure = useAxiosSecure();
     const [selectedImage0, setSelectedImage0] = useState(null);
 
+    const [upload,setUpload] = useState(false);
     const handleImageUpload0 = (event) => {
         const file = event.target.files[0];
         setSelectedImage0(URL.createObjectURL(file));
@@ -25,6 +26,7 @@ const AddStoryModal = ({ refetch }) => {
         if (!data.img) {
             return toast.error("Image is not selected")
         }
+        setUpload(true)
         // imageBB story upload api
         imageUpload(data?.img)
             .then(res => {
@@ -43,6 +45,7 @@ const AddStoryModal = ({ refetch }) => {
                     })
             })
             .catch(err => SwalErrorShow(err))
+            .finally(()=>setUpload(false))
     }
     return (
         <>
@@ -106,7 +109,7 @@ const AddStoryModal = ({ refetch }) => {
                                         <Button color="danger" variant="light" onPress={() => { setSelectedImage0(null); onClose(); }}>
                                             Close
                                         </Button>
-                                        <Button type="submit" color="success" variant="light">
+                                        <Button type="submit" color="success" variant="light" isLoading={upload}>
                                             Create Story
                                         </Button>
                                     </ModalFooter>
