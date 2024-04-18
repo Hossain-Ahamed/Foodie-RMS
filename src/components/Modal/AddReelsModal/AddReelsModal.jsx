@@ -16,6 +16,8 @@ const AddReelsModal = ({ refetch }) => {
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [videoUrl, setVideoUrl] = useState(null);
+
+    const [upload,setUpload] = useState(false);
     const handleVideoUpload = (event) => {
         const file = event.target.files[0];
         setSelectedVideo(file);
@@ -31,6 +33,7 @@ const AddReelsModal = ({ refetch }) => {
         if (!data.videoFile) {
             return toast.error("No file is selected")
         }
+        setUpload(true)
         const storage = getStorage();
         const storageRef = ref(storage, `videos/${selectedVideo.name}`); // Custom video path
 
@@ -61,6 +64,7 @@ const AddReelsModal = ({ refetch }) => {
                     .catch(err => {
                         SwalErrorShow(err)
                     })
+                    .finally(()=>{setUpload(false)})
 
                 // (Optional) Store video URL in Firestore (replace with MongoDB logic)
                 // const db = getFirestore(); // Assuming Firestore is initialized
@@ -181,7 +185,7 @@ const AddReelsModal = ({ refetch }) => {
                                         <Button color="danger" variant="light" onPress={() => { setSelectedVideo(null); onClose(); }}>
                                             Close
                                         </Button>
-                                        <Button type="submit" color="success" variant="light" disabled={!selectedVideo}>
+                                        <Button type="submit" color="success" variant="light" disabled={!selectedVideo} isLoading={upload}>
                                             Upload Video
                                         </Button>
                                     </ModalFooter>
